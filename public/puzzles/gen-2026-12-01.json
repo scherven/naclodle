@@ -4,158 +4,160 @@
   "date": "2026-12-01",
   "difficulty": 2,
   "language": {
-    "name": "Keyeli",
+    "name": "Odusa",
     "real": false
   },
   "checks": 3,
-  "keys": [],
-  "hint": "Find the verb first, then work out which noun is doing the action.",
+  "keys": [
+    "č",
+    "ü",
+    "ö",
+    "ä"
+  ],
+  "hint": "Some endings come in two shapes. Look at the vowels of the word they attach to.",
   "corpus": [
     {
-      "lang": "Uka tuya kebi.",
-      "en": "The explorer wakes the mummy.",
+      "lang": "Lumanlaka čütö.",
+      "en": "The kings laughed.",
       "gloss": [
-        "wake",
-        "mummy",
-        "explorer"
+        "king-PL",
+        "laugh"
       ]
     },
     {
-      "lang": "Bete wike tuyatu.",
-      "en": "The mummies guard the tomb.",
+      "lang": "Nänmä lumanla mončobo.",
+      "en": "The horse did not follow the king.",
       "gloss": [
-        "guard",
-        "tomb",
-        "mummy-PL"
+        "horse",
+        "king",
+        "follow-NEG"
       ]
     },
     {
-      "lang": "Bem uka tuya kebiti.",
-      "en": "The explorers do not wake the mummy.",
+      "lang": "Mönäčäkä nänmä üdä.",
+      "en": "The messengers sent the horse.",
       "gloss": [
-        "NEG",
-        "wake",
-        "mummy",
-        "explorer-PL"
+        "messenger-PL",
+        "horse",
+        "send"
       ]
     },
     {
-      "lang": "Laku wiketi tuyatu.",
-      "en": "The mummies seal the tombs.",
+      "lang": "Lumanlaka mönäčäkä mončo.",
+      "en": "The kings followed the messengers.",
       "gloss": [
-        "seal",
-        "tomb-PL",
-        "mummy-PL"
+        "king-PL",
+        "messenger-PL",
+        "follow"
       ]
     },
     {
-      "lang": "Bete wiketi tuyatu.",
-      "en": "The mummies guard the tombs.",
+      "lang": "Lumanlaka lasaka üdäbö.",
+      "en": "The kings did not send the scrolls.",
       "gloss": [
-        "guard",
-        "tomb-PL",
-        "mummy-PL"
+        "king-PL",
+        "scroll-PL",
+        "send-NEG"
       ]
     },
     {
-      "lang": "Bem bete wiketi latatu.",
-      "en": "The jackals do not guard the tombs.",
+      "lang": "Nänmäkä mönäčäkä mončobo.",
+      "en": "The horses did not follow the messengers.",
       "gloss": [
-        "NEG",
-        "guard",
-        "tomb-PL",
-        "jackal-PL"
+        "horse-PL",
+        "messenger-PL",
+        "follow-NEG"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Bem bete wiketi tuya.",
+      "prompt": "Lumanlaka nänmäkä mončobo.",
       "accepted": [
-        "the mummy does not guard the tombs",
-        "the mummy does not guard tombs",
-        "the mummy did not guard the tombs",
-        "the mummy did not guard tombs",
-        "the mummy is not guarding the tombs",
-        "the mummy is not guarding tombs",
-        "a mummy does not guard the tombs",
-        "a mummy does not guard tombs",
-        "a mummy did not guard the tombs",
-        "a mummy did not guard tombs",
-        "a mummy is not guarding the tombs",
-        "a mummy is not guarding tombs"
+        "the kings did not follow the horses",
+        "the kings did not follow horses",
+        "the kings do not follow the horses",
+        "the kings do not follow horses",
+        "the kings are not following the horses",
+        "the kings are not following horses",
+        "kings did not follow the horses",
+        "kings did not follow horses",
+        "kings do not follow the horses",
+        "kings do not follow horses",
+        "kings are not following the horses",
+        "kings are not following horses"
       ],
-      "explanation": "V O S order. bem = NEG; bete = guard; wike-ti = tomb-PL; tuya = mummy."
+      "explanation": "S O V order. lumanla-ka = king-PL; nänmä-kä = horse-PL; mončo-bo = follow-NEG."
     }
   ],
   "toLang": [
     {
-      "prompt": "The explorers wake the mummies.",
+      "prompt": "The messengers sent the scrolls.",
       "accepted": [
-        "uka tuyatu kebiti"
+        "mönäčäkä lasaka üdä"
       ],
-      "explanation": "V O S order. uka = wake; tuya-tu = mummy-PL; kebi-ti = explorer-PL."
+      "explanation": "S O V order. mönäčä-kä = messenger-PL; lasa-ka = scroll-PL; üdä = send."
     }
   ],
   "explain": {
     "words": [
       [
-        "tuya",
-        "mummy"
+        "lasa",
+        "scroll"
       ],
       [
-        "wike",
-        "tomb"
+        "nänmä",
+        "horse"
       ],
       [
-        "kebi",
-        "explorer"
+        "lumanla",
+        "king"
       ],
       [
-        "lata",
-        "jackal"
+        "mönäčä",
+        "messenger"
       ],
       [
-        "uka",
-        "wake"
+        "üdä-",
+        "send"
       ],
       [
-        "bete",
-        "guard"
+        "mončo-",
+        "follow"
       ],
       [
-        "laku",
-        "seal"
+        "čütö-",
+        "laugh"
       ]
     ],
     "grammar": [
       [
-        "V O S",
-        "Word order: verb, object, subject. With one participant: verb, subject."
+        "S O V",
+        "Word order: subject, object, verb. With one participant: subject, verb."
       ],
       [
-        "-tu / -ti",
+        "-ka / -kä",
         "Plural."
       ],
       [
-        "bem",
-        "Negation: a separate word before the verb."
+        "-bo / -bö",
+        "Negation, on the verb."
       ]
     ],
-    "notes": "Vowel harmony: a word's vowels are either all back (a, u) or all front (e, i), and suffix vowels follow the stem. Checked against 189 alternative analyses; the sentences rule out 184, including: -tu/-ti appears when: animate; -tu/-ti appears when: plural & animate."
+    "notes": "Vowel harmony: a word's vowels are either all back (a, o, u) or all front (ä, ö, ü), and suffix vowels follow the stem. Checked against 292 alternative analyses; the sentences rule out 291, including: -ka/-kä appears when: animate; -ka/-kä appears when: plural & animate."
   },
-  "theme": "explorers in an ancient tomb",
+  "theme": "a scribe at the king's gate",
   "shuffle": {
     "anchors": [
-      3
+      1
     ],
     "order": [
-      4,
       5,
       1,
+      4,
+      2,
       3,
-      0,
-      2
+      0
     ]
   }
 }

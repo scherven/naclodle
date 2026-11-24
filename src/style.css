@@ -207,3 +207,13 @@ dialog.rules::backdrop{background:rgb(23 24 28 / .32)}
 .key-replica{font:15px var(--f-data);min-width:1.8em;padding:1px 6px;border:1px solid var(--rule);border-radius:4px;text-align:center}
 .key-replica.mono{font:13px var(--f-mono);color:var(--muted)}
 .btn-replica{font:500 13px var(--f-ui);padding:5px 12px;background:var(--ink);color:var(--paper);border-radius:4px}
+.stats{display:flex;flex-direction:column;gap:14px;margin-top:8px}
+.stats .figures{display:flex;gap:28px}
+.stat{display:flex;flex-direction:column;gap:2px}
+.stat b{font:500 20px var(--f-mono);font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;color:var(--muted)}
+.bars{display:flex;align-items:flex-end;gap:6px;height:64px}
+.bar{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;height:100%;width:22px}
+.bar i{display:block;width:100%;min-height:1px;background:var(--muted);opacity:.35}
+.bar.now i{background:var(--pen);opacity:1}
+.bar span{font:11px var(--f-mono);color:var(--muted)}

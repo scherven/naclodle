@@ -4,118 +4,128 @@
   "date": "2026-12-03",
   "difficulty": 3,
   "language": {
-    "name": "Elathe",
+    "name": "Oča",
     "real": false
   },
   "checks": 3,
   "keys": [
-    "ï",
-    "ë"
+    "č",
+    "š",
+    "ž"
   ],
   "hint": "Watch for “the” versus “a” in the English.",
   "corpus": [
     {
-      "lang": "Thathserofï thesena.",
-      "en": "The hunters hide.",
+      "lang": "Kokaču šivžaše vaška.",
+      "en": "The priest blesses a soldier.",
       "gloss": [
-        "hunter-PL-DEF",
-        "hide-3PL"
+        "priest-DEF",
+        "soldier-ACC",
+        "bless"
       ]
     },
     {
-      "lang": "Thathsefï thomë mithsa.",
-      "en": "The hunter chases a boar.",
+      "lang": "Koka-koka čeki-čekiše koši.",
+      "en": "Priests guard kings.",
       "gloss": [
-        "hunter-DEF",
-        "boar",
-        "chase"
+        "PL~priest",
+        "PL~king-ACC",
+        "guard"
       ]
     },
     {
-      "lang": "Rasero thomëro fïninatho.",
-      "en": "Stags do not track boars.",
+      "lang": "Čeki-čeki vinučuše zašča.",
+      "en": "Kings polish the shield.",
       "gloss": [
-        "stag-PL",
-        "boar-PL",
-        "track-3PL-NEG"
+        "PL~king",
+        "shield-DEF-ACC",
+        "polish"
       ]
     },
     {
-      "lang": "Rasero thathsefïla thomëfï mithsanatho.",
-      "en": "Stags do not chase the hunter's boar.",
+      "lang": "Čeki čušva-čušvanočuše koka-kokaču zašča.",
+      "en": "A king polishes the priests' crowns.",
       "gloss": [
-        "stag-PL",
-        "hunter-DEF-GEN",
-        "boar-DEF",
-        "chase-3PL-NEG"
+        "king",
+        "PL~crown-POSS-DEF-ACC",
+        "PL~priest-DEF",
+        "polish"
       ]
     },
     {
-      "lang": "Thomëro thathsefïla raserofï fïninatho.",
-      "en": "Boars do not track the hunter's stags.",
+      "lang": "Šivžaču vinu-vinunočuše čekiču vaška.",
+      "en": "The soldier blesses the king's shields.",
       "gloss": [
-        "boar-PL",
-        "hunter-DEF-GEN",
-        "stag-PL-DEF",
-        "track-3PL-NEG"
+        "soldier-DEF",
+        "PL~shield-POSS-DEF-ACC",
+        "king-DEF",
+        "bless"
       ]
     },
     {
-      "lang": "Raserofï thathserofïla thomërofï fïnina.",
-      "en": "The stags track the hunters' boars.",
+      "lang": "Koka-kokaču čušvanočuše šivža-šivžaču zašča.",
+      "en": "The priests polish the soldiers' crown.",
       "gloss": [
-        "stag-PL-DEF",
-        "hunter-PL-DEF-GEN",
-        "boar-PL-DEF",
-        "track-3PL"
+        "PL~priest-DEF",
+        "crown-POSS-DEF-ACC",
+        "PL~soldier-DEF",
+        "polish"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Thathse thomëfï fïnitho.",
+      "prompt": "Šivžanoču čekiču vinuše zašča.",
       "accepted": [
-        "a hunter does not track the boar",
-        "a hunter did not track the boar",
-        "a hunter is not tracking the boar"
+        "the king's soldier polishes a shield",
+        "the king's soldier polished a shield",
+        "the king's soldier is polishing a shield"
       ],
-      "explanation": "S O V order. thathse = hunter; thomë-fï = boar-DEF; fïni-tho = track-NEG."
+      "explanation": "S O V order. šivža-no-ču = soldier-POSS-DEF; čeki-ču = king-DEF; vinu-še = shield-ACC; zašča = polish."
     }
   ],
   "toLang": [
     {
-      "prompt": "The hunters' boars do not chase stags.",
+      "prompt": "Soldiers polish the priests' crown.",
       "accepted": [
-        "thathserofïla thomërofï rasero mithsanatho"
+        "šivža-šivža čušvanočuše koka-kokaču zašča"
       ],
-      "explanation": "S O V order. thathse-ro-fï-la = hunter-PL-DEF-GEN; thomë-ro-fï = boar-PL-DEF; rase-ro = stag-PL; mithsa-na-tho = chase-3PL-NEG."
+      "explanation": "S O V order. šivža-šivža = PL~soldier; čušva-no-ču-še = crown-POSS-DEF-ACC; koka-koka-ču = PL~priest-DEF; zašča = polish."
     }
   ],
   "explain": {
     "words": [
       [
-        "thathse",
-        "hunter"
+        "vinu",
+        "shield"
       ],
       [
-        "thomë",
-        "boar"
+        "šivža",
+        "soldier"
       ],
       [
-        "rase",
-        "stag"
+        "čeki",
+        "king"
       ],
       [
-        "mithsa-",
-        "chase"
+        "čušva",
+        "crown"
       ],
       [
-        "fïni-",
-        "track"
+        "koka",
+        "priest"
       ],
       [
-        "these-",
-        "hide"
+        "koši",
+        "guard"
+      ],
+      [
+        "vaška",
+        "bless"
+      ],
+      [
+        "zašča",
+        "polish"
       ]
     ],
     "grammar": [
@@ -124,48 +134,44 @@
         "Word order: subject, object, verb. With one participant: subject, verb."
       ],
       [
-        "-ro",
-        "Plural."
+        "X-X",
+        "Plural: say the noun twice (čiščošča → čiščošča-čiščoščaču)."
       ],
       [
-        "-fï",
+        "-no",
+        "Marks the possessed noun (“the king's horse” = king horse-POSS). The possessor itself is bare."
+      ],
+      [
+        "-ču",
         "Definite (“the”). A noun without it means “a” (or plain plural)."
       ],
       [
-        "-la",
-        "Marks the possessor (“the king's”)."
-      ],
-      [
-        "-na",
-        "On the verb when the subject is plural."
-      ],
-      [
-        "-tho",
-        "Negation, on the verb."
+        "-še",
+        "Accusative: marks the object."
       ],
       [
         "Suffix order",
-        "On nouns: stem-PL-DEF-GEN."
+        "On nouns: stem-POSS-DEF-ACC."
       ],
       [
         "Possessor",
-        "Comes before the possessed noun."
+        "Comes after the possessed noun."
       ]
     ],
-    "notes": "Checked against 848 alternative analyses; the sentences rule out 828, including: -ro appears when: definite; -ro appears when: plural & definite."
+    "notes": "Checked against 214 alternative analyses; the sentences rule out 198, including: full reduplication appears when: definite; full reduplication appears when: plural & definite."
   },
-  "theme": "a royal hunt",
+  "theme": "priests and soldiers guarding a temple",
   "shuffle": {
     "anchors": [
-      5
+      1
     ],
     "order": [
-      4,
       2,
-      3,
       1,
+      4,
+      5,
       0,
-      5
+      3
     ]
   }
 }

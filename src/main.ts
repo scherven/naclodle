@@ -5,11 +5,14 @@ import { copy, RULES, type CopyKey, type RulesControl } from "./copy";
 import { validatePuzzle, type Puzzle, type PuzzleIndex } from "./puzzle";
 import { colourCss, MAX_COLOURS, newColour } from "./game/colours";
 import {
-  allSolved, canCheck, canCheckPairs, checkAnswers, checkPairs, freshState, isOver, maxScore, placeRemainingPairs,
+  allSolved, canCheck, canCheckPairs, checkAnswers, checkPairs, freshState, hintsUsed, isOver, maxScore, placeRemainingPairs,
   score, shareText, swapTranslations, testItems, unpairedRows, verdictFor,
   type GameState, type Paint, type Side, type Split, type TestItem,
 } from "./game/state";
 import { closestAccepted, longestCommonSubsequence, normalise, words } from "./game/text";
+import { emptyStats, recordResult, summarise, type Stats } from "./game/stats";
+
+const STATS_KEY = "naclodle:stats";
 
 /* ---------------- loading ---------------- */
 
@@ -30,6 +33,9 @@ async function loadPuzzle(): Promise<Puzzle> {
   // #draft-<seed>: a one-off made with `npm run generate -- draft` (local only, never scheduled)
   const draft = location.hash.match(/^#(draft-[\w-]+)$/);
   if (draft) return checked(await fetchPuzzle(`puzzles/drafts/${draft[1]}.json`));
+  // #shelved-<name>: a finished puzzle in shelved/ that isn't scheduled (deployed, so it can be previewed)
+  const shelved = location.hash.match(/^#shelved-([\w-]+)$/);
+  if (shelved) return checked(await fetchPuzzle(`puzzles/shelved/${shelved[1]}.json`));
   const index: PuzzleIndex = await (await fetch("puzzles/index.json")).json();
   const requestedDate = /^#\d{4}-\d{2}-\d{2}$/.test(location.hash) ? location.hash.slice(1) : todayIso();
   const byDate = index.puzzles.slice().sort((first, second) => first.date.localeCompare(second.date));
@@ -152,6 +158,7 @@ function startGame(puzzle: Puzzle) {
       <div class="score" id="score"></div>
       <pre class="share" id="share"></pre>
       <div><button class="btn ghost-btn" id="copyShareButton">Copy result</button></div>
+      <div class="stats" id="stats"></div>
     </div>
     <section class="explain" id="explain" hidden></section>
     ${copyBlock("footer")}
@@ -555,7 +562,7 @@ function startGame(puzzle: Puzzle) {
       byId("doneMessage").hidden = message === null;
       byId("score").textContent = `${score(puzzle, state)} / ${maxScore(puzzle)}`;
       // the link opens this exact puzzle, so a friend who reads it tomorrow still gets the same one
-      const puzzleHash = /^#draft-/.test(location.hash) ? location.hash : "#" + puzzle.date;
+      const puzzleHash = /^#(draft|shelved)-/.test(location.hash) ? location.hash : "#" + puzzle.date;
       byId("share").textContent = shareText(puzzle, state) + "\n" + location.origin + location.pathname + puzzleHash;
     }
   }
@@ -608,11 +615,34 @@ function startGame(puzzle: Puzzle) {
   }
   function finishGame(justFinished: boolean) {
     update(placeRemainingPairs(puzzle, state));
+    recordStats();
     renderExplanation(); renderAllText(); renderGameState();
     if (!justFinished) return;
     document.body.classList.add("celebrate");
     if (allSolved(puzzle, state)) celebrate();
     setTimeout(() => document.body.classList.remove("celebrate"), 3000);
+  }
+
+  /** Drafts don't count. Recording is idempotent, so reopening a finished game is harmless. */
+  function recordStats() {
+    const isDraft = /^#(draft|shelved)-/.test(location.hash);
+    let stats = storage.read<Stats>(STATS_KEY, emptyStats());
+    if (!isDraft) {
+      stats = recordResult(stats, puzzle.date, {
+        score: score(puzzle, state), max: maxScore(puzzle), solved: allSolved(puzzle, state),
+        perfect: allSolved(puzzle, state) && hintsUsed(state) === 0 && !state.revealedRows.length, playedOn: todayIso(),
+      });
+      storage.write(STATS_KEY, stats);
+    }
+    const summary = summarise(stats, todayIso());
+    const figure = (value: number | string, key: CopyKey) => `<div class="stat"><b>${value}</b><span>${escapeHtml(copy(key, languageName) ?? "")}</span></div>`;
+    const tallest = Math.max(1, ...summary.scores);
+    byId("stats").innerHTML =
+      `<div class="figures">${figure(summary.played, "statPlayed")}` +
+      `${figure(summary.played ? Math.round((100 * summary.solved) / summary.played) + "%" : "–", "statSolved")}` +
+      `${figure(summary.streak, "statStreak")}${figure(summary.bestStreak, "statBest")}</div>` +
+      `<div class="bars" aria-label="scores">${summary.scores.map((count, value) =>
+        `<div class="bar${!isDraft && value === score(puzzle, state) ? " now" : ""}"><i style="height:${(100 * count) / tallest}%"></i><span>${value}</span></div>`).join("")}</div>`;
   }
 
   byId("copyShareButton").addEventListener("click", event => {

@@ -4,7 +4,7 @@
   "date": "2026-12-07",
   "difficulty": 1,
   "language": {
-    "name": "Laweya",
+    "name": "Ruwa",
     "real": false
   },
   "checks": 3,
@@ -12,151 +12,157 @@
   "hint": "How does a noun change when there is more than one? Look at the start of the word.",
   "corpus": [
     {
-      "lang": "Lamemo lona malu.",
-      "en": "The hound guards the judge.",
+      "lang": "Horo-horo woli.",
+      "en": "The fairies danced.",
       "gloss": [
-        "hound",
+        "PL~fairy",
+        "dance"
+      ]
+    },
+    {
+      "lang": "Riwi horo yeyu.",
+      "en": "The owl feared the fairy.",
+      "gloss": [
+        "owl",
+        "fairy",
+        "fear"
+      ]
+    },
+    {
+      "lang": "Riwi lawa liya.",
+      "en": "The owl found the grove.",
+      "gloss": [
+        "owl",
+        "grove",
+        "find"
+      ]
+    },
+    {
+      "lang": "Lenara horo yeyu.",
+      "en": "The guard feared the fairy.",
+      "gloss": [
         "guard",
-        "judge"
+        "fairy",
+        "fear"
       ]
     },
     {
-      "lang": "Malu leyo mu wirme.",
-      "en": "The judge does not carry the ghost.",
+      "lang": "Lenara-lenara horo yeyu.",
+      "en": "The guards feared the fairy.",
       "gloss": [
-        "judge",
-        "carry",
-        "NEG",
-        "ghost"
+        "PL~guard",
+        "fairy",
+        "fear"
       ]
     },
     {
-      "lang": "Lalamemo lona malu.",
-      "en": "The hounds guard the judge.",
+      "lang": "Riwi lawa-lawa liya.",
+      "en": "The owl found the groves.",
       "gloss": [
-        "PL~hound",
-        "guard",
-        "judge"
+        "owl",
+        "PL~grove",
+        "find"
       ]
     },
     {
-      "lang": "Rele leyo wiwirme.",
-      "en": "The ferryman carries the ghosts.",
+      "lang": "Horo-horo mani-mani liya.",
+      "en": "The fairies found the axes.",
       "gloss": [
-        "ferryman",
-        "carry",
-        "PL~ghost"
-      ]
-    },
-    {
-      "lang": "Wiwirme lami mu rerele.",
-      "en": "The ghosts do not pay the ferrymen.",
-      "gloss": [
-        "PL~ghost",
-        "pay",
-        "NEG",
-        "PL~ferryman"
-      ]
-    },
-    {
-      "lang": "Rerele lona mu mamalu.",
-      "en": "The ferrymen do not guard the judges.",
-      "gloss": [
-        "PL~ferryman",
-        "guard",
-        "NEG",
-        "PL~judge"
+        "PL~fairy",
+        "PL~axe",
+        "find"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Lamemo lona mu mamalu.",
+      "prompt": "Riwi-riwi horo-horo yeyu.",
       "accepted": [
-        "the hound does not guard the judges",
-        "the hound does not guard judges",
-        "the hound did not guard the judges",
-        "the hound did not guard judges",
-        "the hound is not guarding the judges",
-        "the hound is not guarding judges",
-        "a hound does not guard the judges",
-        "a hound does not guard judges",
-        "a hound did not guard the judges",
-        "a hound did not guard judges",
-        "a hound is not guarding the judges",
-        "a hound is not guarding judges"
+        "the owls feared the fairies",
+        "the owls feared fairies",
+        "the owls fear the fairies",
+        "the owls fear fairies",
+        "the owls are fearing the fairies",
+        "the owls are fearing fairies",
+        "owls feared the fairies",
+        "owls feared fairies",
+        "owls fear the fairies",
+        "owls fear fairies",
+        "owls are fearing the fairies",
+        "owls are fearing fairies"
       ],
-      "explanation": "S V O order. lamemo = hound; lona = guard; mu = NEG; ma~malu = PL~judge."
+      "explanation": "S O V order. riwi-riwi = PL~owl; horo-horo = PL~fairy; yeyu = fear."
     }
   ],
   "toLang": [
     {
-      "prompt": "The ferrymen do not carry the ghost.",
+      "prompt": "The guards found the groves.",
       "accepted": [
-        "rerele leyo mu wirme"
+        "lenara-lenara lawa-lawa liya"
       ],
-      "explanation": "S V O order. re~rele = PL~ferryman; leyo = carry; mu = NEG; wirme = ghost."
+      "explanation": "S O V order. lenara-lenara = PL~guard; lawa-lawa = PL~grove; liya = find."
     }
   ],
   "explain": {
     "words": [
       [
-        "rele",
-        "ferryman"
-      ],
-      [
-        "lamemo",
-        "hound"
-      ],
-      [
-        "malu",
-        "judge"
-      ],
-      [
-        "wirme",
-        "ghost"
-      ],
-      [
-        "lami",
-        "pay"
-      ],
-      [
-        "lona",
+        "lenara",
         "guard"
       ],
       [
-        "leyo",
-        "carry"
+        "lawa",
+        "grove"
+      ],
+      [
+        "riwi",
+        "owl"
+      ],
+      [
+        "mani",
+        "axe"
+      ],
+      [
+        "horo",
+        "fairy"
+      ],
+      [
+        "yeyu",
+        "fear"
+      ],
+      [
+        "liya",
+        "find"
+      ],
+      [
+        "woli",
+        "dance"
       ]
     ],
     "grammar": [
       [
-        "S V O",
-        "Word order: subject, verb, object. With one participant: subject, verb."
+        "S O V",
+        "Word order: subject, object, verb. With one participant: subject, verb."
       ],
       [
-        "CV~",
-        "Plural: copy the noun's first consonant and vowel in front (rele → rerele)."
-      ],
-      [
-        "mu",
-        "Negation: a separate word after the verb."
+        "X-X",
+        "Plural: say the noun twice (lenara → lenara-lenara)."
       ]
     ],
-    "notes": "Checked against 122 alternative analyses; the sentences rule out 118, including: CV reduplication appears when: animate; CV reduplication appears when: plural & not animate."
+    "notes": "Checked against 40 alternative analyses; the sentences rule out 40, including: full reduplication appears when: plural & not human."
   },
-  "theme": "the ferry of the underworld",
+  "theme": "a forbidden forest",
   "shuffle": {
     "anchors": [
       2
     ],
     "order": [
-      4,
-      0,
-      2,
       5,
+      3,
+      2,
+      0,
       1,
-      3
+      6,
+      4
     ]
   }
 }

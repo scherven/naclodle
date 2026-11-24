@@ -14,6 +14,10 @@ export const COPY = {
   exWords: "Words",
   exGrammar: "Grammar",
   exFact: "Did you know",
+  statPlayed: "played",
+  statSolved: "solved",
+  statStreak: "streak",
+  statBest: "best",
   footer: null,
 } as const satisfies Record<string, string | null>;
 

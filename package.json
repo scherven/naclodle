@@ -10,7 +10,8 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "generate": "tsx scripts/generate.ts",
-    "real": "tsx scripts/real-puzzle.ts"
+    "real": "tsx scripts/real/pipeline.ts",
+    "naclo": "tsx scripts/real/naclo.ts"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",

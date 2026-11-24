@@ -35,6 +35,10 @@ export const PLAN_EPOCH = "2026-11-24";
 const HISTORY_BEFORE_EPOCH: PlanHistory[] = [
   { headline: "definiteness", wordOrder: "SOV", theme: "dragon-hoard" }, // 2026-11-23, Mata
 ];
+/** Puzzles kept from an earlier generator: their real theme, so neighbouring days don't repeat it. */
+const KEPT_THEMES: Record<string, string> = {
+  "2026-12-05": "sea-voyage",
+};
 
 /** Indexed by getUTCDay(): Sunday = 0. */
 const WEEKDAY_DIFFICULTY: DayPlan["difficulty"][] = [4, 1, 2, 3, 3, 4, 5];
@@ -116,6 +120,7 @@ export function planForDate(date: string): DayPlan {
   let plan: DayPlan | undefined;
   for (let day = PLAN_EPOCH; day <= date; day = addDays(day, 1)) {
     plan = planCache.get(day) ?? planOneDay(day, history);
+    if (KEPT_THEMES[day]) plan = { ...plan, theme: KEPT_THEMES[day] };
     planCache.set(day, plan);
     history = [...history.slice(-5), plan];
   }

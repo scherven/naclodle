@@ -1,0 +1,368 @@
+{
+  "id": "shelved-german-draft",
+  "number": 2,
+  "date": "2026-11-24",
+  "difficulty": 4,
+  "language": {
+    "name": "German",
+    "real": true,
+    "locale": "de"
+  },
+  "checks": 3,
+  "keys": [
+    "ä",
+    "ö",
+    "ü",
+    "ß"
+  ],
+  "hint": "One verb does most of the work here. Follow where it goes in each clause, where its little partner word goes, and what changes when a sentence starts with weil or wenn.",
+  "theme": "Hänsel and Gretel in the witch's gingerbread house",
+  "corpus": [
+    {
+      "lang": "Die Hexe macht die Tür auf.",
+      "en": "The witch opens the door.",
+      "gloss": [
+        "the.F.SG",
+        "witch",
+        "make.3SG",
+        "the.F.SG",
+        "door",
+        "open.PTCL"
+      ]
+    },
+    {
+      "lang": "Die Kinder machen das Feuer an.",
+      "en": "The children light the fire.",
+      "gloss": [
+        "the.PL",
+        "child.PL",
+        "make.3PL",
+        "the.N.SG",
+        "fire",
+        "on.PTCL"
+      ]
+    },
+    {
+      "lang": "Gretel singt, wenn die Hexe schläft.",
+      "en": "Gretel sings when the witch sleeps.",
+      "gloss": [
+        "Gretel",
+        "sing.3SG",
+        "when",
+        "the.F.SG",
+        "witch",
+        "sleep.3SG"
+      ]
+    },
+    {
+      "lang": "Die Hexe lacht, weil die Kinder das Fenster aufmachen.",
+      "en": "The witch laughs because the children open the window.",
+      "gloss": [
+        "the.F.SG",
+        "witch",
+        "laugh.3SG",
+        "because",
+        "the.PL",
+        "child.PL",
+        "the.N.SG",
+        "window",
+        "open.PTCL-make.3PL"
+      ]
+    },
+    {
+      "lang": "Gretel weint, weil die Hexe das Feuer anmacht.",
+      "en": "Gretel cries because the witch lights the fire.",
+      "gloss": [
+        "Gretel",
+        "cry.3SG",
+        "because",
+        "the.F.SG",
+        "witch",
+        "the.N.SG",
+        "fire",
+        "on.PTCL-make.3SG"
+      ]
+    },
+    {
+      "lang": "Wenn die Kinder schlafen, macht die Hexe die Tür zu.",
+      "en": "When the children sleep, the witch closes the door.",
+      "gloss": [
+        "when",
+        "the.PL",
+        "child.PL",
+        "sleep.3PL",
+        "make.3SG",
+        "the.F.SG",
+        "witch",
+        "the.F.SG",
+        "door",
+        "shut.PTCL"
+      ]
+    },
+    {
+      "lang": "Weil die Hexe schläft, singen die Kinder.",
+      "en": "Because the witch sleeps, the children sing.",
+      "gloss": [
+        "because",
+        "the.F.SG",
+        "witch",
+        "sleep.3SG",
+        "sing.3PL",
+        "the.PL",
+        "child.PL"
+      ]
+    },
+    {
+      "lang": "Wenn Gretel singt, macht Hänsel das Fenster zu.",
+      "en": "When Gretel sings, Hänsel closes the window.",
+      "gloss": [
+        "when",
+        "Gretel",
+        "sing.3SG",
+        "make.3SG",
+        "Hänsel",
+        "the.N.SG",
+        "window",
+        "shut.PTCL"
+      ]
+    },
+    {
+      "lang": "Hänsel schläft, wenn Gretel die Tür zumacht.",
+      "en": "Hänsel sleeps when Gretel closes the door.",
+      "gloss": [
+        "Hänsel",
+        "sleep.3SG",
+        "when",
+        "Gretel",
+        "the.F.SG",
+        "door",
+        "shut.PTCL-make.3SG"
+      ]
+    },
+    {
+      "lang": "Die Hexe macht das Feuer aus.",
+      "en": "The witch puts out the fire.",
+      "gloss": [
+        "the.F.SG",
+        "witch",
+        "make.3SG",
+        "the.N.SG",
+        "fire",
+        "out.PTCL"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Weil die Kinder das Feuer ausmachen, weint die Hexe.",
+      "accepted": [
+        "The witch cries because the children put out the fire",
+        "The witch cries because the children put the fire out",
+        "The witch cries because the children extinguish the fire",
+        "The witch cries because the children are putting out the fire",
+        "The witch cries because the children are putting the fire out",
+        "The witch weeps because the children put out the fire",
+        "The witch weeps because the children put the fire out",
+        "The witch weeps because the children extinguish the fire",
+        "The witch weeps because the children are putting out the fire",
+        "The witch weeps because the children are putting the fire out",
+        "The witch is crying because the children put out the fire",
+        "The witch is crying because the children put the fire out",
+        "The witch is crying because the children extinguish the fire",
+        "The witch is crying because the children are putting out the fire",
+        "The witch is crying because the children are putting the fire out",
+        "The witch is weeping because the children put out the fire",
+        "The witch is weeping because the children put the fire out",
+        "The witch is weeping because the children extinguish the fire",
+        "The witch is weeping because the children are putting out the fire",
+        "The witch is weeping because the children are putting the fire out",
+        "The witch cries since the children put out the fire",
+        "The witch cries since the children put the fire out",
+        "The witch cries since the children extinguish the fire",
+        "The witch cries since the children are putting out the fire",
+        "The witch cries since the children are putting the fire out",
+        "The witch weeps since the children put out the fire",
+        "The witch weeps since the children put the fire out",
+        "The witch weeps since the children extinguish the fire",
+        "The witch weeps since the children are putting out the fire",
+        "The witch weeps since the children are putting the fire out",
+        "The witch is crying since the children put out the fire",
+        "The witch is crying since the children put the fire out",
+        "The witch is crying since the children extinguish the fire",
+        "The witch is crying since the children are putting out the fire",
+        "The witch is crying since the children are putting the fire out",
+        "The witch is weeping since the children put out the fire",
+        "The witch is weeping since the children put the fire out",
+        "The witch is weeping since the children extinguish the fire",
+        "The witch is weeping since the children are putting out the fire",
+        "The witch is weeping since the children are putting the fire out",
+        "Because the children put out the fire, the witch cries",
+        "Because the children put the fire out, the witch cries",
+        "Because the children extinguish the fire, the witch cries",
+        "Because the children are putting out the fire, the witch cries",
+        "Because the children are putting the fire out, the witch cries",
+        "Because the children put out the fire, the witch weeps",
+        "Because the children put the fire out, the witch weeps",
+        "Because the children extinguish the fire, the witch weeps",
+        "Because the children are putting out the fire, the witch weeps",
+        "Because the children are putting the fire out, the witch weeps",
+        "Because the children put out the fire, the witch is crying",
+        "Because the children put the fire out, the witch is crying",
+        "Because the children extinguish the fire, the witch is crying",
+        "Because the children are putting out the fire, the witch is crying",
+        "Because the children are putting the fire out, the witch is crying",
+        "Because the children put out the fire, the witch is weeping",
+        "Because the children put the fire out, the witch is weeping",
+        "Because the children extinguish the fire, the witch is weeping",
+        "Because the children are putting out the fire, the witch is weeping",
+        "Because the children are putting the fire out, the witch is weeping",
+        "Since the children put out the fire, the witch cries",
+        "Since the children put the fire out, the witch cries",
+        "Since the children extinguish the fire, the witch cries",
+        "Since the children are putting out the fire, the witch cries",
+        "Since the children are putting the fire out, the witch cries",
+        "Since the children put out the fire, the witch weeps",
+        "Since the children put the fire out, the witch weeps",
+        "Since the children extinguish the fire, the witch weeps",
+        "Since the children are putting out the fire, the witch weeps",
+        "Since the children are putting the fire out, the witch weeps",
+        "Since the children put out the fire, the witch is crying",
+        "Since the children put the fire out, the witch is crying",
+        "Since the children extinguish the fire, the witch is crying",
+        "Since the children are putting out the fire, the witch is crying",
+        "Since the children are putting the fire out, the witch is crying",
+        "Since the children put out the fire, the witch is weeping",
+        "Since the children put the fire out, the witch is weeping",
+        "Since the children extinguish the fire, the witch is weeping",
+        "Since the children are putting out the fire, the witch is weeping",
+        "Since the children are putting the fire out, the witch is weeping",
+        "The witch cries because the children are extinguishing the fire",
+        "The witch weeps because the children are extinguishing the fire",
+        "The witch is crying because the children are extinguishing the fire",
+        "The witch is weeping because the children are extinguishing the fire",
+        "The witch cries since the children are extinguishing the fire",
+        "The witch weeps since the children are extinguishing the fire",
+        "The witch is crying since the children are extinguishing the fire",
+        "The witch is weeping since the children are extinguishing the fire",
+        "Because the children are extinguishing the fire, the witch cries",
+        "Because the children are extinguishing the fire, the witch weeps",
+        "Because the children are extinguishing the fire, the witch is crying",
+        "Because the children are extinguishing the fire, the witch is weeping",
+        "Since the children are extinguishing the fire, the witch cries",
+        "Since the children are extinguishing the fire, the witch weeps",
+        "Since the children are extinguishing the fire, the witch is crying",
+        "Since the children are extinguishing the fire, the witch is weeping"
+      ],
+      "explanation": "ausmachen is macht … aus (puts out) glued back together at the end of the weil clause, with the plural ending -en for die Kinder; then the main verb weint jumps straight after the comma, ahead of its subject die Hexe."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "When the witch sleeps, the children put out the fire.",
+      "accepted": [
+        "Wenn die Hexe schläft, machen die Kinder das Feuer aus.",
+        "Die Kinder machen das Feuer aus, wenn die Hexe schläft.",
+        "Wenn die Hexe schläft, löschen die Kinder das Feuer.",
+        "Die Kinder löschen das Feuer, wenn die Hexe schläft."
+      ],
+      "explanation": "After a fronted wenn clause the main verb comes first, right after the comma (machen, plural for die Kinder), then the subject; and because this is a main clause the particle aus still splits off to the very end."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "Hexe",
+        "witch"
+      ],
+      [
+        "Kinder",
+        "children"
+      ],
+      [
+        "Tür",
+        "door"
+      ],
+      [
+        "Fenster",
+        "window"
+      ],
+      [
+        "Feuer",
+        "fire"
+      ],
+      [
+        "macht / machen",
+        "makes / make (the all-purpose verb)"
+      ],
+      [
+        "singt / singen",
+        "sings / sing"
+      ],
+      [
+        "schläft / schlafen",
+        "sleeps / sleep"
+      ],
+      [
+        "lacht",
+        "laughs"
+      ],
+      [
+        "weint",
+        "cries"
+      ],
+      [
+        "weil",
+        "because"
+      ],
+      [
+        "wenn",
+        "when, whenever, if"
+      ],
+      [
+        "die / das",
+        "the (feminine or plural / neuter)"
+      ]
+    ],
+    "grammar": [
+      [
+        "auf · zu · an · aus",
+        "Particles that make machen mean open, close, light, put out. The meaning of the verb really sits in the particle."
+      ],
+      [
+        "macht … auf",
+        "In a main clause the particle splits off and goes to the very end."
+      ],
+      [
+        "…, weil … aufmacht",
+        "In a weil or wenn clause the whole verb moves to the end, and the particle joins it again as one word."
+      ],
+      [
+        "Wenn …, macht die Hexe …",
+        "The finite verb of a main clause must be the second element. A fronted weil or wenn clause counts as the first, so the verb comes right after the comma and the subject follows it. The particle still splits off."
+      ],
+      [
+        "-t / -en",
+        "The verb ends in -t for one person and -en for die Kinder: macht / machen, singt / singen, schläft / schlafen."
+      ]
+    ],
+    "notes": "These are called separable verbs: aufmachen, zumachen, anmachen, ausmachen. In a main clause the listener hears macht and has to wait until the last word to know whether the door is being opened or shut. The verb-second rule is why a whole clause in front pushes the subject behind the verb.",
+    "fact": "The Brothers Grimm, who collected Hänsel und Gretel, also began the great Deutsches Wörterbuch in 1838. It was only finished in 1961, and Jacob Grimm himself got as far as the word Frucht (fruit) before he died in 1863."
+  },
+  "shuffle": {
+    "anchors": [
+      2
+    ],
+    "order": [
+      6,
+      9,
+      2,
+      1,
+      8,
+      3,
+      7,
+      4,
+      0,
+      5
+    ]
+  }
+}

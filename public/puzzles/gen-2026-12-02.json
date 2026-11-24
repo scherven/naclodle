@@ -4,137 +4,144 @@
   "date": "2026-12-02",
   "difficulty": 3,
   "language": {
-    "name": "Nera",
+    "name": "Uta",
     "real": false
   },
   "checks": 3,
-  "keys": [],
+  "keys": [
+    "ŋ"
+  ],
   "hint": "In “the king's horse”, which of the two words carries the extra ending?",
   "corpus": [
     {
-      "lang": "Taro nonine.",
-      "en": "The apprentice does not sleep.",
+      "lang": "Rituŋi titaka.",
+      "en": "The augurs sing.",
       "gloss": [
-        "apprentice",
-        "sleep-NEG"
+        "augur-PL",
+        "sing-3PL"
       ]
     },
     {
-      "lang": "Kumututi nonimi.",
-      "en": "The witches sleep.",
+      "lang": "Kapina kamuti ritu.",
+      "en": "The singer ignored the augur.",
       "gloss": [
-        "PL-witch",
-        "sleep-3PL"
+        "singer",
+        "ignore-PST",
+        "augur"
       ]
     },
     {
-      "lang": "Taro ganke mututi tumanatora.",
-      "en": "The apprentice stirs the witch's cauldron.",
+      "lang": "Ritu bata kapinaŋi.",
+      "en": "The augur hears the singers.",
       "gloss": [
-        "apprentice",
-        "stir",
-        "witch",
-        "cauldron-POSS-ACC"
+        "augur",
+        "hear",
+        "singer-PL"
       ]
     },
     {
-      "lang": "Kutaro gankemi tumanara.",
-      "en": "The apprentices stir the cauldron.",
+      "lang": "Kapina ma kamu ununari ritu.",
+      "en": "The singer does not ignore the augur's omen.",
       "gloss": [
-        "PL-apprentice",
-        "stir-3PL",
-        "cauldron-ACC"
+        "singer",
+        "NEG",
+        "ignore",
+        "omen-POSS",
+        "augur"
       ]
     },
     {
-      "lang": "Kumututi hotemine taro tahotetora.",
-      "en": "The witches do not curse the apprentice's raven.",
+      "lang": "Ritu kamuti ununaŋiri kapina.",
+      "en": "The augur ignored the singer's omens.",
       "gloss": [
-        "PL-witch",
-        "curse-3PL-NEG",
-        "apprentice",
-        "raven-POSS-ACC"
+        "augur",
+        "ignore-PST",
+        "omen-PL-POSS",
+        "singer"
       ]
     },
     {
-      "lang": "Kumututi kutaroto gankemi tumanara.",
-      "en": "The witches' apprentices stir the cauldron.",
+      "lang": "Kapinaŋi batatika bipiŋi.",
+      "en": "The singers heard the flutes.",
       "gloss": [
-        "PL-witch",
-        "PL-apprentice-POSS",
-        "stir-3PL",
-        "cauldron-ACC"
+        "singer-PL",
+        "hear-PST-3PL",
+        "flute-PL"
       ]
     },
     {
-      "lang": "Kumututi kutaroto gankemine kutumanara.",
-      "en": "The witches' apprentices do not stir the cauldrons.",
+      "lang": "Rituŋi ma kamutika ununaŋiri kapinaŋi.",
+      "en": "The augurs did not ignore the singers' omens.",
       "gloss": [
-        "PL-witch",
-        "PL-apprentice-POSS",
-        "stir-3PL-NEG",
-        "PL-cauldron-ACC"
+        "augur-PL",
+        "NEG",
+        "ignore-PST-3PL",
+        "omen-PL-POSS",
+        "singer-PL"
+      ]
+    },
+    {
+      "lang": "Kapinaŋi ma batatika ununaŋiri rituŋi.",
+      "en": "The singers did not hear the augurs' omens.",
+      "gloss": [
+        "singer-PL",
+        "NEG",
+        "hear-PST-3PL",
+        "omen-PL-POSS",
+        "augur-PL"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Kumututi taroto ganke kutumanara.",
+      "prompt": "Rituŋi ma kamutika ununari kapina.",
       "accepted": [
-        "the witches' apprentice stirs the cauldrons",
-        "the witches' apprentice stirs cauldrons",
-        "the witches' apprentice stirred the cauldrons",
-        "the witches' apprentice stirred cauldrons",
-        "the witches' apprentice is stirring the cauldrons",
-        "the witches' apprentice is stirring cauldrons",
-        "witches' apprentice stirs the cauldrons",
-        "witches' apprentice stirs cauldrons",
-        "witches' apprentice stirred the cauldrons",
-        "witches' apprentice stirred cauldrons",
-        "witches' apprentice is stirring the cauldrons",
-        "witches' apprentice is stirring cauldrons"
+        "the augurs did not ignore the singer's omen",
+        "the augurs did not ignore a singer's omen",
+        "augurs did not ignore the singer's omen",
+        "augurs did not ignore a singer's omen"
       ],
-      "explanation": "S V O order. ku-mututi = PL-witch; taro-to = apprentice-POSS; ganke = stir; ku-tumana-ra = PL-cauldron-ACC."
+      "explanation": "S V O order. ritu-ŋi = augur-PL; ma = NEG; kamu-ti-ka = ignore-PST-3PL; ununa-ri = omen-POSS; kapina = singer."
     }
   ],
   "toLang": [
     {
-      "prompt": "The witch stirs the apprentice's cauldron.",
+      "prompt": "The augurs did not hear the singer's flutes.",
       "accepted": [
-        "mututi ganke taro tumanatora"
+        "rituŋi ma batatika bipiŋiri kapina"
       ],
-      "explanation": "S V O order. mututi = witch; ganke = stir; taro = apprentice; tumana-to-ra = cauldron-POSS-ACC."
+      "explanation": "S V O order. ritu-ŋi = augur-PL; ma = NEG; bata-ti-ka = hear-PST-3PL; bipi-ŋi-ri = flute-PL-POSS; kapina = singer."
     }
   ],
   "explain": {
     "words": [
       [
-        "taro",
-        "apprentice"
+        "ununa",
+        "omen"
       ],
       [
-        "tahote",
-        "raven"
+        "kapina",
+        "singer"
       ],
       [
-        "tumana",
-        "cauldron"
+        "ritu",
+        "augur"
       ],
       [
-        "mututi",
-        "witch"
+        "bipi",
+        "flute"
       ],
       [
-        "ganke-",
-        "stir"
+        "bata-",
+        "hear"
       ],
       [
-        "hote-",
-        "curse"
+        "kamu-",
+        "ignore"
       ],
       [
-        "noni-",
-        "sleep"
+        "tita-",
+        "sing"
       ]
     ],
     "grammar": [
@@ -143,49 +150,50 @@
         "Word order: subject, verb, object. With one participant: subject, verb."
       ],
       [
-        "ku-",
+        "-ŋi",
         "Plural."
       ],
       [
-        "-to",
+        "-ri",
         "Marks the possessed noun (“the king's horse” = king horse-POSS). The possessor itself is bare."
       ],
       [
-        "-ra",
-        "Accusative: marks the object."
+        "-ti",
+        "Past tense. Without it the verb is present or future."
       ],
       [
-        "-mi",
+        "-ka",
         "On the verb when the subject is plural."
       ],
       [
-        "-ne",
-        "Negation, on the verb."
+        "ma",
+        "Negation: a separate word before the verb."
       ],
       [
         "Suffix order",
-        "On nouns: stem-POSS-ACC."
+        "On nouns: stem-PL-POSS."
       ],
       [
         "Possessor",
-        "Comes before the possessed noun."
+        "Comes after the possessed noun."
       ]
     ],
-    "notes": "Checked against 1191 alternative analyses; the sentences rule out 1179, including: -to appears when: possessed noun & animate."
+    "notes": "Checked against 1058 alternative analyses; the sentences rule out 1049, including: -ŋi appears when: (plural or possessor); -ŋi appears when: (plural or negative)."
   },
-  "theme": "a witch's hut",
+  "theme": "an augur and an envoy at a shrine",
   "shuffle": {
     "anchors": [
-      5
+      6
     ],
     "order": [
-      6,
       3,
-      0,
       4,
+      1,
+      7,
+      0,
       2,
-      5,
-      1
+      6,
+      5
     ]
   }
 }

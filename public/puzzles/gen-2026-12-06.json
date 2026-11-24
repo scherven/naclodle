@@ -4,7 +4,7 @@
   "date": "2026-12-06",
   "difficulty": 4,
   "language": {
-    "name": "Taaja",
+    "name": "Iipaqa",
     "real": false
   },
   "checks": 3,
@@ -12,132 +12,133 @@
   "hint": "Watch for “the” versus “a” in the English.",
   "corpus": [
     {
-      "lang": "Quuqanga viitapuu.",
-      "en": "Giants snore.",
+      "lang": "Paakinaatilaa vakaatuu.",
+      "en": "The pipers laugh.",
       "gloss": [
-        "giant-PL",
-        "snore-3PL"
+        "DEF-piper-PL",
+        "laugh-3PL"
       ]
     },
     {
-      "lang": "Vanaaqnaa tiiq qiiqa.",
-      "en": "The hen does not cackle.",
+      "lang": "Paaqiviqiilaa vakaatuu.",
+      "en": "The farmers laugh.",
       "gloss": [
-        "DEF-hen",
+        "DEF-farmer-PL",
+        "laugh-3PL"
+      ]
+    },
+    {
+      "lang": "Kaatngu qirla kinaatilaaka.",
+      "en": "A goose chases pipers.",
+      "gloss": [
+        "goose",
+        "chase",
+        "piper-PL-ACC"
+      ]
+    },
+    {
+      "lang": "Paaqiviqii vi qirla kinaatilaaka.",
+      "en": "The farmer does not chase pipers.",
+      "gloss": [
+        "DEF-farmer",
         "NEG",
-        "cackle"
+        "chase",
+        "piper-PL-ACC"
       ]
     },
     {
-      "lang": "Rlaavuu qapaanaanga lipapuu quuqanganuu kijaqaa.",
-      "en": "Sleepy sheepdogs wake giants again.",
+      "lang": "Paakinaati vi siiqii paaurluusaka paaqiviqiilaa.",
+      "en": "The piper does not milk the farmers' goat.",
       "gloss": [
-        "sleepy",
-        "sheepdog-PL",
-        "wake-3PL",
-        "giant-PL-ACC",
-        "again"
-      ]
-    },
-    {
-      "lang": "Naaqnaanga kiilipapuu vaquuqanuu kijaqaa.",
-      "en": "Hens woke the giant again.",
-      "gloss": [
-        "hen-PL",
-        "PST-wake-3PL",
-        "DEF-giant-ACC",
-        "again"
-      ]
-    },
-    {
-      "lang": "Naaqnaanga kiilipapuu vaqapaanaanganuu.",
-      "en": "Hens woke the sheepdogs.",
-      "gloss": [
-        "hen-PL",
-        "PST-wake-3PL",
-        "DEF-sheepdog-PL-ACC"
-      ]
-    },
-    {
-      "lang": "Rlaavuu quuqanga tiiq kiiqitkaapuu vanaaqnaanganuu kijaqaa.",
-      "en": "Sleepy giants did not steal the hens again.",
-      "gloss": [
-        "sleepy",
-        "giant-PL",
+        "DEF-piper",
         "NEG",
-        "PST-steal-3PL",
-        "DEF-hen-PL-ACC",
-        "again"
+        "milk",
+        "DEF-goat-POSS-ACC",
+        "DEF-farmer-PL"
       ]
     },
     {
-      "lang": "Rlaavuu vaqapaanaanga tiiq kiilipapuu vaquuqanganuu kijaqaa.",
-      "en": "The sleepy sheepdogs did not wake the giants again.",
+      "lang": "Paakinaatilaa qirlatuu paaurluulaasaka paaqiviqii.",
+      "en": "The pipers chase the farmer's goats.",
       "gloss": [
-        "sleepy",
-        "DEF-sheepdog-PL",
+        "DEF-piper-PL",
+        "chase-3PL",
+        "DEF-goat-PL-POSS-ACC",
+        "DEF-farmer"
+      ]
+    },
+    {
+      "lang": "Paaurluulaa vi qirlatuu paakaatngusaka paaqiviqiilaa.",
+      "en": "The goats do not chase the farmers' goose.",
+      "gloss": [
+        "DEF-goat-PL",
         "NEG",
-        "PST-wake-3PL",
-        "DEF-giant-PL-ACC",
-        "again"
+        "chase-3PL",
+        "DEF-goose-POSS-ACC",
+        "DEF-farmer-PL"
+      ]
+    },
+    {
+      "lang": "Paaqiviqiilaa vi siiqiituu paaurluulaasaka paakinaati.",
+      "en": "The farmers do not milk the piper's goats.",
+      "gloss": [
+        "DEF-farmer-PL",
+        "NEG",
+        "milk-3PL",
+        "DEF-goat-PL-POSS-ACC",
+        "DEF-piper"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Naaqnaa tiiq kiilipa rlaavuu vaqapaanaanganuu.",
+      "prompt": "Qiviqii qirla paaurluusaka paakinaati.",
       "accepted": [
-        "a hen did not wake the sleepy sheepdogs"
+        "a farmer chases the piper's goat",
+        "a farmer chased the piper's goat",
+        "a farmer is chasing the piper's goat"
       ],
-      "explanation": "S V O order. naaqnaa = hen; tiiq = NEG; kii-lipa = PST-wake; rlaavuu = sleepy; va-qapaanaa-nga-nuu = DEF-sheepdog-PL-ACC."
+      "explanation": "S V O order. qiviqii = farmer; qirla = chase; paa-urluu-sa-ka = DEF-goat-POSS-ACC; paa-kinaati = DEF-piper."
     }
   ],
   "toLang": [
     {
-      "prompt": "Sleepy hens do not wake a giant again.",
+      "prompt": "A goat does not chase the piper's goose.",
       "accepted": [
-        "rlaavuu naaqnaanga tiiq lipapuu quuqanuu kijaqaa"
+        "urluu vi qirla paakaatngusaka paakinaati"
       ],
-      "explanation": "S V O order. rlaavuu = sleepy; naaqnaa-nga = hen-PL; tiiq = NEG; lipa-puu = wake-3PL; quuqa-nuu = giant-ACC; kijaqaa = again."
+      "explanation": "S V O order. urluu = goat; vi = NEG; qirla = chase; paa-kaatngu-sa-ka = DEF-goose-POSS-ACC; paa-kinaati = DEF-piper."
     }
   ],
   "explain": {
     "words": [
       [
-        "qapaanaa",
-        "sheepdog"
+        "kaatngu",
+        "goose"
       ],
       [
-        "naaqnaa",
-        "hen"
+        "qiviqii",
+        "farmer"
       ],
       [
-        "quuqa",
-        "giant"
+        "urluu",
+        "goat"
       ],
       [
-        "lipa-",
-        "wake"
+        "kinaati",
+        "piper"
       ],
       [
-        "qitkaa-",
-        "steal"
+        "qirla-",
+        "chase"
       ],
       [
-        "qiiqa-",
-        "cackle"
+        "siiqii-",
+        "milk"
       ],
       [
-        "viita-",
-        "snore"
-      ],
-      [
-        "rlaavuu",
-        "sleepy"
-      ],
-      [
-        "kijaqaa",
-        "again"
+        "vakaa-",
+        "laugh"
       ]
     ],
     "grammar": [
@@ -146,57 +147,54 @@
         "Word order: subject, verb, object. With one participant: subject, verb."
       ],
       [
-        "-nga",
+        "-laa",
         "Plural."
       ],
       [
-        "va-",
+        "-sa",
+        "Marks the possessed noun (“the king's horse” = king horse-POSS). The possessor itself is bare."
+      ],
+      [
+        "paa-",
         "Definite (“the”). A noun without it means “a” (or plain plural)."
       ],
       [
-        "-nuu",
+        "-ka",
         "Accusative: marks the object."
       ],
       [
-        "kii-",
-        "Past tense. Without it the verb is present or future."
-      ],
-      [
-        "-puu",
+        "-tuu",
         "On the verb when the subject is plural."
       ],
       [
-        "tiiq",
+        "vi",
         "Negation: a separate word before the verb."
       ],
       [
         "Suffix order",
-        "On nouns: stem-PL-ACC."
+        "On nouns: stem-PL-POSS-ACC."
       ],
       [
-        "Adjectives",
-        "Come before the noun. Noun endings go on the noun only; the adjective stays bare."
-      ],
-      [
-        "Time and manner words",
-        "Go at the end of the sentence."
+        "Possessor",
+        "Comes after the possessed noun."
       ]
     ],
-    "notes": "Checked against 2348 alternative analyses; the sentences rule out 2333, including: -nga appears when: definite; -nga appears when: plural & definite."
+    "notes": "Checked against 1077 alternative analyses; the sentences rule out 1060, including: vi appears when: negative & any plural noun."
   },
-  "theme": "giants above the clouds",
+  "theme": "a village harvest festival",
   "shuffle": {
     "anchors": [
-      3
+      1
     ],
     "order": [
-      1,
-      5,
-      4,
       3,
+      1,
       6,
+      4,
+      7,
+      0,
       2,
-      0
+      5
     ]
   }
 }

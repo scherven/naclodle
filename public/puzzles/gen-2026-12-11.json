@@ -4,176 +4,155 @@
   "date": "2026-12-11",
   "difficulty": 4,
   "language": {
-    "name": "Ɬikʼuxa",
+    "name": "Šačaši",
     "real": false
   },
   "checks": 3,
   "keys": [
-    "ɬ",
-    "ʷ",
-    "ʼ"
+    "č",
+    "š",
+    "ž"
   ],
-  "hint": "In “the king's horse”, which of the two words carries the extra ending?",
+  "hint": "When a describing word is added, where do the noun's usual endings go?",
   "corpus": [
     {
-      "lang": "Ɬixʷakisu sakʼaxʷi ti.",
-      "en": "The soldier did not weep.",
+      "lang": "Ačiškire čače.",
+      "en": "The king laughed.",
       "gloss": [
-        "DEF-soldier",
-        "weep-PST",
-        "NEG"
+        "king-DEF",
+        "laugh"
       ]
     },
     {
-      "lang": "Ɬixʷakisu qatuta kaxaxʷi.",
-      "en": "The soldier polished an altar.",
+      "lang": "Ačiškiša čežo čačeke.",
+      "en": "Kings laughed again.",
       "gloss": [
-        "DEF-soldier",
-        "altar",
-        "polish-PST"
-      ]
-    },
-    {
-      "lang": "Xʷakisusa qukaɬusa kaxakʼi ti.",
-      "en": "Soldiers do not polish shields.",
-      "gloss": [
-        "soldier-PL",
-        "shield-PL",
-        "polish-3PL",
-        "NEG"
-      ]
-    },
-    {
-      "lang": "Ɬiqiti ɬiqatutasa siqʼuta kaxaxʷi.",
-      "en": "The priest polished the altars again.",
-      "gloss": [
-        "DEF-priest",
-        "DEF-altar-PL",
+        "king-PL",
         "again",
-        "polish-PST"
+        "laugh-3PL"
       ]
     },
     {
-      "lang": "Xʷakisusa qiti qaqʼuxʷikʼi ti.",
-      "en": "Soldiers did not praise a priest.",
+      "lang": "Ačiški kizeša sešože čačeke.",
+      "en": "Old kings laughed in a market.",
       "gloss": [
-        "soldier-PL",
-        "priest",
-        "praise-PST-3PL",
-        "NEG"
+        "king",
+        "old-PL",
+        "market-LOC",
+        "laugh-3PL"
       ]
     },
     {
-      "lang": "Ɬiqiti ɬixʷakisu ɬiqatutasaxi tuxʷaqu kaxa ti.",
-      "en": "The priest does not polish the soldier's altars at night.",
+      "lang": "Ačiški kize lišire kopi.",
+      "en": "An old king carried the spear.",
       "gloss": [
-        "DEF-priest",
-        "DEF-soldier",
-        "DEF-altar-PL-POSS",
-        "at.night",
-        "polish",
-        "NEG"
+        "king",
+        "old",
+        "spear-DEF",
+        "carry"
       ]
     },
     {
-      "lang": "Ɬiqitisa ɬitatiqisa ɬixʷakisuxi xikʼaxʷikʼi.",
-      "en": "The priests blessed the kings' soldier.",
+      "lang": "Ačiški lišiša kopi.",
+      "en": "A king carried spears.",
       "gloss": [
-        "DEF-priest-PL",
-        "DEF-king-PL",
-        "DEF-soldier-POSS",
-        "bless-PST-3PL"
+        "king",
+        "spear-PL",
+        "carry"
       ]
     },
     {
-      "lang": "Ɬixʷakisusa ɬiqitisa ɬiqatutasaxi tuxʷaqu kaxaxʷikʼi ti.",
-      "en": "The soldiers did not polish the priests' altars at night.",
+      "lang": "Ačiški liši kizeša kopi.",
+      "en": "A king carried old spears.",
       "gloss": [
-        "DEF-soldier-PL",
-        "DEF-priest-PL",
-        "DEF-altar-PL-POSS",
-        "at.night",
-        "polish-PST-3PL",
-        "NEG"
+        "king",
+        "spear",
+        "old-PL",
+        "carry"
       ]
     },
     {
-      "lang": "Ɬiqitisa ɬixʷakisusa ɬiqukaɬusaxi siqʼuta xikʼaxʷikʼi ti.",
-      "en": "The priests did not bless the soldiers' shields again.",
+      "lang": "Pekažašare ačiški lersoža sešluke.",
+      "en": "The scribes followed a king at dawn.",
       "gloss": [
-        "DEF-priest-PL",
-        "DEF-soldier-PL",
-        "DEF-shield-PL-POSS",
-        "again",
-        "bless-PST-3PL",
-        "NEG"
+        "scribe-PL-DEF",
+        "king",
+        "at.dawn",
+        "follow-3PL"
+      ]
+    },
+    {
+      "lang": "Ačiškišare liši kizeša sešoreže kopike.",
+      "en": "The kings carried old spears in the market.",
+      "gloss": [
+        "king-PL-DEF",
+        "spear",
+        "old-PL",
+        "market-DEF-LOC",
+        "carry-3PL"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Qitisa ɬixʷakisu ɬiqukaɬuxi siqʼuta kaxakʼi ti.",
+      "prompt": "Ačiški kizešare lišire kopike.",
       "accepted": [
-        "priests do not polish the soldier's shield again",
-        "priests are not polishing the soldier's shield again",
-        "priests will not polish the soldier's shield again"
+        "the old kings carried the spear",
+        "the old kings carry the spear",
+        "the old kings are carrying the spear"
       ],
-      "explanation": "S O V order. qiti-sa = priest-PL; ɬi-xʷakisu = DEF-soldier; ɬi-qukaɬu-xi = DEF-shield-POSS; siqʼuta = again; kaxa-kʼi = polish-3PL; ti = NEG."
+      "explanation": "S O V order. ačiški = king; kize-ša-re = old-PL-DEF; liši-re = spear-DEF; kopi-ke = carry-3PL."
     }
   ],
   "toLang": [
     {
-      "prompt": "The soldiers polish the priests' altar at night.",
+      "prompt": "The old kings laughed.",
       "accepted": [
-        "ɬixʷakisusa ɬiqitisa ɬiqatutaxi tuxʷaqu kaxakʼi"
+        "ačiški kizešare čačeke"
       ],
-      "explanation": "S O V order. ɬi-xʷakisu-sa = DEF-soldier-PL; ɬi-qiti-sa = DEF-priest-PL; ɬi-qatuta-xi = DEF-altar-POSS; tuxʷaqu = at.night; kaxa-kʼi = polish-3PL."
+      "explanation": "S V order. ačiški = king; kize-ša-re = old-PL-DEF; čače-ke = laugh-3PL."
     }
   ],
   "explain": {
     "words": [
       [
-        "tatiqi",
+        "liši",
+        "spear"
+      ],
+      [
+        "pekaža",
+        "scribe"
+      ],
+      [
+        "ačiški",
         "king"
       ],
       [
-        "xʷakisu",
-        "soldier"
+        "sešo",
+        "market"
       ],
       [
-        "qukaɬu",
-        "shield"
+        "sešlu-",
+        "follow"
       ],
       [
-        "qatuta",
-        "altar"
+        "kopi-",
+        "carry"
       ],
       [
-        "qiti",
-        "priest"
+        "čače-",
+        "laugh"
       ],
       [
-        "xikʼa-",
-        "bless"
+        "kize",
+        "old"
       ],
       [
-        "kaxa-",
-        "polish"
+        "lersoža",
+        "at dawn"
       ],
       [
-        "qaqʼu-",
-        "praise"
-      ],
-      [
-        "sakʼa-",
-        "weep"
-      ],
-      [
-        "tuxʷaqu",
-        "at night"
-      ],
-      [
-        "siqʼuta",
+        "čežo",
         "again"
       ]
     ],
@@ -183,59 +162,54 @@
         "Word order: subject, object, verb. With one participant: subject, verb."
       ],
       [
-        "-sa",
+        "-ša",
         "Plural."
       ],
       [
-        "-xi",
-        "Marks the possessed noun (“the king's horse” = king horse-POSS). The possessor itself is bare."
-      ],
-      [
-        "ɬi-",
+        "-re",
         "Definite (“the”). A noun without it means “a” (or plain plural)."
       ],
       [
-        "-xʷi",
-        "Past tense. Without it the verb is present or future."
+        "-že",
+        "Marks a place (“in”, “on” or “at”)."
       ],
       [
-        "-kʼi",
+        "-ke",
         "On the verb when the subject is plural."
       ],
       [
-        "ti",
-        "Negation: a separate word after the verb."
-      ],
-      [
         "Suffix order",
-        "On nouns: stem-PL-POSS."
+        "On nouns: stem-PL-DEF-LOC."
       ],
       [
-        "Possessor",
-        "Comes before the possessed noun."
+        "Adjectives",
+        "Come after the noun. Endings go on the last word of the phrase, so they attach to the adjective, not the noun."
+      ],
+      [
+        "Place and “with” phrases",
+        "Go just before the verb."
       ],
       [
         "Time and manner words",
         "Go just before the verb."
       ]
     ],
-    "notes": "Checked against 1130 alternative analyses; the sentences rule out 1121, including: -sa appears when: (plural or possessed noun); -xʷi appears when: (past or plural subject)."
+    "notes": "Checked against 590 alternative analyses; the sentences rule out 585, including: -re appears when: definite & two-participant clause."
   },
-  "theme": "priests and soldiers guarding a temple",
+  "theme": "a scribe at the king's gate",
   "shuffle": {
     "anchors": [
-      7
+      1
     ],
     "order": [
-      6,
-      5,
-      0,
-      1,
-      8,
-      4,
-      2,
       7,
-      3
+      1,
+      3,
+      2,
+      6,
+      0,
+      4,
+      5
     ]
   }
 }

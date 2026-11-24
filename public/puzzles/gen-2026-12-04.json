@@ -4,136 +4,160 @@
   "date": "2026-12-04",
   "difficulty": 4,
   "language": {
-    "name": "Tarešu",
+    "name": "Leto",
     "real": false
   },
   "checks": 3,
   "keys": [
     "š"
   ],
-  "hint": "Compare the noun doing the action when the verb has one participant and when it has two.",
+  "hint": "English says “with” in more than one sense. Does this language?",
   "corpus": [
     {
-      "lang": "Kokale kešo.",
-      "en": "The queen does not sing.",
+      "lang": "Tiše tošipu tokelki.",
+      "en": "The queen finds the sword.",
       "gloss": [
-        "sing-NEG",
-        "queen"
-      ]
-    },
-    {
-      "lang": "Koka rokešo.",
-      "en": "The queens sing.",
-      "gloss": [
-        "sing",
-        "PL-queen"
-      ]
-    },
-    {
-      "lang": "Tetini kokata rokešo.",
-      "en": "The queens sang at night.",
-      "gloss": [
-        "at.night",
-        "sing-PST",
-        "PL-queen"
-      ]
-    },
-    {
-      "lang": "Tena kereke mekamu.",
-      "en": "The eagle guards the sword.",
-      "gloss": [
-        "guard",
-        "eagle-ERG",
+        "find",
+        "queen-ERG",
         "sword"
       ]
     },
     {
-      "lang": "Tetini tena rokešoke romekamu.",
-      "en": "The queens guard the swords at night.",
+      "lang": "Tiše totapu toši tokelkine.",
+      "en": "The elf finds the queen with the sword.",
       "gloss": [
-        "at.night",
-        "guard",
-        "PL-queen-ERG",
-        "PL-sword"
+        "find",
+        "elf-ERG",
+        "queen",
+        "sword-INS"
       ]
     },
     {
-      "lang": "Kema tešutale kereke kešo.",
-      "en": "The eagle did not follow the queen again.",
+      "lang": "Nupi daltišosopu toši.",
+      "en": "The archers guard the queen.",
       "gloss": [
-        "again",
-        "follow-PST-NEG",
-        "eagle-ERG",
+        "guard",
+        "archer-PL-ERG",
         "queen"
       ]
     },
     {
-      "lang": "Tetini tenatale rokešoke romekamu.",
-      "en": "The queens did not guard the swords at night.",
+      "lang": "Šunša daltišosopu totame tokelki.",
+      "en": "The archers carry the elf's sword.",
       "gloss": [
-        "at.night",
-        "guard-PST-NEG",
-        "PL-queen-ERG",
-        "PL-sword"
+        "carry",
+        "archer-PL-ERG",
+        "elf-GEN",
+        "sword"
+      ]
+    },
+    {
+      "lang": "Tiše totapu tošiso tokelkisone.",
+      "en": "The elf finds the queens with the swords.",
+      "gloss": [
+        "find",
+        "elf-ERG",
+        "queen-PL",
+        "sword-PL-INS"
+      ]
+    },
+    {
+      "lang": "Šunša tošisome totasopu tokelki disitiro.",
+      "en": "The queens' elves carry the sword with the eagle.",
+      "gloss": [
+        "carry",
+        "queen-PL-GEN",
+        "elf-PL-ERG",
+        "sword",
+        "eagle-COM"
+      ]
+    },
+    {
+      "lang": "Tiše disitisopu daltišosome tokelkiso totasoro.",
+      "en": "The eagles find the archers' swords with the elves.",
+      "gloss": [
+        "find",
+        "eagle-PL-ERG",
+        "archer-PL-GEN",
+        "sword-PL",
+        "elf-PL-COM"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Kema kokale rokešo.",
+      "prompt": "Tiše disitipu daltišosome tokelkiso toširo.",
       "accepted": [
-        "the queens do not sing again",
-        "the queens are not singing again",
-        "the queens will not sing again",
-        "queens do not sing again",
-        "queens are not singing again",
-        "queens will not sing again"
+        "the eagle finds the archers' swords with the queen",
+        "the eagle finds the archers' swords with a queen",
+        "the eagle finds archers' swords with the queen",
+        "the eagle finds archers' swords with a queen",
+        "the eagle found the archers' swords with the queen",
+        "the eagle found the archers' swords with a queen",
+        "the eagle found archers' swords with the queen",
+        "the eagle found archers' swords with a queen",
+        "the eagle is finding the archers' swords with the queen",
+        "the eagle is finding the archers' swords with a queen",
+        "the eagle is finding archers' swords with the queen",
+        "the eagle is finding archers' swords with a queen",
+        "an eagle finds the archers' swords with the queen",
+        "an eagle finds the archers' swords with a queen",
+        "an eagle finds archers' swords with the queen",
+        "an eagle finds archers' swords with a queen",
+        "an eagle found the archers' swords with the queen",
+        "an eagle found the archers' swords with a queen",
+        "an eagle found archers' swords with the queen",
+        "an eagle found archers' swords with a queen",
+        "an eagle is finding the archers' swords with the queen",
+        "an eagle is finding the archers' swords with a queen",
+        "an eagle is finding archers' swords with the queen",
+        "an eagle is finding archers' swords with a queen"
       ],
-      "explanation": "V S order. kema = again; koka-le = sing-NEG; ro-kešo = PL-queen. One participant, so no ergative ending."
+      "explanation": "V S O order. tiše = find; disiti-pu = eagle-ERG; daltišo-so-me = archer-PL-GEN; tokelki-so = sword-PL; toši-ro = queen-COM."
     }
   ],
   "toLang": [
     {
-      "prompt": "The eagles guard the sword at night.",
+      "prompt": "The elves carry the archers' swords with the eagle.",
       "accepted": [
-        "tetini tena rokereke mekamu"
+        "šunša totasopu daltišosome tokelkiso disitiro"
       ],
-      "explanation": "V S O order. tetini = at.night; tena = guard; ro-kere-ke = PL-eagle-ERG; mekamu = sword."
+      "explanation": "V S O order. šunša = carry; tota-so-pu = elf-PL-ERG; daltišo-so-me = archer-PL-GEN; tokelki-so = sword-PL; disiti-ro = eagle-COM."
     }
   ],
   "explain": {
     "words": [
       [
-        "kere",
-        "eagle"
-      ],
-      [
-        "mekamu",
-        "sword"
-      ],
-      [
-        "kešo",
+        "toši",
         "queen"
       ],
       [
-        "tešu-",
-        "follow"
+        "disiti",
+        "eagle"
       ],
       [
-        "tena-",
+        "tota",
+        "elf"
+      ],
+      [
+        "daltišo",
+        "archer"
+      ],
+      [
+        "tokelki",
+        "sword"
+      ],
+      [
+        "šunša",
+        "carry"
+      ],
+      [
+        "nupi",
         "guard"
       ],
       [
-        "koka-",
-        "sing"
-      ],
-      [
-        "tetini",
-        "at night"
-      ],
-      [
-        "kema",
-        "again"
+        "tiše",
+        "find"
       ]
     ],
     "grammar": [
@@ -142,40 +166,52 @@
         "Word order: verb, subject, object. With one participant: verb, subject."
       ],
       [
-        "ro-",
+        "-so",
         "Plural."
       ],
       [
-        "-ke",
+        "-me",
+        "Marks the possessor (“the king's”)."
+      ],
+      [
+        "-pu",
         "Ergative: marks the doer of a two-participant verb. The lone participant of a one-participant verb is bare, just like the object."
       ],
       [
-        "-ta",
-        "Past tense. Without it the verb is present or future."
+        "-ne",
+        "Marks the instrument, the thing used (“with a spear”)."
       ],
       [
-        "-le",
-        "Negation, on the verb."
+        "-ro",
+        "Marks a companion, someone doing it alongside (“with the queen”)."
       ],
       [
-        "Time and manner words",
-        "Go at the start of the sentence."
+        "Suffix order",
+        "On nouns: stem-PL-GEN-ERG-INS-COM."
+      ],
+      [
+        "Possessor",
+        "Comes before the possessed noun."
+      ],
+      [
+        "Place and “with” phrases",
+        "Go at the end of the sentence."
       ]
     ],
-    "notes": "Checked against 1338 alternative analyses; the sentences rule out 1334, including: ro- appears when: animate; ro- appears when: plural & animate."
+    "notes": "Checked against 678 alternative analyses; the sentences rule out 645, including: -so appears when: animate; -so appears when: plural & animate."
   },
   "theme": "elves defending a cliff tower",
   "shuffle": {
     "anchors": [
-      0
+      4
     ],
     "order": [
+      2,
+      6,
       0,
+      1,
       4,
       3,
-      6,
-      1,
-      2,
       5
     ]
   }
