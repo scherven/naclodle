@@ -4,142 +4,92 @@
   "date": "2026-11-25",
   "difficulty": 4,
   "language": {
-    "name": "Bökö",
+    "name": "Poko",
     "real": false
   },
   "checks": 3,
-  "keys": [],
+  "keys": [
+    "ö"
+  ],
   "hint": "Some endings come in two shapes. Look at the vowels of the word they attach to.",
   "corpus": [
     {
-      "lang": "Tipe num nitite.",
-      "en": "A piper does not sing.",
+      "lang": "Moma num nitite.",
+      "en": "A piper does not dance.",
       "gloss": [
-        "sing",
+        "dance",
         "NEG",
         "piper"
       ]
     },
     {
-      "lang": "Tipe tuwolusa.",
-      "en": "The farmers sing.",
+      "lang": "Moma nititeli.",
+      "en": "Pipers dance.",
       "gloss": [
-        "sing",
-        "farmer-PL-DEF"
+        "dance",
+        "piper-PL"
       ]
     },
     {
-      "lang": "Tipe num tuwolu.",
-      "en": "Farmers do not sing.",
+      "lang": "Önö nititeliti eteli.",
+      "en": "Pipers milk goats.",
       "gloss": [
-        "sing",
-        "NEG",
-        "farmer-PL"
+        "milk",
+        "piper-PL-ERG",
+        "goat-PL"
       ]
     },
     {
-      "lang": "Kapo num nititeti tuwosa.",
-      "en": "A piper does not chase the farmer.",
+      "lang": "Önö nititeliseti ete.",
+      "en": "The pipers milk a goat.",
       "gloss": [
-        "chase",
-        "NEG",
-        "piper-ERG",
-        "farmer-DEF"
+        "milk",
+        "piper-PL-DEF-ERG",
+        "goat"
       ]
     },
     {
-      "lang": "Kapo tuwolutu etelise.",
-      "en": "Farmers chase the goats.",
+      "lang": "Önö nititeseti etelise.",
+      "en": "The piper milks the goats.",
       "gloss": [
-        "chase",
-        "farmer-PL-ERG",
+        "milk",
+        "piper-DEF-ERG",
         "goat-PL-DEF"
       ]
     },
     {
-      "lang": "Kapo num tuwolusatu nititese.",
-      "en": "The farmers do not chase the piper.",
+      "lang": "Önö num nititeliseti etelise.",
+      "en": "The pipers do not milk the goats.",
       "gloss": [
-        "chase",
+        "milk",
         "NEG",
-        "farmer-PL-DEF-ERG",
-        "piper-DEF"
-      ]
-    },
-    {
-      "lang": "Kapo num samalusatu nititelise.",
-      "en": "The geese do not chase the pipers.",
-      "gloss": [
-        "chase",
-        "NEG",
-        "goose-PL-DEF-ERG",
-        "piper-PL-DEF"
-      ]
-    },
-    {
-      "lang": "Kapo num eteliseti tuwolusa.",
-      "en": "The goats do not chase the farmers.",
-      "gloss": [
-        "chase",
-        "NEG",
-        "goat-PL-DEF-ERG",
-        "farmer-PL-DEF"
+        "piper-PL-DEF-ERG",
+        "goat-PL-DEF"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Kapo num nititeliti sama.",
+      "prompt": "Moma num nititelise.",
       "accepted": [
-        "pipers do not chase a goose",
-        "pipers did not chase a goose",
-        "pipers are not chasing a goose"
+        "the pipers do not dance",
+        "the pipers did not dance",
+        "the pipers are not dancing"
       ],
-      "explanation": "V S O order. kapo = chase; num = NEG; nitite-li-ti = piper-PL-ERG; sama = goose."
-    },
-    {
-      "prompt": "Kapo tuwotu samasa.",
-      "accepted": [
-        "a farmer chases the goose",
-        "a farmer chased the goose",
-        "a farmer is chasing the goose"
-      ],
-      "explanation": "V S O order. kapo = chase; tuwo-tu = farmer-ERG; sama-sa = goose-DEF."
+      "explanation": "V S order. moma = dance; num = NEG; nitite-li-se = piper-PL-DEF. One participant, so no ergative ending."
     }
   ],
   "toLang": [
     {
-      "prompt": "Farmers do not chase the pipers.",
+      "prompt": "A piper does not milk the goat.",
       "accepted": [
-        "kapo num tuwolutu nititelise"
+        "önö num nititeti etese"
       ],
-      "explanation": "V S O order. kapo = chase; num = NEG; tuwo-lu-tu = farmer-PL-ERG; nitite-li-se = piper-PL-DEF."
-    },
-    {
-      "prompt": "The farmer does not sing.",
-      "accepted": [
-        "tipe num tuwosa"
-      ],
-      "explanation": "V S order. tipe = sing; num = NEG; tuwo-sa = farmer-DEF. One participant, so no ergative ending."
-    },
-    {
-      "prompt": "The goose chases the goats.",
-      "accepted": [
-        "kapo samasatu etelise"
-      ],
-      "explanation": "V S O order. kapo = chase; sama-sa-tu = goose-DEF-ERG; ete-li-se = goat-PL-DEF."
+      "explanation": "V S O order. önö = milk; num = NEG; nitite-ti = piper-ERG; ete-se = goat-DEF."
     }
   ],
   "explain": {
     "words": [
-      [
-        "sama",
-        "goose"
-      ],
-      [
-        "tuwo",
-        "farmer"
-      ],
       [
         "ete",
         "goat"
@@ -149,12 +99,12 @@
         "piper"
       ],
       [
-        "kapo",
-        "chase"
+        "önö",
+        "milk"
       ],
       [
-        "tipe",
-        "sing"
+        "moma",
+        "dance"
       ]
     ],
     "grammar": [
@@ -183,6 +133,6 @@
         "On nouns: stem-PL-DEF-ERG."
       ]
     ],
-    "notes": "Vowel harmony: a word's vowels are either all back (a, o, u) or all front (e, ö, i), and suffix vowels follow the stem. Checked against 470 alternative analyses; the sentences rule out 465, including: -lu/-li appears when: plural & negative; -sa/-se appears when: definite & two-participant clause."
+    "notes": "Vowel harmony: a word's vowels are either all back (a, o, u) or all front (e, ö, i), and suffix vowels follow the stem. Checked against 988 alternative analyses; the sentences rule out 976, including: -lu/-li appears when: definite; -lu/-li appears when: plural & definite."
   }
 }

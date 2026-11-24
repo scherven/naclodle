@@ -1,7 +1,7 @@
 /** naclodle: page wiring. Rules live in game/state.ts, grading in game/text.ts. */
 
 import "./style.css";
-import { copy, type CopyKey } from "./copy";
+import { copy, RULES, type CopyKey, type RulesControl } from "./copy";
 import { validatePuzzle, type Puzzle, type PuzzleIndex } from "./puzzle";
 import { colourCss, MAX_COLOURS, newColour } from "./game/colours";
 import {
@@ -76,14 +76,46 @@ function startGame(puzzle: Puzzle) {
     .toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", year: "numeric" });
   const difficultyDots = "●".repeat(puzzle.difficulty) + "○".repeat(5 - puzzle.difficulty);
   const keysHtml = puzzle.keys.length
-    ? `<div class="keys" id="keys">${puzzle.keys.map(key => `<button type="button" data-key="${escapeHtml(key)}" tabindex="-1">${escapeHtml(key)}</button>`).join("")}</div>`
+    ? `<div class="keys" id="keys"><button type="button" class="shift" id="shiftKey" aria-pressed="false" tabindex="-1" title="Capitals (or hold Shift)">⇧</button>` +
+      puzzle.keys.map(key => `<button type="button" data-key="${escapeHtml(key)}" tabindex="-1">${escapeHtml(key)}</button>`).join("") + `</div>`
     : "";
+
+  /* ---------- the "How to play" panel ---------- */
+  function rulesControlHtml(control: RulesControl): string {
+    const sampleKeys = (puzzle.keys.length ? puzzle.keys : ["ŋ", "ə", "ʔ"]).slice(0, 3);
+    switch (control) {
+      case "colours": return [1, 2, 3].map(id => `<span class="sw" data-colour="${id}"></span>`).join("");
+      case "numberKeys": return `<span class="key-replica mono">1–9</span>`;
+      case "addColour": return `<span class="sw-add">+</span>`;
+      case "allOne": return `<span class="seg-replica"><span class="on">all</span><span>one</span></span>`;
+      case "split": return `<span class="tog-replica">a|b</span>`;
+      case "clear": return `<span class="text-replica">clear</span>`;
+      case "drag": return `<span class="text-replica">⠿</span>`;
+      case "hint": return `<span class="text-replica">hint <span class="cost">−1</span></span>`;
+      case "checkPairs": return `<span class="text-replica">check pairs <span class="cost">−1</span></span>`;
+      case "letterKeys": return `<span class="key-replica mono">⇧</span>` + sampleKeys.map((key: string) => `<span class="key-replica">${escapeHtml(key)}</span>`).join("");
+      case "check": return `<span class="btn-replica">Check</span>`;
+      case "right": return `<span class="verdict ok">✓</span>`;
+      case "almost": return `<span class="verdict near">≈</span>`;
+      case "wrong": return `<span class="verdict bad">✗</span>`;
+    }
+  }
+  function rulesHtml(): string {
+    const sections = RULES.sections.map(section =>
+      `<div class="rules-block"><div class="ex-h">${escapeHtml(section.heading)}</div><div class="rules-rows">` +
+      section.rows.map(row => `<div class="rules-control">${rulesControlHtml(row.control)}</div><div class="rules-text">${escapeHtml(row.text)}</div>`).join("") +
+      `</div></div>`).join("");
+    return `<div class="rules-head"><h2 id="rulesTitle">${escapeHtml(RULES.title)}</h2>` +
+      `<button type="button" class="rules-close" id="rulesClose" aria-label="Close">×</button></div>` +
+      `<p class="rules-goal">${escapeHtml(RULES.goal)}</p>${sections}`;
+  }
 
   root.innerHTML = `
     <header>
       <span class="mark">naclodle</span>
       <span class="meta"><span>No. ${String(puzzle.number).padStart(3, "0")}</span><span>${escapeHtml(dateLabel)}</span>
-        <span class="dots" title="difficulty ${puzzle.difficulty} of 5">${difficultyDots}</span></span>
+        <span class="dots" title="difficulty ${puzzle.difficulty} of 5">${difficultyDots}</span>
+        <button type="button" class="info" id="infoButton" aria-label="How to play" title="How to play" aria-haspopup="dialog">i</button></span>
     </header>
     <div class="lede"><h1>${escapeHtml(languageName)}</h1>${copyBlock("tagline", "small")}${copyBlock("intro")}</div>
     <div class="corpus-wrap">${isShuffled ? copyBlock("pairIntro", "small") : ""}<div class="corpus" id="corpus"></div></div>
@@ -96,7 +128,7 @@ function startGame(puzzle: Puzzle) {
       <div class="swatches" id="swatches" aria-label="Highlighter"></div>
     </div>
     <div class="hint-text" id="hintText" hidden></div>
-    <details class="notes" open><summary>notes</summary>
+    <details class="notes"><summary>notes</summary>
       <textarea id="notes" spellcheck="false" aria-label="Notes"></textarea></details>
     ${puzzle.toEnglish.length ? `<section><div class="task-h"><span class="letter">A</span>${copyBlock("taskA")}</div><div class="items" id="itemsToEnglish"></div></section>` : ""}
     ${puzzle.toLang.length ? `<section><div class="task-h"><span class="letter">${puzzle.toEnglish.length ? "B" : "A"}</span>${copyBlock("taskB")}</div>
@@ -109,7 +141,18 @@ function startGame(puzzle: Puzzle) {
       <div><button class="btn ghost-btn" id="copyShareButton">Copy result</button></div>
     </div>
     <section class="explain" id="explain" hidden></section>
-    ${copyBlock("footer")}`;
+    ${copyBlock("footer")}
+    <dialog class="rules" id="rules" aria-labelledby="rulesTitle">${rulesHtml()}</dialog>`;
+
+  const rulesDialog = byId<HTMLDialogElement>("rules");
+  byId("infoButton").addEventListener("click", () => rulesDialog.showModal());
+  byId("rulesClose").addEventListener("click", () => rulesDialog.close());
+  // a click on the dimmed backdrop (outside the panel's box) closes it
+  rulesDialog.addEventListener("click", event => {
+    const bounds = rulesDialog.getBoundingClientRect();
+    const outside = event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom;
+    if (outside) rulesDialog.close();
+  });
 
   /* ---------- highlighting and split marks ---------- */
 
@@ -220,14 +263,14 @@ function startGame(puzzle: Puzzle) {
     byId("paintStyles").textContent = colourCss(state.colours);
     const hasPaint = activeColour != null ? state.paints.some(paint => paint.colour === activeColour) : state.paints.length > 0;
     byId("swatches").innerHTML =
-      state.colours.map(colour => `<button type="button" class="sw${activeColour === colour.id ? " active" : ""}" data-colour="${colour.id}" aria-label="Colour ${colour.id}" aria-pressed="${activeColour === colour.id}"></button>`).join("") +
-      (state.colours.length < MAX_COLOURS ? `<button type="button" class="sw-add" id="addColour" aria-label="New colour" title="New colour">+</button>` : "") +
+      state.colours.map(colour => `<button type="button" class="sw${activeColour === colour.id ? " active" : ""}" data-colour="${colour.id}" aria-label="Color ${colour.id}" aria-pressed="${activeColour === colour.id}"></button>`).join("") +
+      (state.colours.length < MAX_COLOURS ? `<button type="button" class="sw-add" id="addColour" aria-label="New color" title="New color">+</button>` : "") +
       `<span class="sep"></span>` +
       `<span class="seg" role="group" aria-label="What a click highlights">` +
       `<button type="button" data-match="all" aria-pressed="${state.matchAll}" title="Every match">all</button>` +
       `<button type="button" data-match="one" aria-pressed="${!state.matchAll}" title="Only what you click">one</button></span>` +
       `<button type="button" class="tog" id="splitModeButton" aria-pressed="${splitMode}" title="Click between letters to mark where a word splits">a|b</button>` +
-      (hasPaint ? `<button type="button" class="txt" id="clearPaint" title="${activeColour != null ? "Clear this colour" : "Clear all colours"}">clear</button>` : "");
+      (hasPaint ? `<button type="button" class="txt" id="clearPaint" title="${activeColour != null ? "Clear this color" : "Clear all colors"}">clear</button>` : "");
     document.body.classList.toggle("painting", activeColour != null);
     document.body.classList.toggle("splitting", splitMode);
   }
@@ -262,9 +305,8 @@ function startGame(puzzle: Puzzle) {
   function renderCorpus() {
     const gameOver = isOver(puzzle, state);
     byId("corpus").innerHTML = puzzle.corpus.map((line, row) => {
-      const dimmed = state.dimmedRows.includes(row) ? " dim" : "";
       const englishLine = state.translationOrder[row], locked = state.lockedRows.includes(row);
-      let englishClass = "en" + dimmed;
+      let englishClass = "en";
       if (isShuffled) {
         const placedForPlayer = puzzle.shuffle!.anchors.includes(row) || state.revealedRows.includes(row);
         englishClass += locked ? " paired" + (placedForPlayer ? " given" : "") : " movable";
@@ -272,8 +314,8 @@ function startGame(puzzle: Puzzle) {
       const grip = isShuffled && !locked
         ? `<button type="button" class="grip" data-row="${row}" aria-label="Drag translation ${row + 1}; arrow keys move it">⠿</button>` : "";
       const languageHtml = gameOver ? renderGlossed(line.lang, line.gloss, row, "L" + row) : renderSentence(line.lang, "lang", "L" + row);
-      return `<button type="button" class="n${dimmed}" data-row="${row}" tabindex="-1" aria-label="Sentence ${row + 1}">${row + 1}</button>` +
-        `<span class="lang${dimmed}">${languageHtml}</span>` +
+      return `<span class="n">${row + 1}</span>` +
+        `<span class="lang">${languageHtml}</span>` +
         `<span class="${englishClass}" data-row="${row}">${grip}${renderSentence(puzzle.corpus[englishLine].en, "en", "E" + englishLine)}</span>`;
     }).join("");
   }
@@ -342,17 +384,11 @@ function startGame(puzzle: Puzzle) {
     document.querySelectorAll(`.en[data-row="${firstRow}"], .en[data-row="${secondRow}"]`).forEach(element => element.classList.add("flash"));
   }
 
-  /* ---------- clicks: dimming, highlighting, splitting ---------- */
+  /* ---------- clicks: highlighting, splitting ---------- */
 
   document.addEventListener("click", event => {
     const target = event.target as HTMLElement;
     if (target.closest(".grip")) return;
-    const rowNumber = target.closest<HTMLElement>(".corpus .n");
-    if (rowNumber) {
-      const row = Number(rowNumber.dataset.row), position = state.dimmedRows.indexOf(row);
-      if (position >= 0) state.dimmedRows.splice(position, 1); else state.dimmedRows.push(row);
-      save(); renderCorpus(); return;
-    }
     const wordElement = target.closest<HTMLElement>(".w");
     if (String(getSelection() || "").trim()) return;
     if (!wordElement) {
@@ -430,19 +466,37 @@ function startGame(puzzle: Puzzle) {
     input.addEventListener("keydown", event => { if (event.key === "Enter") runCheck(); });
   }
 
+  // on-screen letters: ⇧ capitalises the next letter (or hold Shift); capitals use the puzzle's locale (i → İ in Turkish)
   const keyboard = document.getElementById("keys");
+  let shiftLatched = false, shiftHeld = false;
+  const capitalsOn = () => shiftLatched || shiftHeld;
+  const capitalise = (letter: string) => letter.toLocaleUpperCase(locale || "und");
+  function renderKeyboard() {
+    if (!keyboard) return;
+    keyboard.querySelectorAll<HTMLElement>("button[data-key]").forEach(button => {
+      button.textContent = capitalsOn() ? capitalise(button.dataset.key!) : button.dataset.key!;
+    });
+    byId("shiftKey").setAttribute("aria-pressed", String(capitalsOn()));
+  }
+  const setShiftHeld = (held: boolean) => { if (held !== shiftHeld) { shiftHeld = held; renderKeyboard(); } };
+  document.addEventListener("keydown", event => { if (event.key === "Shift") setShiftHeld(true); });
+  document.addEventListener("keyup", event => { if (event.key === "Shift") setShiftHeld(false); });
+  addEventListener("blur", () => setShiftHeld(false));
+
   keyboard?.addEventListener("mousedown", event => event.preventDefault()); // keep focus in the answer
   keyboard?.addEventListener("click", event => {
     const button = (event.target as HTMLElement).closest<HTMLElement>("button"); if (!button) return;
+    if (button.id === "shiftKey") { shiftLatched = !shiftLatched; renderKeyboard(); return; }
     const languageInputs = answerInputs().filter(input => answerSide(input.dataset.item!) === "lang" && !input.disabled);
     const input = lastFocusedInput && languageInputs.includes(lastFocusedInput) ? lastFocusedInput : languageInputs[0];
     if (!input) return;
-    const character = button.dataset.key!;
+    const character = capitalsOn() || event.shiftKey ? capitalise(button.dataset.key!) : button.dataset.key!;
     const selectionStart = input.selectionStart ?? input.value.length, selectionEnd = input.selectionEnd ?? selectionStart;
     input.value = input.value.slice(0, selectionStart) + character + input.value.slice(selectionEnd);
     input.focus();
     input.setSelectionRange(selectionStart + character.length, selectionStart + character.length);
     input.dispatchEvent(new Event("input"));
+    if (shiftLatched) { shiftLatched = false; renderKeyboard(); } // one capital, like a phone keyboard
   });
 
   /* ---------- game state → page ---------- */

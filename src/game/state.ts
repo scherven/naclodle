@@ -35,7 +35,6 @@ export interface GameState {
   colours: Colour[];
   /** true: a click highlights every match. false: only what was clicked. */
   matchAll: boolean;
-  dimmedRows: number[];
   /** Shuffled days: translationOrder[row] = index of the English line shown in that row. */
   translationOrder: number[];
   lockedRows: number[];
@@ -62,7 +61,7 @@ export function freshState(puzzle: Puzzle): GameState {
   const identity = puzzle.corpus.map((_, row) => row);
   return {
     answers: {}, answersAtLastCheck: {}, verdicts: {}, checkHistory: [], hintUsed: false, notes: "",
-    paints: [], splits: [], colours: DEFAULT_COLOURS.map(colour => ({ ...colour })), matchAll: true, dimmedRows: [],
+    paints: [], splits: [], colours: DEFAULT_COLOURS.map(colour => ({ ...colour })), matchAll: true,
     translationOrder: puzzle.shuffle ? puzzle.shuffle.order.slice() : identity,
     lockedRows: puzzle.shuffle ? puzzle.shuffle.anchors.slice() : identity,
     pairCheckHistory: [], revealedRows: [], orderAtLastPairCheck: null,

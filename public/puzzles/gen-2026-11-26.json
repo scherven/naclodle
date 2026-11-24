@@ -4,7 +4,7 @@
   "date": "2026-11-26",
   "difficulty": 4,
   "language": {
-    "name": "Tenti",
+    "name": "Mita",
     "real": false
   },
   "checks": 3,
@@ -12,135 +12,88 @@
   "hint": "Not every object gets the same ending. What do the marked ones have in common?",
   "corpus": [
     {
-      "lang": "Tutana su urepa.",
-      "en": "The sailors do not swim.",
-      "gloss": [
-        "swim-3PL",
-        "NEG",
-        "sailor-PL"
-      ]
-    },
-    {
-      "lang": "Intuna su mitunripa.",
-      "en": "The navigators do not sing.",
-      "gloss": [
-        "sing-3PL",
-        "NEG",
-        "navigator-PL"
-      ]
-    },
-    {
-      "lang": "Lati su mete mitunri.",
-      "en": "The navigator does not mend the map.",
+      "lang": "Lati mete ure.",
+      "en": "The sailor mends the map.",
       "gloss": [
         "mend",
-        "NEG",
         "map",
+        "sailor"
+      ]
+    },
+    {
+      "lang": "Nata kimapaka mitunri.",
+      "en": "The navigator follows the whales.",
+      "gloss": [
+        "follow",
+        "whale-PL-ACC",
         "navigator"
       ]
     },
     {
-      "lang": "Nata kimaka ure.",
-      "en": "The sailor follows the whale.",
+      "lang": "Nata kimapaka ure.",
+      "en": "The sailor follows the whales.",
       "gloss": [
         "follow",
-        "whale-ACC",
+        "whale-PL-ACC",
         "sailor"
       ]
     },
     {
-      "lang": "Latina metepa urepa.",
-      "en": "The sailors mend the maps.",
-      "gloss": [
-        "mend-3PL",
-        "map-PL",
-        "sailor-PL"
-      ]
-    },
-    {
-      "lang": "Nata su mitunripaka ure.",
-      "en": "The sailor does not follow the navigators.",
-      "gloss": [
-        "follow",
-        "NEG",
-        "navigator-PL-ACC",
-        "sailor"
-      ]
-    },
-    {
-      "lang": "Natana su mitunrika kimapa.",
-      "en": "The whales do not follow the navigator.",
+      "lang": "Natana mitunrika urepa.",
+      "en": "The sailors follow the navigator.",
       "gloss": [
         "follow-3PL",
-        "NEG",
         "navigator-ACC",
-        "whale-PL"
+        "sailor-PL"
       ]
     },
     {
-      "lang": "Natana su mitunripaka urepa.",
-      "en": "The sailors do not follow the navigators.",
+      "lang": "Nakina kutasipa urepa.",
+      "en": "The sailors steer the ships.",
+      "gloss": [
+        "steer-3PL",
+        "ship-PL",
+        "sailor-PL"
+      ]
+    },
+    {
+      "lang": "Natana su mitunripaka kimapa.",
+      "en": "The whales do not follow the navigators.",
       "gloss": [
         "follow-3PL",
         "NEG",
         "navigator-PL-ACC",
-        "sailor-PL"
+        "whale-PL"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Latina su metepa mitunripa.",
+      "prompt": "Natana urepaka kimapa.",
       "accepted": [
-        "the navigators do not mend the maps",
-        "the navigators do not mend maps",
-        "the navigators did not mend the maps",
-        "the navigators did not mend maps",
-        "the navigators are not mending the maps",
-        "the navigators are not mending maps",
-        "navigators do not mend the maps",
-        "navigators do not mend maps",
-        "navigators did not mend the maps",
-        "navigators did not mend maps",
-        "navigators are not mending the maps",
-        "navigators are not mending maps"
+        "the whales follow the sailors",
+        "the whales follow sailors",
+        "the whales followed the sailors",
+        "the whales followed sailors",
+        "the whales are following the sailors",
+        "the whales are following sailors",
+        "whales follow the sailors",
+        "whales follow sailors",
+        "whales followed the sailors",
+        "whales followed sailors",
+        "whales are following the sailors",
+        "whales are following sailors"
       ],
-      "explanation": "V O S order. lati-na = mend-3PL; su = NEG; mete-pa = map-PL; mitunri-pa = navigator-PL. This object is not marked."
-    },
-    {
-      "prompt": "Intu mitunri.",
-      "accepted": [
-        "the navigator sings",
-        "the navigator sang",
-        "the navigator is singing",
-        "a navigator sings",
-        "a navigator sang",
-        "a navigator is singing"
-      ],
-      "explanation": "V S order. intu = sing; mitunri = navigator."
+      "explanation": "V O S order. nata-na = follow-3PL; ure-pa-ka = sailor-PL-ACC; kima-pa = whale-PL."
     }
   ],
   "toLang": [
     {
-      "prompt": "The whales swim.",
+      "prompt": "The navigators follow the whale.",
       "accepted": [
-        "tutana kimapa"
+        "natana kimaka mitunripa"
       ],
-      "explanation": "V S order. tuta-na = swim-3PL; kima-pa = whale-PL."
-    },
-    {
-      "prompt": "The whale does not follow the sailors.",
-      "accepted": [
-        "nata su urepaka kima"
-      ],
-      "explanation": "V O S order. nata = follow; su = NEG; ure-pa-ka = sailor-PL-ACC; kima = whale."
-    },
-    {
-      "prompt": "The navigator follows the whales.",
-      "accepted": [
-        "nata kimapaka mitunri"
-      ],
-      "explanation": "V O S order. nata = follow; kima-pa-ka = whale-PL-ACC; mitunri = navigator."
+      "explanation": "V O S order. nata-na = follow-3PL; kima-ka = whale-ACC; mitunri-pa = navigator-PL."
     }
   ],
   "explain": {
@@ -162,20 +115,20 @@
         "whale"
       ],
       [
+        "kutasi",
+        "ship"
+      ],
+      [
+        "naki-",
+        "steer"
+      ],
+      [
         "nata-",
         "follow"
       ],
       [
         "lati-",
         "mend"
-      ],
-      [
-        "tuta-",
-        "swim"
-      ],
-      [
-        "intu-",
-        "sing"
       ]
     ],
     "grammar": [
@@ -204,6 +157,6 @@
         "On nouns: stem-PL-ACC."
       ]
     ],
-    "notes": "Checked against 479 alternative analyses; the sentences rule out 476, including: -ka appears when: object & animate & human; -na appears when: (plural subject or plural lone-subject/object)."
+    "notes": "Checked against 407 alternative analyses; the sentences rule out 393, including: -pa appears when: animate; -pa appears when: plural & animate."
   }
 }

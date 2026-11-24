@@ -4,7 +4,7 @@
   "date": "2026-11-29",
   "difficulty": 4,
   "language": {
-    "name": "Tula",
+    "name": "Mata",
     "real": false
   },
   "checks": 3,
@@ -12,76 +12,67 @@
   "hint": "Watch for “the” versus “a” in the English.",
   "corpus": [
     {
-      "lang": "Tamutu tele.",
-      "en": "Sailors whisper.",
+      "lang": "Teltivise telelketime kuva.",
+      "en": "The spirits guard a stable.",
       "gloss": [
-        "sailor-PL",
-        "whisper"
+        "stable-ACC",
+        "spirit-PL-DEF",
+        "guard"
       ]
     },
     {
-      "lang": "Matama la tele.",
-      "en": "The guardian does not whisper.",
+      "lang": "Teltivise telelketime kuvana.",
+      "en": "The spirits guarded a stable.",
       "gloss": [
+        "stable-ACC",
+        "spirit-PL-DEF",
+        "guard-PST"
+      ]
+    },
+    {
+      "lang": "Tamutusa telelketime kuva.",
+      "en": "The spirits guard sailors.",
+      "gloss": [
+        "sailor-PL-ACC",
+        "spirit-PL-DEF",
+        "guard"
+      ]
+    },
+    {
+      "lang": "Tamumasa matama la kuva.",
+      "en": "The guardian does not guard the sailor.",
+      "gloss": [
+        "sailor-DEF-ACC",
         "guardian-DEF",
-        "NEG",
-        "whisper"
-      ]
-    },
-    {
-      "lang": "Tikelteme la telene.",
-      "en": "The captain did not whisper.",
-      "gloss": [
-        "captain-DEF",
-        "NEG",
-        "whisper-PST"
-      ]
-    },
-    {
-      "lang": "Tamutumasa telelke la kuva.",
-      "en": "A spirit does not guard the sailors.",
-      "gloss": [
-        "sailor-PL-DEF-ACC",
-        "spirit",
         "NEG",
         "guard"
       ]
     },
     {
-      "lang": "Teltivitise matatuma kuvana.",
-      "en": "The guardians guarded stables.",
-      "gloss": [
-        "stable-PL-ACC",
-        "guardian-PL-DEF",
-        "guard-PST"
-      ]
-    },
-    {
-      "lang": "Tamumasa matatuma la sekene.",
-      "en": "The guardians did not warn the sailor.",
-      "gloss": [
-        "sailor-DEF-ACC",
-        "guardian-PL-DEF",
-        "NEG",
-        "warn-PST"
-      ]
-    },
-    {
-      "lang": "Teltivitimese telelkeme la kuvana.",
-      "en": "The spirit did not guard the stables.",
+      "lang": "Teltivitimese telelketi kuva.",
+      "en": "Spirits guard the stables.",
       "gloss": [
         "stable-PL-DEF-ACC",
-        "spirit-DEF",
+        "spirit-PL",
+        "guard"
+      ]
+    },
+    {
+      "lang": "Teltivitise telelketime la kuvana.",
+      "en": "The spirits did not guard stables.",
+      "gloss": [
+        "stable-PL-ACC",
+        "spirit-PL-DEF",
         "NEG",
         "guard-PST"
       ]
     },
     {
-      "lang": "Tikeltetimese telelketime la kuvana.",
-      "en": "The spirits did not guard the captains.",
+      "lang": "Tamutumasa matatuma la kuvana.",
+      "en": "The guardians did not guard the sailors.",
       "gloss": [
-        "captain-PL-DEF-ACC",
-        "spirit-PL-DEF",
+        "sailor-PL-DEF-ACC",
+        "guardian-PL-DEF",
         "NEG",
         "guard-PST"
       ]
@@ -89,49 +80,24 @@
   ],
   "toEnglish": [
     {
-      "prompt": "Tikeltetimese matatuma kuvana.",
+      "prompt": "Teltivise mata la kuvana.",
       "accepted": [
-        "the guardians guarded the captains"
+        "a guardian did not guard a stable"
       ],
-      "explanation": "O S V order. tikelte-ti-me-se = captain-PL-DEF-ACC; mata-tu-ma = guardian-PL-DEF; kuva-na = guard-PST."
-    },
-    {
-      "prompt": "Teltivitise telelketi kuvana.",
-      "accepted": [
-        "spirits guarded stables"
-      ],
-      "explanation": "O S V order. teltivi-ti-se = stable-PL-ACC; telelke-ti = spirit-PL; kuva-na = guard-PST."
+      "explanation": "O S V order. teltivi-se = stable-ACC; mata = guardian; la = NEG; kuva-na = guard-PST."
     }
   ],
   "toLang": [
     {
-      "prompt": "The guardians do not warn the sailors.",
+      "prompt": "A spirit guards the sailors.",
       "accepted": [
-        "tamutumasa matatuma la seke"
+        "tamutumasa telelke kuva"
       ],
-      "explanation": "O S V order. tamu-tu-ma-sa = sailor-PL-DEF-ACC; mata-tu-ma = guardian-PL-DEF; la = NEG; seke = warn."
-    },
-    {
-      "prompt": "Spirits do not guard the sailor.",
-      "accepted": [
-        "tamumasa telelketi la kuva"
-      ],
-      "explanation": "O S V order. tamu-ma-sa = sailor-DEF-ACC; telelke-ti = spirit-PL; la = NEG; kuva = guard."
-    },
-    {
-      "prompt": "Spirits did not whisper.",
-      "accepted": [
-        "telelketi la telene"
-      ],
-      "explanation": "S V order. telelke-ti = spirit-PL; la = NEG; tele-ne = whisper-PST."
+      "explanation": "O S V order. tamu-tu-ma-sa = sailor-PL-DEF-ACC; telelke = spirit; kuva = guard."
     }
   ],
   "explain": {
     "words": [
-      [
-        "tikelte",
-        "captain"
-      ],
       [
         "tamu",
         "sailor"
@@ -151,14 +117,6 @@
       [
         "kuva-",
         "guard"
-      ],
-      [
-        "seke-",
-        "warn"
-      ],
-      [
-        "tele-",
-        "whisper"
       ]
     ],
     "grammar": [
@@ -191,6 +149,6 @@
         "On nouns: stem-PL-DEF-ACC."
       ]
     ],
-    "notes": "Vowel harmony: a word's vowels are either all back (a, u) or all front (e, i), and suffix vowels follow the stem. Checked against 1305 alternative analyses; the sentences rule out 1303, including: -tu/-ti appears when: plural & two-participant clause; -ma/-me appears when: definite & animate."
+    "notes": "Vowel harmony: a word's vowels are either all back (a, u) or all front (e, i), and suffix vowels follow the stem. Checked against 894 alternative analyses; the sentences rule out 877, including: la appears when: (negative or past)."
   }
 }

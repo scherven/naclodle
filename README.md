@@ -7,8 +7,7 @@ A daily linguistics puzzle in the style of NACLO "Rosetta stone" problems. You g
 - Three checks per puzzle. Each answer is marked ✓ (right), ≈ (right apart from accents or one word), or ✗.
 - One hint, which costs a point.
 - On shuffled days the translations start out of order: drag them into place. "Check pairs" locks the correct ones and costs a point.
-- Highlighter: pick a colour, then click a word or select part of one to colour every match, in the examples, the questions and your answers. "one" colours only what you click. `a|b` marks where a word splits. Keys 1–9 pick colours, Esc puts the pen down.
-- Click a sentence number to dim it.
+- Highlighter: pick a colour, then click a word or select part of one to colour every match, in the examples, the questions and your answers. "one" colours only what you click. `a|b` marks where a word splits. Keys 1–9 pick the nth colour, Esc puts it down.
 - `#YYYY-MM-DD` in the URL plays an earlier puzzle.
 
 ## Development

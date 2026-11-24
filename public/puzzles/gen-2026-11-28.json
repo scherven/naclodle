@@ -4,7 +4,7 @@
   "date": "2026-11-28",
   "difficulty": 3,
   "language": {
-    "name": "Bamanla",
+    "name": "Etabe",
     "real": false
   },
   "checks": 3,
@@ -12,146 +12,94 @@
   "hint": "Watch for “the” versus “a” in the English.",
   "corpus": [
     {
-      "lang": "Tukemu tonka.",
-      "en": "The eagle sleeps.",
+      "lang": "Manto tukemubo re agi.",
+      "en": "A wolf does not follow the eagle.",
       "gloss": [
-        "eagle-DEF",
-        "sleep"
-      ]
-    },
-    {
-      "lang": "Tiranleko tonkane.",
-      "en": "Archers sleep.",
-      "gloss": [
-        "archer-PL",
-        "sleep-3PL"
-      ]
-    },
-    {
-      "lang": "Tetukomu re tonkane.",
-      "en": "The elves do not sleep.",
-      "gloss": [
-        "elf-PL-DEF",
+        "wolf",
+        "eagle-DEF-ACC",
         "NEG",
-        "sleep-3PL"
+        "follow"
       ]
     },
     {
-      "lang": "Tiranle tetukobo re agi.",
-      "en": "An archer does not follow elves.",
+      "lang": "Mantomu tetukobo re agi.",
+      "en": "The wolf does not follow elves.",
       "gloss": [
-        "archer",
+        "wolf-DEF",
         "elf-PL-ACC",
         "NEG",
         "follow"
       ]
     },
     {
-      "lang": "Tetumu tiranlebo re binte.",
-      "en": "The elf does not guard an archer.",
+      "lang": "Tukeko tetumubo agine.",
+      "en": "Eagles follow the elf.",
       "gloss": [
-        "elf-DEF",
-        "archer-ACC",
-        "NEG",
-        "guard"
+        "eagle-PL",
+        "elf-DEF-ACC",
+        "follow-3PL"
       ]
     },
     {
-      "lang": "Natuyamu tukebo re agi.",
-      "en": "The queen does not follow an eagle.",
+      "lang": "Manto tukekomubo re agi.",
+      "en": "A wolf does not follow the eagles.",
       "gloss": [
-        "queen-DEF",
-        "eagle-ACC",
+        "wolf",
+        "eagle-PL-DEF-ACC",
         "NEG",
         "follow"
       ]
     },
     {
-      "lang": "Mantokomu tiranlekobo bintene.",
-      "en": "The wolves guard archers.",
+      "lang": "Tetuko mantokomubo re agine.",
+      "en": "Elves do not follow the wolves.",
       "gloss": [
-        "wolf-PL-DEF",
-        "archer-PL-ACC",
-        "guard-3PL"
-      ]
-    },
-    {
-      "lang": "Mantoko natuyakomubo re bintene.",
-      "en": "Wolves do not guard the queens.",
-      "gloss": [
-        "wolf-PL",
-        "queen-PL-DEF-ACC",
-        "NEG",
-        "guard-3PL"
-      ]
-    },
-    {
-      "lang": "Tetukomu tiranlekomubo re agine.",
-      "en": "The elves do not follow the archers.",
-      "gloss": [
-        "elf-PL-DEF",
-        "archer-PL-DEF-ACC",
+        "elf-PL",
+        "wolf-PL-DEF-ACC",
         "NEG",
         "follow-3PL"
+      ]
+    },
+    {
+      "lang": "Tukekomu tentantakomubo re bintene.",
+      "en": "The eagles do not guard the towers.",
+      "gloss": [
+        "eagle-PL-DEF",
+        "tower-PL-DEF-ACC",
+        "NEG",
+        "guard-3PL"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Tetu natuyamubo re agi.",
+      "prompt": "Tukekomu mantobo re agine.",
       "accepted": [
-        "an elf does not follow the queen",
-        "an elf did not follow the queen",
-        "an elf is not following the queen"
+        "the eagles do not follow a wolf",
+        "the eagles did not follow a wolf",
+        "the eagles are not following a wolf"
       ],
-      "explanation": "S O V order. tetu = elf; natuya-mu-bo = queen-DEF-ACC; re = NEG; agi = follow."
-    },
-    {
-      "prompt": "Tetukomu tiranlekobo re bintene.",
-      "accepted": [
-        "the elves do not guard archers",
-        "the elves did not guard archers",
-        "the elves are not guarding archers"
-      ],
-      "explanation": "S O V order. tetu-ko-mu = elf-PL-DEF; tiranle-ko-bo = archer-PL-ACC; re = NEG; binte-ne = guard-3PL."
+      "explanation": "S O V order. tuke-ko-mu = eagle-PL-DEF; manto-bo = wolf-ACC; re = NEG; agi-ne = follow-3PL."
     }
   ],
   "toLang": [
     {
-      "prompt": "The queen does not follow archers.",
+      "prompt": "The elves do not guard a tower.",
       "accepted": [
-        "natuyamu tiranlekobo re agi"
+        "tetukomu tentantabo re bintene"
       ],
-      "explanation": "S O V order. natuya-mu = queen-DEF; tiranle-ko-bo = archer-PL-ACC; re = NEG; agi = follow."
-    },
-    {
-      "prompt": "The eagle does not follow the wolf.",
-      "accepted": [
-        "tukemu mantomubo re agi"
-      ],
-      "explanation": "S O V order. tuke-mu = eagle-DEF; manto-mu-bo = wolf-DEF-ACC; re = NEG; agi = follow."
-    },
-    {
-      "prompt": "The wolf does not sleep.",
-      "accepted": [
-        "mantomu re tonka"
-      ],
-      "explanation": "S V order. manto-mu = wolf-DEF; re = NEG; tonka = sleep."
+      "explanation": "S O V order. tetu-ko-mu = elf-PL-DEF; tentanta-bo = tower-ACC; re = NEG; binte-ne = guard-3PL."
     }
   ],
   "explain": {
     "words": [
       [
+        "tentanta",
+        "tower"
+      ],
+      [
         "tetu",
         "elf"
-      ],
-      [
-        "tiranle",
-        "archer"
-      ],
-      [
-        "natuya",
-        "queen"
       ],
       [
         "manto",
@@ -168,10 +116,6 @@
       [
         "binte-",
         "guard"
-      ],
-      [
-        "tonka-",
-        "sleep"
       ]
     ],
     "grammar": [
@@ -204,6 +148,6 @@
         "On nouns: stem-PL-DEF-ACC."
       ]
     ],
-    "notes": "Checked against 471 alternative analyses; the sentences rule out 464, including: -bo appears when: object & human; -ne appears when: plural lone-subject/object; re appears when: negative & two-participant clause."
+    "notes": "Checked against 739 alternative analyses; the sentences rule out 728, including: -ko appears when: definite; -ko appears when: plural & definite."
   }
 }

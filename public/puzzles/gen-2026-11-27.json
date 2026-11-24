@@ -4,7 +4,7 @@
   "date": "2026-11-27",
   "difficulty": 4,
   "language": {
-    "name": "Kapafu",
+    "name": "Lutake",
     "real": false
   },
   "checks": 3,
@@ -14,161 +14,112 @@
   "hint": "Find the verb first, then work out which noun is doing the action.",
   "corpus": [
     {
-      "lang": "Mekatu-mekatu nitupifo.",
-      "en": "The princesses fled.",
-      "gloss": [
-        "PL~princess",
-        "flee-PST-3PL"
-      ]
-    },
-    {
-      "lang": "Keto-keto senitupifo.",
-      "en": "The thieves did not flee.",
-      "gloss": [
-        "PL~thief",
-        "NEG-flee-PST-3PL"
-      ]
-    },
-    {
-      "lang": "Tañalo ñanumu señapapi.",
-      "en": "The dragon did not wake the knight.",
+      "lang": "Tañalo ñanumu señapa.",
+      "en": "The dragon does not wake the knight.",
       "gloss": [
         "knight-ACC",
+        "dragon",
+        "NEG-wake"
+      ]
+    },
+    {
+      "lang": "Ñanumulo taña ñapapi.",
+      "en": "The knight woke the dragon.",
+      "gloss": [
+        "dragon-ACC",
+        "knight",
+        "wake-PST"
+      ]
+    },
+    {
+      "lang": "Ñanumu-ñanumulo taña ñapa.",
+      "en": "The knight wakes the dragons.",
+      "gloss": [
+        "PL~dragon-ACC",
+        "knight",
+        "wake"
+      ]
+    },
+    {
+      "lang": "Taña-tañalo ñanumu señapapi.",
+      "en": "The dragon did not wake the knights.",
+      "gloss": [
+        "PL~knight-ACC",
         "dragon",
         "NEG-wake-PST"
       ]
     },
     {
-      "lang": "Mekatulo keto-keto ñapafo.",
-      "en": "The thieves wake the princess.",
+      "lang": "Tañenilo taña-taña selifipifo.",
+      "en": "The knights did not guard the jewel.",
       "gloss": [
-        "princess-ACC",
-        "PL~thief",
-        "wake-3PL"
-      ]
-    },
-    {
-      "lang": "Keto-ketolo taña señapa.",
-      "en": "The knight does not wake the thieves.",
-      "gloss": [
-        "PL~thief-ACC",
-        "knight",
-        "NEG-wake"
-      ]
-    },
-    {
-      "lang": "Mekatulo keto-keto ñapapifo.",
-      "en": "The thieves woke the princess.",
-      "gloss": [
-        "princess-ACC",
-        "PL~thief",
-        "wake-PST-3PL"
-      ]
-    },
-    {
-      "lang": "Keto-ketolo ñanumu-ñanumu ñapapifo.",
-      "en": "The dragons woke the thieves.",
-      "gloss": [
-        "PL~thief-ACC",
-        "PL~dragon",
-        "wake-PST-3PL"
-      ]
-    },
-    {
-      "lang": "Kuki-kukilo mekatu-mekatu selifipifo.",
-      "en": "The princesses did not guard the caves.",
-      "gloss": [
-        "PL~cave-ACC",
-        "PL~princess",
+        "jewel-ACC",
+        "PL~knight",
         "NEG-guard-PST-3PL"
       ]
     },
     {
-      "lang": "Taña-tañalo ñanumu-ñanumu señapapifo.",
-      "en": "The dragons did not wake the knights.",
+      "lang": "Tañeni-tañenilo taña-taña lifipifo.",
+      "en": "The knights guarded the jewels.",
+      "gloss": [
+        "PL~jewel-ACC",
+        "PL~knight",
+        "guard-PST-3PL"
+      ]
+    },
+    {
+      "lang": "Tañeni-tañenilo ñanumu-ñanumu selififo.",
+      "en": "The dragons do not guard the jewels.",
+      "gloss": [
+        "PL~jewel-ACC",
+        "PL~dragon",
+        "NEG-guard-3PL"
+      ]
+    },
+    {
+      "lang": "Taña-tañalo ñanumu-ñanumu ñapapifo.",
+      "en": "The dragons woke the knights.",
       "gloss": [
         "PL~knight-ACC",
         "PL~dragon",
-        "NEG-wake-PST-3PL"
+        "wake-PST-3PL"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Kukilo ñanumu selifi.",
+      "prompt": "Tañenilo ñanumu-ñanumu lifipifo.",
       "accepted": [
-        "the dragon does not guard the cave",
-        "the dragon does not guard a cave",
-        "the dragon is not guarding the cave",
-        "the dragon is not guarding a cave",
-        "the dragon will not guard the cave",
-        "the dragon will not guard a cave",
-        "a dragon does not guard the cave",
-        "a dragon does not guard a cave",
-        "a dragon is not guarding the cave",
-        "a dragon is not guarding a cave",
-        "a dragon will not guard the cave",
-        "a dragon will not guard a cave"
+        "the dragons guarded the jewel",
+        "the dragons guarded a jewel",
+        "dragons guarded the jewel",
+        "dragons guarded a jewel"
       ],
-      "explanation": "O S V order. kuki-lo = cave-ACC; ñanumu = dragon; se-lifi = NEG-guard."
-    },
-    {
-      "prompt": "Keto nitu.",
-      "accepted": [
-        "the thief flees",
-        "the thief is fleeing",
-        "the thief will flee",
-        "a thief flees",
-        "a thief is fleeing",
-        "a thief will flee"
-      ],
-      "explanation": "S V order. keto = thief; nitu = flee."
+      "explanation": "O S V order. tañeni-lo = jewel-ACC; ñanumu-ñanumu = PL~dragon; lifi-pi-fo = guard-PST-3PL."
     }
   ],
   "toLang": [
     {
-      "prompt": "The dragons wake the knights.",
+      "prompt": "The dragons wake the knight.",
       "accepted": [
-        "taña-tañalo ñanumu-ñanumu ñapafo"
+        "tañalo ñanumu-ñanumu ñapafo"
       ],
-      "explanation": "O S V order. taña-taña-lo = PL~knight-ACC; ñanumu-ñanumu = PL~dragon; ñapa-fo = wake-3PL."
-    },
-    {
-      "prompt": "The princesses did not wake the dragon.",
-      "accepted": [
-        "ñanumulo mekatu-mekatu señapapifo"
-      ],
-      "explanation": "O S V order. ñanumu-lo = dragon-ACC; mekatu-mekatu = PL~princess; se-ñapa-pi-fo = NEG-wake-PST-3PL."
-    },
-    {
-      "prompt": "The princesses do not flee.",
-      "accepted": [
-        "mekatu-mekatu senitufo"
-      ],
-      "explanation": "S V order. mekatu-mekatu = PL~princess; se-nitu-fo = NEG-flee-3PL."
+      "explanation": "O S V order. taña-lo = knight-ACC; ñanumu-ñanumu = PL~dragon; ñapa-fo = wake-3PL."
     }
   ],
   "explain": {
     "words": [
       [
-        "mekatu",
-        "princess"
-      ],
-      [
         "taña",
         "knight"
-      ],
-      [
-        "keto",
-        "thief"
       ],
       [
         "ñanumu",
         "dragon"
       ],
       [
-        "kuki",
-        "cave"
+        "tañeni",
+        "jewel"
       ],
       [
         "lifi-",
@@ -177,10 +128,6 @@
       [
         "ñapa-",
         "wake"
-      ],
-      [
-        "nitu-",
-        "flee"
       ]
     ],
     "grammar": [
@@ -209,6 +156,6 @@
         "Negation, on the verb."
       ]
     ],
-    "notes": "Checked against 896 alternative analyses; the sentences rule out 893, including: full reduplication appears when: plural & past; -pi appears when: (past or plural lone-subject/object); se- appears when: (negative or plural object)."
+    "notes": "Checked against 549 alternative analyses; the sentences rule out 538, including: -pi appears when: (past or plural subject); -fo appears when: plural subject & plural lone-subject/object."
   }
 }

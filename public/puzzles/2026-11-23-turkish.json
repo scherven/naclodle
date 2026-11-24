@@ -85,13 +85,6 @@
   ],
   "toEnglish": [
     {
-      "prompt": "Çocuk kadını gördü.",
-      "accepted": [
-        "the child saw the woman"
-      ],
-      "explanation": "kadın-ı: “the” object takes -ı. gör-dü: saw."
-    },
-    {
       "prompt": "Adamlar ekmek yemedi.",
       "accepted": [
         "the men did not eat bread",
@@ -103,21 +96,6 @@
     }
   ],
   "toLang": [
-    {
-      "prompt": "The man did not see the fish.",
-      "accepted": [
-        "adam balığı görmedi"
-      ],
-      "explanation": "balığ-ı (the fish) + gör-me-di (did not see)."
-    },
-    {
-      "prompt": "The women saw the children.",
-      "accepted": [
-        "kadınlar çocukları gördü",
-        "kadınlar çocukları gördüler"
-      ],
-      "explanation": "Plural -lar comes before -ı: çocuk-lar-ı."
-    },
     {
       "prompt": "The child ate a fish.",
       "accepted": [

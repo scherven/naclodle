@@ -27,9 +27,9 @@ export interface Puzzle {
   hint: string;
   /** Example sentences, in the order of the language column. */
   corpus: CorpusLine[];
-  /** Items translated from the language into English. */
+  /** The item translated from the language into English (exactly one). */
   toEnglish: Item[];
-  /** Items translated from English into the language. */
+  /** The item translated from English into the language (exactly one). */
   toLang: Item[];
   /** Shown after the game ends. */
   explain: Explanation;
@@ -102,7 +102,8 @@ export function validatePuzzle(puzzle: Puzzle): string[] {
     if (!item.accepted?.length) problems.push(`item ${index}: no accepted answers`);
     if (!item.prompt) problems.push(`item ${index}: no prompt`);
   });
-  if (!puzzle.toEnglish.length && !puzzle.toLang.length) problems.push("no test items");
+  if (puzzle.toEnglish.length !== 1) problems.push("needs exactly one item to translate into English");
+  if (puzzle.toLang.length !== 1) problems.push("needs exactly one item to translate into the language");
   if (puzzle.shuffle) {
     const rowCount = puzzle.corpus.length;
     const order = puzzle.shuffle.order;

@@ -4,145 +4,121 @@
   "date": "2026-11-30",
   "difficulty": 4,
   "language": {
-    "name": "Gunwo",
+    "name": "Tanka",
     "real": false
   },
   "checks": 3,
   "keys": [
     "ö",
-    "ä",
-    "ü"
+    "ü",
+    "ä"
   ],
   "hint": "Some endings come in two shapes. Look at the vowels of the word they attach to.",
   "corpus": [
     {
-      "lang": "Töxömä haku.",
-      "en": "The singers weep.",
+      "lang": "Töxö ükö.",
+      "en": "The singer sings.",
       "gloss": [
-        "singer-PL",
-        "weep"
-      ]
-    },
-    {
-      "lang": "Kuga sä haku.",
-      "en": "The ancestor does not weep.",
-      "gloss": [
-        "ancestor",
-        "NEG",
-        "weep"
-      ]
-    },
-    {
-      "lang": "Karado töxö xono.",
-      "en": "The singer ignores the messenger.",
-      "gloss": [
-        "messenger-ACC",
         "singer",
-        "ignore"
+        "sing"
       ]
     },
     {
-      "lang": "Nunrodo töxömä tütä.",
-      "en": "The singers greet the augur.",
+      "lang": "Nunro sä ükö.",
+      "en": "The augur does not sing.",
       "gloss": [
-        "augur-ACC",
-        "singer-PL",
-        "greet"
+        "augur",
+        "NEG",
+        "sing"
       ]
     },
     {
-      "lang": "Töxömädö kara tütä.",
-      "en": "The messenger greets the singers.",
+      "lang": "Töxödö nunro nänxä.",
+      "en": "The augur blesses the singer.",
+      "gloss": [
+        "singer-ACC",
+        "augur",
+        "bless"
+      ]
+    },
+    {
+      "lang": "Väsönümädö nunro nänxä.",
+      "en": "The augur blesses the flutes.",
+      "gloss": [
+        "flute-PL-ACC",
+        "augur",
+        "bless"
+      ]
+    },
+    {
+      "lang": "Nunromado töxömä nänxä.",
+      "en": "The singers bless the augurs.",
+      "gloss": [
+        "augur-PL-ACC",
+        "singer-PL",
+        "bless"
+      ]
+    },
+    {
+      "lang": "Nunromado töxö sä nänxä.",
+      "en": "The singer does not bless the augurs.",
+      "gloss": [
+        "augur-PL-ACC",
+        "singer",
+        "NEG",
+        "bless"
+      ]
+    },
+    {
+      "lang": "Väsönümädö nunroma sä nänxä.",
+      "en": "The augurs do not bless the flutes.",
+      "gloss": [
+        "flute-PL-ACC",
+        "augur-PL",
+        "NEG",
+        "bless"
+      ]
+    },
+    {
+      "lang": "Töxömädö nunroma sä nänxä.",
+      "en": "The augurs do not bless the singers.",
       "gloss": [
         "singer-PL-ACC",
-        "messenger",
-        "greet"
-      ]
-    },
-    {
-      "lang": "Nunrodo töxömä sä xono.",
-      "en": "The singers do not ignore the augur.",
-      "gloss": [
-        "augur-ACC",
-        "singer-PL",
+        "augur-PL",
         "NEG",
-        "ignore"
-      ]
-    },
-    {
-      "lang": "Kugamado karama sä tütä.",
-      "en": "The messengers do not greet the ancestors.",
-      "gloss": [
-        "ancestor-PL-ACC",
-        "messenger-PL",
-        "NEG",
-        "greet"
+        "bless"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Nunromado kugama xono.",
+      "prompt": "Töxömä sä ükö.",
       "accepted": [
-        "the ancestors ignore the augurs",
-        "the ancestors ignore augurs",
-        "the ancestors ignored the augurs",
-        "the ancestors ignored augurs",
-        "the ancestors are ignoring the augurs",
-        "the ancestors are ignoring augurs",
-        "ancestors ignore the augurs",
-        "ancestors ignore augurs",
-        "ancestors ignored the augurs",
-        "ancestors ignored augurs",
-        "ancestors are ignoring the augurs",
-        "ancestors are ignoring augurs"
+        "the singers do not sing",
+        "the singers did not sing",
+        "the singers are not singing",
+        "singers do not sing",
+        "singers did not sing",
+        "singers are not singing"
       ],
-      "explanation": "O S V order. nunro-ma-do = augur-PL-ACC; kuga-ma = ancestor-PL; xono = ignore."
-    },
-    {
-      "prompt": "Nunrodo töxö sä tütä.",
-      "accepted": [
-        "the singer does not greet the augur",
-        "the singer does not greet an augur",
-        "the singer did not greet the augur",
-        "the singer did not greet an augur",
-        "the singer is not greeting the augur",
-        "the singer is not greeting an augur",
-        "a singer does not greet the augur",
-        "a singer does not greet an augur",
-        "a singer did not greet the augur",
-        "a singer did not greet an augur",
-        "a singer is not greeting the augur",
-        "a singer is not greeting an augur"
-      ],
-      "explanation": "O S V order. nunro-do = augur-ACC; töxö = singer; sä = NEG; tütä = greet."
+      "explanation": "S V order. töxö-mä = singer-PL; sä = NEG; ükö = sing."
     }
   ],
   "toLang": [
     {
-      "prompt": "The messengers do not weep.",
+      "prompt": "The augurs bless the flute.",
       "accepted": [
-        "karama sä haku"
+        "väsönüdö nunroma nänxä"
       ],
-      "explanation": "S V order. kara-ma = messenger-PL; sä = NEG; haku = weep."
-    },
-    {
-      "prompt": "The augur ignores the messengers.",
-      "accepted": [
-        "karamado nunro xono"
-      ],
-      "explanation": "O S V order. kara-ma-do = messenger-PL-ACC; nunro = augur; xono = ignore."
-    },
-    {
-      "prompt": "The singers greet the ancestors.",
-      "accepted": [
-        "kugamado töxömä tütä"
-      ],
-      "explanation": "O S V order. kuga-ma-do = ancestor-PL-ACC; töxö-mä = singer-PL; tütä = greet."
+      "explanation": "O S V order. väsönü-dö = flute-ACC; nunro-ma = augur-PL; nänxä = bless."
     }
   ],
   "explain": {
     "words": [
+      [
+        "väsönü",
+        "flute"
+      ],
       [
         "töxö",
         "singer"
@@ -152,24 +128,12 @@
         "augur"
       ],
       [
-        "kara",
-        "messenger"
+        "nänxä",
+        "bless"
       ],
       [
-        "kuga",
-        "ancestor"
-      ],
-      [
-        "tütä",
-        "greet"
-      ],
-      [
-        "xono",
-        "ignore"
-      ],
-      [
-        "haku",
-        "weep"
+        "ükö",
+        "sing"
       ]
     ],
     "grammar": [
@@ -194,6 +158,6 @@
         "On nouns: stem-PL-ACC."
       ]
     ],
-    "notes": "Vowel harmony: a word's vowels are either all back (a, o, u) or all front (ä, ö, ü), and suffix vowels follow the stem. Checked against 491 alternative analyses; the sentences rule out 487, including: sä appears when: (negative or plural object)."
+    "notes": "Vowel harmony: a word's vowels are either all back (a, o, u) or all front (ä, ö, ü), and suffix vowels follow the stem. Checked against 295 alternative analyses; the sentences rule out 291, including: -ma/-mä appears when: plural & negative; sä appears when: (negative or plural subject)."
   }
 }

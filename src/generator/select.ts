@@ -55,17 +55,19 @@ const morphemeCount = (words: RealisedWord[]) => words.reduce((sum, word) => sum
 function chooseTests(rng: Rng, grammar: Grammar, pool: Meaning[]): TestItem[] | null {
   const transitive = pool.filter(meaning => meaning.object);
   const intransitive = pool.filter(meaning => !meaning.object);
-  for (let attempt = 0; attempt < 200; attempt++) {
-    // Three into-language items (the harder direction carries the aha), two into English.
-    const shapes = rng.shuffle([true, true, false]).concat([true, rng.chance(0.5)]);
-    const meanings = shapes.map(isTransitive => rng.pick(isTransitive ? transitive : intransitive));
+  for (let attempt = 0; attempt < 400; attempt++) {
+    // One item each way. The into-language item is transitive and must exercise the headline (it carries the aha).
+    const toLanguage = rng.pick(transitive);
+    const toEnglish = rng.pick(rng.chance(0.7) ? transitive : intransitive);
+    const meanings = [toLanguage, toEnglish];
     const words = meanings.map(meaning => realise(grammar, meaning));
-    const spread = meanings.every((meaning, i) => meanings.every((other, j) => i === j || meaningDistance(meaning, other) >= 3));
-    const headlineCount = meanings.filter((meaning, index) => exercisesHeadline(grammar, meaning, words[index])).length;
-    const rich = words.slice(0, 3).every(sentence => morphemeCount(sentence) >= 2);
-    const lexemes = new Set(meanings.flatMap(lexemesOf));
-    if (spread && rich && headlineCount >= 3 && lexemes.size <= 8)
-      return meanings.map((meaning, index) => ({ meaning, direction: index < 3 ? "toLang" : "toEnglish" }));
+    const different = meaningDistance(toLanguage, toEnglish) >= 3;
+    const headlineInToLanguage = exercisesHeadline(grammar, toLanguage, words[0]);
+    // prefer both items exercising the headline; accept one after many tries
+    const headlineInBoth = headlineInToLanguage && exercisesHeadline(grammar, toEnglish, words[1]);
+    const rich = words.every(sentence => morphemeCount(sentence) >= 2);
+    if (different && rich && (headlineInBoth || (attempt > 200 && headlineInToLanguage)))
+      return [{ meaning: toLanguage, direction: "toLang" }, { meaning: toEnglish, direction: "toEnglish" }];
   }
   return null;
 }

@@ -20,20 +20,20 @@ describe("normalisation and grading", () => {
   it("expands English contractions and drops punctuation", () => {
     expect(normalise("The men didn't eat bread.", undefined, true)).toBe("the men did not eat bread");
   });
-  const item = turkish.toLang[0]; // adam balığı görmedi
+  const item = turkish.toLang[0]; // çocuk balık yedi
   it("accepts exact answers regardless of case and punctuation", () => {
-    expect(grade(item, "Adam balığı görmedi.", "tr", false)).toBe("ok");
+    expect(grade(item, "Çocuk balık yedi.", "tr", false)).toBe("ok");
   });
   it("treats accent slips and one wrong word as near", () => {
-    expect(grade(item, "adam baligi gormedi", "tr", false)).toBe("near");
-    expect(grade(item, "adam balık görmedi", "tr", false)).toBe("near");
+    expect(grade(item, "cocuk balik yedi", "tr", false)).toBe("near");
+    expect(grade(item, "çocuk balığı yedi", "tr", false)).toBe("near");
   });
   it("rejects wrong answers", () => {
-    expect(grade(item, "balık adam gördü", "tr", false)).toBe("bad");
+    expect(grade(item, "balık çocuğu gördü", "tr", false)).toBe("bad");
     expect(grade(item, "", "tr", false)).toBe("bad");
   });
   it("picks the closest accepted answer for the key", () => {
-    expect(closestAccepted(turkish.toEnglish[1], "the men did not eat any bread", "tr", true)).toBe("the men did not eat any bread");
+    expect(closestAccepted(turkish.toEnglish[0], "the men did not eat any bread", "tr", true)).toBe("the men did not eat any bread");
   });
 });
 
@@ -45,7 +45,7 @@ describe("game rules", () => {
   it("solves with full marks and a star", () => {
     const state = checkAnswers(turkish, answerEverything());
     expect(isOver(turkish, state)).toBe(true);
-    expect(score(turkish, state)).toBe(15);
+    expect(score(turkish, state)).toBe(6);
     expect(shareText(turkish, state)).toContain("★");
   });
   it("only allows a check when an answer changed", () => {
@@ -65,7 +65,7 @@ describe("game rules", () => {
   });
   it("charges for the hint", () => {
     const state = answerEverything(); state.hintUsed = true;
-    expect(score(turkish, checkAnswers(turkish, state))).toBe(14);
+    expect(score(turkish, checkAnswers(turkish, state))).toBe(5);
   });
 });
 
