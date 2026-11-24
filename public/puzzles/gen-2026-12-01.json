@@ -1,0 +1,161 @@
+{
+  "id": "gen-2026-12-01",
+  "number": 9,
+  "date": "2026-12-01",
+  "difficulty": 2,
+  "language": {
+    "name": "Keyeli",
+    "real": false
+  },
+  "checks": 3,
+  "keys": [],
+  "hint": "Find the verb first, then work out which noun is doing the action.",
+  "corpus": [
+    {
+      "lang": "Uka tuya kebi.",
+      "en": "The explorer wakes the mummy.",
+      "gloss": [
+        "wake",
+        "mummy",
+        "explorer"
+      ]
+    },
+    {
+      "lang": "Bete wike tuyatu.",
+      "en": "The mummies guard the tomb.",
+      "gloss": [
+        "guard",
+        "tomb",
+        "mummy-PL"
+      ]
+    },
+    {
+      "lang": "Bem uka tuya kebiti.",
+      "en": "The explorers do not wake the mummy.",
+      "gloss": [
+        "NEG",
+        "wake",
+        "mummy",
+        "explorer-PL"
+      ]
+    },
+    {
+      "lang": "Laku wiketi tuyatu.",
+      "en": "The mummies seal the tombs.",
+      "gloss": [
+        "seal",
+        "tomb-PL",
+        "mummy-PL"
+      ]
+    },
+    {
+      "lang": "Bete wiketi tuyatu.",
+      "en": "The mummies guard the tombs.",
+      "gloss": [
+        "guard",
+        "tomb-PL",
+        "mummy-PL"
+      ]
+    },
+    {
+      "lang": "Bem bete wiketi latatu.",
+      "en": "The jackals do not guard the tombs.",
+      "gloss": [
+        "NEG",
+        "guard",
+        "tomb-PL",
+        "jackal-PL"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Bem bete wiketi tuya.",
+      "accepted": [
+        "the mummy does not guard the tombs",
+        "the mummy does not guard tombs",
+        "the mummy did not guard the tombs",
+        "the mummy did not guard tombs",
+        "the mummy is not guarding the tombs",
+        "the mummy is not guarding tombs",
+        "a mummy does not guard the tombs",
+        "a mummy does not guard tombs",
+        "a mummy did not guard the tombs",
+        "a mummy did not guard tombs",
+        "a mummy is not guarding the tombs",
+        "a mummy is not guarding tombs"
+      ],
+      "explanation": "V O S order. bem = NEG; bete = guard; wike-ti = tomb-PL; tuya = mummy."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "The explorers wake the mummies.",
+      "accepted": [
+        "uka tuyatu kebiti"
+      ],
+      "explanation": "V O S order. uka = wake; tuya-tu = mummy-PL; kebi-ti = explorer-PL."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "tuya",
+        "mummy"
+      ],
+      [
+        "wike",
+        "tomb"
+      ],
+      [
+        "kebi",
+        "explorer"
+      ],
+      [
+        "lata",
+        "jackal"
+      ],
+      [
+        "uka",
+        "wake"
+      ],
+      [
+        "bete",
+        "guard"
+      ],
+      [
+        "laku",
+        "seal"
+      ]
+    ],
+    "grammar": [
+      [
+        "V O S",
+        "Word order: verb, object, subject. With one participant: verb, subject."
+      ],
+      [
+        "-tu / -ti",
+        "Plural."
+      ],
+      [
+        "bem",
+        "Negation: a separate word before the verb."
+      ]
+    ],
+    "notes": "Vowel harmony: a word's vowels are either all back (a, u) or all front (e, i), and suffix vowels follow the stem. Checked against 189 alternative analyses; the sentences rule out 184, including: -tu/-ti appears when: animate; -tu/-ti appears when: plural & animate."
+  },
+  "theme": "explorers in an ancient tomb",
+  "shuffle": {
+    "anchors": [
+      3
+    ],
+    "order": [
+      4,
+      5,
+      1,
+      3,
+      0,
+      2
+    ]
+  }
+}

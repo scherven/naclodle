@@ -1,24 +1,47 @@
 /** Lexicon: a themed subset of English concepts, each given a conlang stem from the sampled phonology. */
 
 import type { Rng } from "./rng";
-import { allowsAgent, allowsPatient, type Theme, type ThemeNoun, type ThemeVerb } from "./themes";
+import { allowsAgent, allowsPatient, type Adverb, type Theme, type ThemeAdjective, type ThemeNoun, type ThemeVerb } from "./themes";
 import { ENGLISH_WORDS } from "./blocklist";
 import { editDistance, makeStem, resolveHarmony, type Phonology } from "./phonology";
 
 export interface LexiconNoun extends ThemeNoun { form: string }
 export interface LexiconVerb extends ThemeVerb { form: string }
-export interface Lexicon { nouns: LexiconNoun[]; verbs: LexiconVerb[] }
+export interface LexiconAdjective extends ThemeAdjective { form: string }
+export interface LexiconAdverb extends Adverb { form: string }
+export interface Lexicon {
+  nouns: LexiconNoun[];
+  verbs: LexiconVerb[];
+  adjectives: LexiconAdjective[];
+  adverbs: LexiconAdverb[];
+}
+
+export interface Vocabulary {
+  nouns: ThemeNoun[];
+  verbs: ThemeVerb[];
+  adjectives: ThemeAdjective[];
+  adverbs: Adverb[];
+}
 
 const ANIMATE_CLASSES = new Set(["p", "b", "s"]);
 export const isAnimate = (noun: ThemeNoun) => ANIMATE_CLASSES.has(noun.semanticClass);
 export const isHuman = (noun: ThemeNoun) => noun.semanticClass === "p";
 
 /**
- * Pick 2-3 transitive and 1-2 intransitive verbs, then 6-8 nouns such that every verb has at least two
+ * Pick 3-4 transitive and 1-2 intransitive verbs, then 6-8 nouns such that every verb has at least two
  * possible subjects and an object, and some transitive verb has at least two possible objects.
+ * Adjectives and adverbs are only included when the grammar uses them.
  */
-export function chooseVocabulary(rng: Rng, theme: Theme): { nouns: ThemeNoun[]; verbs: ThemeVerb[] } | null {
-  const transitiveVerbs = rng.shuffle(theme.verbs.filter(verb => verb.transitive)).slice(0, rng.int(2, 3));
+export function chooseVocabulary(rng: Rng, theme: Theme, adverbs: Adverb[]): Vocabulary | null {
+  for (let attempt = 0; attempt < 30; attempt++) {
+    const vocabulary = tryVocabulary(rng, theme, adverbs);
+    if (vocabulary) return vocabulary;
+  }
+  return null;
+}
+
+function tryVocabulary(rng: Rng, theme: Theme, adverbs: Adverb[]): Vocabulary | null {
+  const transitiveVerbs = rng.shuffle(theme.verbs.filter(verb => verb.transitive)).slice(0, rng.int(3, 4));
   const intransitiveVerbs = rng.shuffle(theme.verbs.filter(verb => !verb.transitive)).slice(0, rng.int(1, 2));
   const verbs = [...transitiveVerbs, ...intransitiveVerbs];
   const usefulNouns = theme.nouns.filter(noun => verbs.some(verb => allowsAgent(verb, noun) || allowsPatient(verb, noun)));
@@ -27,7 +50,8 @@ export function chooseVocabulary(rng: Rng, theme: Theme): { nouns: ThemeNoun[]; 
   const patientCount = (verb: ThemeVerb) => nouns.filter(noun => allowsPatient(verb, noun)).length;
   const usable = verbs.every(verb => agentCount(verb) >= 2 && (!verb.transitive || patientCount(verb) >= 1)) &&
     transitiveVerbs.some(verb => patientCount(verb) >= 2);
-  return usable && transitiveVerbs.length >= 2 && intransitiveVerbs.length >= 1 ? { nouns, verbs } : null;
+  const adjectives = theme.adjectives.filter(adjective => nouns.filter(noun => adjective.describes.includes(noun.semanticClass)).length >= 2);
+  return usable && transitiveVerbs.length >= 2 && intransitiveVerbs.length >= 1 ? { nouns, verbs, adjectives, adverbs } : null;
 }
 
 /** Would this form read as English, or echo its own gloss (griffin -> "grif")? */
@@ -57,7 +81,7 @@ export interface AffixConstraints {
 export function assignForms(
   rng: Rng,
   phonology: Phonology,
-  vocabulary: { nouns: ThemeNoun[]; verbs: ThemeVerb[] },
+  vocabulary: Vocabulary,
   constraints: AffixConstraints,
 ): Lexicon | null {
   const taken: string[] = [...constraints.words];
@@ -93,7 +117,19 @@ export function assignForms(
     if (!form) return null;
     verbs.push({ ...verb, form });
   }
-  return { nouns, verbs };
+  const adjectives: LexiconAdjective[] = [];
+  for (const adjective of vocabulary.adjectives) {
+    const form = makeFor(adjective.id, () => 2, phonology.harmony ? rng.chance(0.5) : null);
+    if (!form) return null;
+    adjectives.push({ ...adjective, form });
+  }
+  const adverbs: LexiconAdverb[] = [];
+  for (const adverb of vocabulary.adverbs) {
+    const form = makeFor(adverb.english.replace(/^at /, ""), () => rng.int(2, 3), phonology.harmony ? rng.chance(0.5) : null);
+    if (!form) return null;
+    adverbs.push({ ...adverb, form });
+  }
+  return { nouns, verbs, adjectives, adverbs };
 }
 
 /** Both harmony variants of an affix (or just the affix). */

@@ -4,8 +4,9 @@ import type { CorpusLine, Item, Puzzle } from "../puzzle";
 import type { CheckResult, TestItem } from "./checker";
 import { englishAnswers, englishSentence, type EnglishLexicon, type EnglishOptions } from "./english";
 import type { Grammar, Headline, Morpheme } from "./grammar";
+import { difficultyScore } from "./sample";
 import { affixVariants } from "./lexicon";
-import type { Meaning } from "./meaning";
+import { lexemesOf, type Meaning } from "./meaning";
 import { displaySentence, realise, sentenceText, type RealisedWord } from "./realise";
 import { isHarmonising } from "./select";
 
@@ -17,6 +18,8 @@ const HINTS: Record<Headline, string> = {
   harmony: "Some endings come in two shapes. Look at the vowels of the word they attach to.",
   definiteness: "Watch for “the” versus “a” in the English.",
   wordOrder: "Find the verb first, then work out which noun is doing the action.",
+  possessive: "In “the king's horse”, which of the two words carries the extra ending?",
+  adjectivePhrase: "When a describing word is added, where do the noun's usual endings go?",
 };
 
 const ORDER_NAMES: Record<string, string> = { S: "subject", O: "object", V: "verb" };
@@ -25,6 +28,8 @@ export function englishLexiconOf(grammar: Grammar): EnglishLexicon {
   return {
     noun: id => grammar.lexicon.nouns.find(entry => entry.id === id)!.english,
     verb: id => grammar.lexicon.verbs.find(entry => entry.id === id)!.english,
+    adjective: id => grammar.lexicon.adjectives.find(entry => entry.id === id)!.id,
+    adverb: id => grammar.lexicon.adverbs.find(entry => entry.id === id)!,
   };
 }
 
@@ -66,7 +71,11 @@ function describeMorpheme(grammar: Grammar, morpheme: Morpheme): string {
       return "Accusative: marks the object.";
     }
     case "DEF": return "Definite (“the”). A noun without it means “a” (or plain plural).";
-    case "PST": return "Past tense. Without it the verb is present or future.";
+    case "PST": return JSON.stringify(morpheme.condition).includes("pastTimeWord")
+      ? "Past tense, but left off when “yesterday” already says the time: tense is marked only once."
+      : "Past tense. Without it the verb is present or future.";
+    case "GEN": return "Marks the possessor (“the king's”).";
+    case "POSS": return "Marks the possessed noun (“the king's horse” = king horse-POSS). The possessor itself is bare.";
     case "AGR": return morpheme.gloss === "PL.ABS"
       ? "On the verb when the lone participant, or the object, is plural. A plural doer does not trigger it."
       : "On the verb when the subject is plural.";
@@ -84,6 +93,24 @@ function orderLine(grammar: Grammar): [string, string] {
   return [order.join(" "), `Word order: ${order.map(letter => ORDER_NAMES[letter]).join(", ")}. With one participant: ${intransitive}.`];
 }
 
+function structureLines(grammar: Grammar): [string, string][] {
+  const lines: [string, string][] = [];
+  const adjectives = grammar.adjectives;
+  if (adjectives) {
+    const where = adjectives.position === "before" ? "before" : "after";
+    const marking = adjectives.marking === "head" ? "Noun endings go on the noun only; the adjective stays bare."
+      : adjectives.marking === "concord" ? `The adjective copies the noun's ${adjectives.concord.map(id => ({ PL: "plural", ACC: "object", ERG: "ergative", DEF: "definite", GEN: "possessor", POSS: "possessed" } as Record<string, string>)[id] ?? id).join(" and ")} ending${adjectives.concord.length > 1 ? "s" : ""}.`
+      : `Endings go on the last word of the phrase, so they attach to the adjective, not the noun.`;
+    lines.push(["Adjectives", `Come ${where} the noun. ${marking}`]);
+  }
+  if (grammar.possessorPosition) lines.push(["Possessor", `Comes ${grammar.possessorPosition} the possessed noun.`]);
+  if (grammar.adverbPosition) {
+    const where = { initial: "at the start of the sentence", final: "at the end of the sentence", beforeVerb: "just before the verb", afterVerb: "just after the verb" }[grammar.adverbPosition];
+    lines.push(["Time and manner words", `Go ${where}.`]);
+  }
+  return lines;
+}
+
 function itemExplanation(grammar: Grammar, meaning: Meaning, words: RealisedWord[]): string {
   const parts = words.map(word => `${word.segmented} = ${word.gloss}`);
   const clauseOrder = meaning.object ? grammar.wordOrder : grammar.intransitiveSubjectFirst ? "SV" : "VS";
@@ -95,13 +122,7 @@ function itemExplanation(grammar: Grammar, meaning: Meaning, words: RealisedWord
 }
 
 function difficultyOf(grammar: Grammar): Puzzle["difficulty"] {
-  const base: Record<Headline, number> = {
-    ergative: 3, differentialObject: 3, harmony: 2.5, reduplication: 2, circumfix: 2, definiteness: 2, wordOrder: 2,
-  };
-  let score = base[grammar.info.headline] + 0.5 * grammar.info.supporting.length;
-  if (!["SOV", "SVO"].includes(grammar.wordOrder)) score += 0.5;
-  if (grammar.morphemes.some(morpheme => morpheme.gloss === "PL.ABS")) score += 0.5;
-  return Math.max(1, Math.min(5, Math.round(score))) as Puzzle["difficulty"];
+  return Math.max(1, Math.min(5, Math.round(difficultyScore(grammar)))) as Puzzle["difficulty"];
 }
 
 export const PUZZLE_EPOCH = "2026-11-22";
@@ -117,9 +138,11 @@ export interface BuildInput {
   tests: TestItem[];
   check: CheckResult;
   blocked: string[];
+  themeTitle: string;
+  shuffle?: { anchors: number[]; order: number[] };
 }
 
-export function buildPuzzle({ date, languageName, grammar, corpus, tests, check, blocked }: BuildInput): Puzzle {
+export function buildPuzzle({ date, languageName, grammar, corpus, tests, check, blocked, themeTitle, shuffle }: BuildInput): Puzzle {
   const english = englishLexiconOf(grammar);
   const englishOptions = englishOptionsOf(grammar);
 
@@ -139,11 +162,13 @@ export function buildPuzzle({ date, languageName, grammar, corpus, tests, check,
   const keys = [...new Set([...allText.toLowerCase()].filter(letter => /\p{L}/u.test(letter) && !/[a-z]/.test(letter)))];
 
   // Word list: every lexeme the player meets.
-  const usedLexemes = new Set([...corpus, ...tests.map(test => test.meaning)].flatMap(meaning => [meaning.verb, meaning.subject.noun, ...(meaning.object ? [meaning.object.noun] : [])]));
+  const usedLexemes = new Set([...corpus, ...tests.map(test => test.meaning)].flatMap(lexemesOf));
   const verbsTakeAffixes = grammar.morphemes.some(morpheme => morpheme.host === "verb" && morpheme.exponent.kind !== "particle");
   const words: [string, string][] = [
     ...grammar.lexicon.nouns.filter(noun => usedLexemes.has(noun.id)).map(noun => [noun.form, noun.english.singular] as [string, string]),
     ...grammar.lexicon.verbs.filter(verb => usedLexemes.has(verb.id)).map(verb => [verbsTakeAffixes ? `${verb.form}-` : verb.form, verb.english.base] as [string, string]),
+    ...grammar.lexicon.adjectives.filter(adjective => usedLexemes.has(`adj:${adjective.id}`)).map(adjective => [adjective.form, adjective.id] as [string, string]),
+    ...grammar.lexicon.adverbs.filter(adverb => usedLexemes.has(`adv:${adverb.id}`)).map(adverb => [adverb.form, adverb.english] as [string, string]),
   ];
 
   const grammarLines: [string, string][] = [orderLine(grammar)];
@@ -152,6 +177,7 @@ export function buildPuzzle({ date, languageName, grammar, corpus, tests, check,
   const nounSuffixes = grammar.morphemes.filter(morpheme => morpheme.host === "noun" && morpheme.exponent.kind === "suffix");
   if (nounSuffixes.length >= 2)
     grammarLines.push(["Suffix order", `On nouns: stem-${[...nounSuffixes].sort((first, second) => first.slot - second.slot).map(morpheme => morpheme.gloss).join("-")}.`]);
+  grammarLines.push(...structureLines(grammar));
 
   const notes: string[] = [];
   if (grammar.harmonyCondition && grammar.phonology.harmony && grammar.morphemes.some(isHarmonising)) {
@@ -176,5 +202,7 @@ export function buildPuzzle({ date, languageName, grammar, corpus, tests, check,
     toEnglish: tests.filter(test => test.direction === "toEnglish").map(item),
     toLang: tests.filter(test => test.direction === "toLang").map(item),
     explain: { words, grammar: grammarLines, notes: notes.join(" ") },
+    theme: themeTitle,
+    ...(shuffle ? { shuffle } : {}),
   };
 }

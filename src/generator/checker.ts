@@ -17,6 +17,11 @@
  *   harmony        no harmony (always back / always front) or allomorphs chosen by another feature
  *   boundary       a morpheme boundary shifted by one letter (stem "taku" + "-n" vs "tak" + "-un")
  *   circumfixSplit the two halves of a circumfix read as independent morphemes
+ *   adjective      adjective on the other side of the noun; noun-phrase morphology on the head only,
+ *                  copied onto the adjective (number, or number and case), or on the phrase's last word
+ *   possessor      possessor on the other side of the possessed noun (possessor- vs possessed-marking is
+ *                  covered by the condition family: GEN "appears when: possessed noun")
+ *   adverbPosition the manner/time word in any other position
  *
  * Known gaps: competitors never invent new morpheme strings beyond one-letter boundary shifts, never
  * posit free word order, and never reanalyse a stem as two morphemes. The explicit evidence check
@@ -25,10 +30,10 @@
 
 import {
   cloneGrammar, describeCondition, featureCondition, NOUN_FEATURES, VERB_FEATURES, WORD_ORDERS,
-  type Condition, type Feature, type Grammar, type Morpheme, type Role,
+  type AdjectiveRules, type AdverbPosition, type Condition, type Feature, type Grammar, type Morpheme, type Role,
 } from "./grammar";
 import { englishSentence, type EnglishLexicon, type EnglishOptions } from "./english";
-import { lexemesOf, type Meaning } from "./meaning";
+import { relatedMeanings, type Meaning } from "./meaning";
 import { resolveHarmony } from "./phonology";
 import { realise, sentenceText } from "./realise";
 
@@ -40,8 +45,6 @@ export interface CheckContext {
   grammar: Grammar;
   corpus: Meaning[];
   tests: TestItem[];
-  /** All meanings the lexicon allows, used to read test sentences under a competitor grammar. */
-  meaningPool: Meaning[];
   english: EnglishLexicon;
   englishOptions: EnglishOptions;
 }
@@ -86,8 +89,11 @@ function mentionsFeature(condition: Condition, feature: Feature): boolean {
 
 /** Features the player can actually observe in this language (no tense contrast -> "past" is meaningless). */
 function observableFeatures(grammar: Grammar, host: Morpheme["host"]): Feature[] {
+  const dimensions = grammar.info.dimensions;
   return (host === "noun" ? NOUN_FEATURES : VERB_FEATURES).filter(feature =>
-    !(feature === "past" && !grammar.info.dimensions.tense) &&
+    !(feature === "past" && !dimensions.tense) &&
+    !((feature === "possessor" || feature === "possessed") && !dimensions.possession) &&
+    !(feature === "pastTimeWord" && !grammar.lexicon.adverbs.some(adverb => adverb.requiresPast)) &&
     !(feature === "definite" && !grammar.info.dimensions.definiteness) &&
     !(feature === "frontStem" && !grammar.phonology.harmony));
 }
@@ -226,6 +232,35 @@ export function singleEditCompetitors(grammar: Grammar): Competitor[] {
       });
     }
 
+  if (grammar.adjectives) {
+    const rules = grammar.adjectives;
+    add("adjective", `adjective goes ${rules.position === "before" ? "after" : "before"} the noun`, candidate => {
+      candidate.adjectives = { ...rules, position: rules.position === "before" ? "after" : "before" };
+    });
+    const caseIds = grammar.morphemes.filter(morpheme => ["ACC", "ERG"].includes(morpheme.id)).map(morpheme => morpheme.id);
+    const allIds = grammar.morphemes.filter(morpheme => morpheme.host === "noun").map(morpheme => morpheme.id);
+    const markings: AdjectiveRules[] = [
+      { position: rules.position, marking: "head", concord: [] },
+      { position: rules.position, marking: "concord", concord: ["PL"] },
+      { position: rules.position, marking: "concord", concord: ["PL", ...caseIds] },
+      { position: rules.position, marking: "concord", concord: allIds },
+      { position: "after", marking: "edge", concord: [] },
+      { position: "before", marking: "edge", concord: [] },
+    ];
+    for (const marking of markings)
+      if (JSON.stringify(marking) !== JSON.stringify(rules))
+        add("adjective", `noun-phrase endings: ${marking.marking}${marking.concord.length ? ` (${marking.concord.join("+")} copied)` : ""}, adjective ${marking.position}`,
+          candidate => { candidate.adjectives = marking; });
+  }
+  if (grammar.possessorPosition)
+    add("possessor", `possessor goes ${grammar.possessorPosition === "before" ? "after" : "before"} the possessed noun`, candidate => {
+      candidate.possessorPosition = grammar.possessorPosition === "before" ? "after" : "before";
+    });
+  if (grammar.adverbPosition)
+    for (const position of ["initial", "final", "beforeVerb", "afterVerb"] as AdverbPosition[])
+      if (position !== grammar.adverbPosition)
+        add("adverbPosition", `adverb position: ${position}`, candidate => { candidate.adverbPosition = position; });
+
   if (grammar.harmonyCondition) {
     add("harmony", "no vowel harmony: suffixes always have back vowels", candidate => { candidate.harmonyCondition = { type: "never" }; });
     add("harmony", "no vowel harmony: suffixes always have front vowels", candidate => { candidate.harmonyCondition = { type: "always" }; });
@@ -236,17 +271,19 @@ export function singleEditCompetitors(grammar: Grammar): Competitor[] {
   return competitors;
 }
 
+const TOP_LEVEL_FIELDS = ["wordOrder", "intransitiveSubjectFirst", "harmonyCondition", "adjectives", "possessorPosition", "adverbPosition"] as const;
+
 /** Combine two single edits (applied in sequence) into one competitor. */
 function combine(grammar: Grammar, first: Competitor, second: Competitor): Competitor | null {
   if (first.family === second.family && first.family !== "condition") return null;
   // Re-derive the second edit on top of the first by diffing it against the true grammar.
   const combined = cloneGrammar(first.grammar);
-  if (second.grammar.wordOrder !== grammar.wordOrder) combined.wordOrder = second.grammar.wordOrder;
-  if (second.grammar.intransitiveSubjectFirst !== grammar.intransitiveSubjectFirst)
-    combined.intransitiveSubjectFirst = second.grammar.intransitiveSubjectFirst;
-  if (JSON.stringify(second.grammar.harmonyCondition) !== JSON.stringify(grammar.harmonyCondition))
-    combined.harmonyCondition = second.grammar.harmonyCondition;
   let changed = false;
+  for (const field of TOP_LEVEL_FIELDS)
+    if (JSON.stringify(second.grammar[field]) !== JSON.stringify(grammar[field])) {
+      if (JSON.stringify(first.grammar[field]) !== JSON.stringify(grammar[field])) return null; // both edit it
+      Object.assign(combined, { [field]: second.grammar[field] });
+    }
   second.grammar.morphemes.forEach((morpheme, index) => {
     const original = grammar.morphemes[index];
     if (!original) { combined.morphemes.push({ ...morpheme }); return; }
@@ -256,7 +293,7 @@ function combine(grammar: Grammar, first: Competitor, second: Competitor): Compe
     }
   });
   if (changed) return null;
-  if (second.family === "boundary") combined.lexicon = second.grammar.lexicon;
+  if (second.family === "boundary" || second.family === "lexicalSwap") combined.lexicon = second.grammar.lexicon;
   return { family: `${first.family}+${second.family}`, description: `${first.description}; and ${second.description}`, grammar: combined };
 }
 
@@ -267,20 +304,22 @@ function readings(grammar: Grammar, text: string, candidates: Meaning[]): Meanin
   });
 }
 
-function sameLexemes(first: Meaning, second: Meaning): boolean {
-  return [...lexemesOf(first)].sort().join() === [...lexemesOf(second)].sort().join();
-}
-
 export interface Checker {
   evaluate(competitor: Competitor): CompetitorVerdict;
   corpusMismatches(competitor: Competitor): number;
 }
 
 export function makeChecker(context: CheckContext): Checker {
-  const { grammar, corpus, tests, meaningPool, english, englishOptions } = context;
+  const { grammar, corpus, tests, english, englishOptions } = context;
   const corpusTexts = corpus.map(meaning => sentenceText(realise(grammar, meaning)));
   const testTexts = tests.map(test => sentenceText(realise(grammar, test.meaning)));
-  const testReadingCandidates = tests.map(test => meaningPool.filter(meaning => sameLexemes(meaning, test.meaning)));
+  // Computed lazily: only competitors that survive the corpus need to read the test sentences.
+  const readingCandidates = new Map<number, Meaning[]>();
+  const candidatesFor = (index: number) => {
+    if (!readingCandidates.has(index))
+      readingCandidates.set(index, relatedMeanings(grammar.lexicon, grammar.info.dimensions, tests[index].meaning));
+    return readingCandidates.get(index)!;
+  };
   const trueEnglish = tests.map(test => englishSentence(test.meaning, english, englishOptions));
 
   const realiseText = (candidateGrammar: Grammar, meaning: Meaning) => {
@@ -300,7 +339,7 @@ export function makeChecker(context: CheckContext): Checker {
             if (realiseText(competitor.grammar, test.meaning) !== testTexts[index]) disagreesOn.push(index);
           } else {
             // A competitor that cannot read the sentence at all gives no rival answer.
-            const rivalReadings = readings(competitor.grammar, testTexts[index], testReadingCandidates[index]);
+            const rivalReadings = readings(competitor.grammar, testTexts[index], candidatesFor(index));
             if (rivalReadings.some(meaning => englishSentence(meaning, english, englishOptions) !== trueEnglish[index]))
               disagreesOn.push(index);
           }
@@ -332,4 +371,109 @@ export function checkSolvability(context: CheckContext, maxPairs = 3000): CheckR
       if (++pairCount >= maxPairs) break outer;
     }
   return { verdicts, harmful: verdicts.filter(verdict => verdict.killedBy === -1 && verdict.disagreesOn.length > 0) };
+}
+
+/** Competitors that swap two stems of the same kind, or the spellings of two affixes on the same host. */
+export function swapCompetitors(grammar: Grammar): Competitor[] {
+  const competitors: Competitor[] = [];
+  const lexiconLists = ["nouns", "verbs", "adjectives", "adverbs"] as const;
+  for (const listName of lexiconLists) {
+    const entries = grammar.lexicon[listName];
+    for (let i = 0; i < entries.length; i++)
+      for (let j = i + 1; j < entries.length; j++) {
+        const candidate = cloneGrammar(grammar);
+        const list = candidate.lexicon[listName];
+        [list[i].form, list[j].form] = [list[j].form, list[i].form];
+        competitors.push({ family: "lexicalSwap", description: `"${entries[i].form}" means ${entries[j].id} and "${entries[j].form}" means ${entries[i].id}`, grammar: candidate });
+      }
+  }
+  for (let i = 0; i < grammar.morphemes.length; i++)
+    for (let j = i + 1; j < grammar.morphemes.length; j++) {
+      if (grammar.morphemes[i].host !== grammar.morphemes[j].host) continue;
+      const candidate = cloneGrammar(grammar);
+      const [first, second] = [candidate.morphemes[i], candidate.morphemes[j]];
+      [first.exponent, second.exponent] = [second.exponent, first.exponent];
+      competitors.push({ family: "exponentSwap", description: `${morphemeName(grammar, grammar.morphemes[i])} and ${morphemeName(grammar, grammar.morphemes[j])} swap meanings`, grammar: candidate });
+    }
+  return competitors;
+}
+
+export interface ShuffleCheck {
+  /** Rows whose English line stays in place. Empty when no anchor set makes the pairing unique. */
+  anchors: number[];
+  unique: boolean;
+  /** Rival pairings found (each is row -> English line), and the grammar that produced the first one. */
+  rivalCount: number;
+  rival?: string;
+}
+
+/**
+ * Shuffled days: the player must also work out which English line belongs to which sentence.
+ *
+ * Method: take a hypothesis space H = the true grammar, every single-edit competitor, every swap of two
+ * stems or two affix spellings, every pair of stem swaps, and every stem swap combined with a single
+ * edit. For each G in H, realise every English line's meaning under G. Corpus sentences are distinct
+ * strings, so if the realisations are exactly the corpus sentences in some order, G explains the data
+ * under one and only one pairing (string equality fixes it), and we record that pairing. No search over
+ * the n! pairings is needed. The puzzle is uniquely pairable (within H) if every recorded pairing other
+ * than the true one moves at least one anchor row; we choose 1-2 anchors to make that so.
+ *
+ * Limits: like the main check, this only covers grammars near the true one. A player could in principle
+ * hold a wilder analysis; H was chosen to include the confusions shuffling invites (which word is which).
+ */
+export function checkShufflePairing(grammar: Grammar, corpus: Meaning[], rng: { shuffle<T>(items: readonly T[]): T[] }): ShuffleCheck {
+  const corpusTexts = corpus.map(meaning => sentenceText(realise(grammar, meaning)));
+  const rowOf = new Map(corpusTexts.map((text, row) => [text, row]));
+  const singles = singleEditCompetitors(grammar);
+  const swaps = swapCompetitors(grammar);
+  const lexicalSwaps = swaps.filter(competitor => competitor.family === "lexicalSwap");
+  const hypotheses: Competitor[] = [{ family: "true", description: "the true grammar", grammar }, ...singles, ...swaps];
+  for (let i = 0; i < lexicalSwaps.length; i++) {
+    for (let j = i + 1; j < lexicalSwaps.length; j++) {
+      const pairGrammar = cloneGrammar(grammar);
+      pairGrammar.lexicon = combineLexicons(grammar, lexicalSwaps[i].grammar, lexicalSwaps[j].grammar);
+      hypotheses.push({ family: "lexicalSwap+lexicalSwap", description: `${lexicalSwaps[i].description}; and ${lexicalSwaps[j].description}`, grammar: pairGrammar });
+    }
+    for (const single of singles) {
+      const pair = combine(grammar, single, lexicalSwaps[i]);
+      if (pair) hypotheses.push(pair);
+    }
+  }
+
+  const rivalPairings: { pairing: number[]; description: string }[] = [];
+  const seen = new Set<string>();
+  for (const hypothesis of hypotheses) {
+    const pairing: number[] = new Array(corpus.length);
+    let explains = true;
+    for (let line = 0; line < corpus.length && explains; line++) {
+      let text: string;
+      try { text = sentenceText(realise(hypothesis.grammar, corpus[line])); } catch { explains = false; break; }
+      const row = rowOf.get(text);
+      if (row === undefined || pairing[row] !== undefined) explains = false;
+      else pairing[row] = line;
+    }
+    if (!explains) continue;
+    const key = pairing.join(",");
+    if (pairing.every((line, row) => line === row) || seen.has(key)) continue;
+    seen.add(key);
+    rivalPairings.push({ pairing, description: hypothesis.description });
+  }
+  if (!rivalPairings.length) return { anchors: [rng.shuffle(corpus.map((_, row) => row))[0]], unique: true, rivalCount: 0 };
+  // Find 1-2 anchor rows that every rival pairing moves.
+  const rows = rng.shuffle(corpus.map((_, row) => row));
+  const movesAll = (anchors: number[]) => rivalPairings.every(rival => anchors.some(anchor => rival.pairing[anchor] !== anchor));
+  for (const anchor of rows) if (movesAll([anchor])) return { anchors: [anchor], unique: true, rivalCount: rivalPairings.length };
+  for (const first of rows) for (const second of rows)
+    if (first < second && movesAll([first, second])) return { anchors: [first, second], unique: true, rivalCount: rivalPairings.length };
+  return { anchors: [], unique: false, rivalCount: rivalPairings.length, rival: rivalPairings[0].description };
+}
+
+/** Apply two independent stem swaps to one lexicon. */
+function combineLexicons(grammar: Grammar, first: Grammar, second: Grammar): Grammar["lexicon"] {
+  const lexicon = cloneGrammar(first).lexicon;
+  for (const listName of ["nouns", "verbs", "adjectives", "adverbs"] as const)
+    lexicon[listName].forEach((entry, index) => {
+      if (second.lexicon[listName][index].form !== grammar.lexicon[listName][index].form) entry.form = second.lexicon[listName][index].form;
+    });
+  return lexicon;
 }

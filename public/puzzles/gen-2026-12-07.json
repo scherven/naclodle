@@ -1,0 +1,167 @@
+{
+  "id": "gen-2026-12-07",
+  "number": 15,
+  "date": "2026-12-07",
+  "difficulty": 1,
+  "language": {
+    "name": "Niša",
+    "real": false
+  },
+  "checks": 3,
+  "keys": [],
+  "hint": "How does a noun change when there is more than one? Look at the start of the word.",
+  "corpus": [
+    {
+      "lang": "Tunewe menta.",
+      "en": "The judge waits.",
+      "gloss": [
+        "judge",
+        "wait"
+      ]
+    },
+    {
+      "lang": "Kiti mamo tunewe.",
+      "en": "The ferryman pays the judge.",
+      "gloss": [
+        "ferryman",
+        "pay",
+        "judge"
+      ]
+    },
+    {
+      "lang": "Tunewe koka kara-kara.",
+      "en": "The judge crosses the rivers.",
+      "gloss": [
+        "judge",
+        "cross",
+        "PL~river"
+      ]
+    },
+    {
+      "lang": "Tunewe ma koka kara.",
+      "en": "The judge does not cross the river.",
+      "gloss": [
+        "judge",
+        "NEG",
+        "cross",
+        "river"
+      ]
+    },
+    {
+      "lang": "Kiti-kiti koka kara-kara.",
+      "en": "The ferrymen cross the rivers.",
+      "gloss": [
+        "PL~ferryman",
+        "cross",
+        "PL~river"
+      ]
+    },
+    {
+      "lang": "Tunewe-tunewe ma mamo kiti.",
+      "en": "The judges do not pay the ferryman.",
+      "gloss": [
+        "PL~judge",
+        "NEG",
+        "pay",
+        "ferryman"
+      ]
+    },
+    {
+      "lang": "Kiti-kiti ma mamo tunewe-tunewe.",
+      "en": "The ferrymen do not pay the judges.",
+      "gloss": [
+        "PL~ferryman",
+        "NEG",
+        "pay",
+        "PL~judge"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Kiti-kiti ma koka kara.",
+      "accepted": [
+        "the ferrymen do not cross the river",
+        "the ferrymen do not cross a river",
+        "the ferrymen did not cross the river",
+        "the ferrymen did not cross a river",
+        "the ferrymen are not crossing the river",
+        "the ferrymen are not crossing a river",
+        "ferrymen do not cross the river",
+        "ferrymen do not cross a river",
+        "ferrymen did not cross the river",
+        "ferrymen did not cross a river",
+        "ferrymen are not crossing the river",
+        "ferrymen are not crossing a river"
+      ],
+      "explanation": "S V O order. kiti-kiti = PL~ferryman; ma = NEG; koka = cross; kara = river."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "The judges pay the ferrymen.",
+      "accepted": [
+        "tunewe-tunewe mamo kiti-kiti"
+      ],
+      "explanation": "S V O order. tunewe-tunewe = PL~judge; mamo = pay; kiti-kiti = PL~ferryman."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "kiti",
+        "ferryman"
+      ],
+      [
+        "kara",
+        "river"
+      ],
+      [
+        "tunewe",
+        "judge"
+      ],
+      [
+        "koka",
+        "cross"
+      ],
+      [
+        "mamo",
+        "pay"
+      ],
+      [
+        "menta",
+        "wait"
+      ]
+    ],
+    "grammar": [
+      [
+        "S V O",
+        "Word order: subject, verb, object. With one participant: subject, verb."
+      ],
+      [
+        "X-X",
+        "Plural: say the noun twice (wemšoke → wemšoke-wemšoke)."
+      ],
+      [
+        "ma",
+        "Negation: a separate word before the verb."
+      ]
+    ],
+    "notes": "Checked against 143 alternative analyses; the sentences rule out 141, including: ma appears when: (negative or plural subject)."
+  },
+  "theme": "the ferry of the underworld",
+  "shuffle": {
+    "anchors": [
+      0
+    ],
+    "order": [
+      0,
+      3,
+      6,
+      4,
+      5,
+      2,
+      1
+    ]
+  }
+}

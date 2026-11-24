@@ -1,0 +1,231 @@
+{
+  "id": "de-1",
+  "number": 17,
+  "date": "2026-12-09",
+  "difficulty": 3,
+  "language": {
+    "name": "German",
+    "real": true,
+    "locale": "de"
+  },
+  "theme": "Grimm fairy tale: a witch, a wolf, a dwarf, a hunter and a king in the forest",
+  "checks": 3,
+  "keys": [
+    "ä",
+    "ö",
+    "ü",
+    "ß"
+  ],
+  "hint": "Compare the first two sentences. If the order of the nouns does not tell you who does what, what does?",
+  "corpus": [
+    {
+      "lang": "Der Wolf sieht den Jäger.",
+      "en": "The wolf sees the hunter.",
+      "gloss": [
+        "the.M.NOM",
+        "wolf",
+        "see.3SG",
+        "the.M.ACC",
+        "hunter"
+      ]
+    },
+    {
+      "lang": "Den Wolf sieht der Jäger.",
+      "en": "The hunter sees the wolf.",
+      "gloss": [
+        "the.M.ACC",
+        "wolf",
+        "see.3SG",
+        "the.M.NOM",
+        "hunter"
+      ]
+    },
+    {
+      "lang": "Die Hexe gibt dem Zwerg den Apfel.",
+      "en": "The witch gives the dwarf the apple.",
+      "gloss": [
+        "the.F",
+        "witch",
+        "give.3SG",
+        "the.M.DAT",
+        "dwarf",
+        "the.M.ACC",
+        "apple"
+      ]
+    },
+    {
+      "lang": "Im Wald findet der Zwerg den Ring.",
+      "en": "In the forest, the dwarf finds the ring.",
+      "gloss": [
+        "in.the.DAT",
+        "forest",
+        "find.3SG",
+        "the.M.NOM",
+        "dwarf",
+        "the.M.ACC",
+        "ring"
+      ]
+    },
+    {
+      "lang": "Den Apfel gibt der Zwerg dem Wolf.",
+      "en": "The dwarf gives the apple to the wolf.",
+      "gloss": [
+        "the.M.ACC",
+        "apple",
+        "give.3SG",
+        "the.M.NOM",
+        "dwarf",
+        "the.M.DAT",
+        "wolf"
+      ]
+    },
+    {
+      "lang": "Der König sieht die Hexe im Wald.",
+      "en": "The king sees the witch in the forest.",
+      "gloss": [
+        "the.M.NOM",
+        "king",
+        "see.3SG",
+        "the.F",
+        "witch",
+        "in.the.DAT",
+        "forest"
+      ]
+    },
+    {
+      "lang": "Dem König gibt der Jäger den Ring.",
+      "en": "The hunter gives the king the ring.",
+      "gloss": [
+        "the.M.DAT",
+        "king",
+        "give.3SG",
+        "the.M.NOM",
+        "hunter",
+        "the.M.ACC",
+        "ring"
+      ]
+    },
+    {
+      "lang": "Im Wald sieht die Hexe den König.",
+      "en": "In the forest, the witch sees the king.",
+      "gloss": [
+        "in.the.DAT",
+        "forest",
+        "see.3SG",
+        "the.F",
+        "witch",
+        "the.M.ACC",
+        "king"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Den Zwerg sieht der Wolf im Wald.",
+      "accepted": [
+        "the wolf sees the dwarf in the forest",
+        "in the forest the wolf sees the dwarf",
+        "the wolf sees the dwarf in the woods",
+        "in the woods the wolf sees the dwarf",
+        "the wolf sees the dwarf in the wood",
+        "in the wood the wolf sees the dwarf"
+      ],
+      "explanation": "den marks the one being seen and der the one seeing, so the wolf is the subject even though it comes second."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "In the forest, the hunter gives the wolf the apple.",
+      "accepted": [
+        "Im Wald gibt der Jäger dem Wolf den Apfel.",
+        "Im Wald gibt der Jäger den Apfel dem Wolf.",
+        "Im Wald gibt dem Wolf der Jäger den Apfel.",
+        "Der Jäger gibt im Wald dem Wolf den Apfel.",
+        "Der Jäger gibt dem Wolf im Wald den Apfel.",
+        "Der Jäger gibt dem Wolf den Apfel im Wald.",
+        "Der Jäger gibt den Apfel dem Wolf im Wald.",
+        "Dem Wolf gibt der Jäger im Wald den Apfel.",
+        "Dem Wolf gibt der Jäger den Apfel im Wald.",
+        "Den Apfel gibt der Jäger im Wald dem Wolf.",
+        "Den Apfel gibt der Jäger dem Wolf im Wald."
+      ],
+      "explanation": "The verb must be the second element, so after Im Wald comes gibt, then the subject. der = giver, dem = receiver, den = thing given."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "Wolf",
+        "wolf"
+      ],
+      [
+        "Jäger",
+        "hunter"
+      ],
+      [
+        "Hexe",
+        "witch"
+      ],
+      [
+        "Zwerg",
+        "dwarf"
+      ],
+      [
+        "König",
+        "king"
+      ],
+      [
+        "Apfel",
+        "apple"
+      ],
+      [
+        "Ring",
+        "ring"
+      ],
+      [
+        "Wald",
+        "forest"
+      ],
+      [
+        "sieht",
+        "sees"
+      ],
+      [
+        "gibt",
+        "gives"
+      ],
+      [
+        "findet",
+        "finds"
+      ],
+      [
+        "im",
+        "in the"
+      ]
+    ],
+    "grammar": [
+      [
+        "der",
+        "“the” for a masculine subject (the one doing it)."
+      ],
+      [
+        "den",
+        "“the” for a masculine direct object (the one it is done to)."
+      ],
+      [
+        "dem",
+        "“the” for a masculine indirect object (the receiver)."
+      ],
+      [
+        "die",
+        "“the” for a feminine noun; the same as subject or object."
+      ],
+      [
+        "verb second",
+        "The verb is always the second element. Whatever comes first (subject, object or im Wald), the verb follows it directly."
+      ]
+    ],
+    "notes": "Because the article carries the role, German can put the object first for emphasis without changing who does what. English lost these endings and relies on word order instead.",
+    "fact": "The Brothers Grimm were linguists as well as collectors of tales. In 1838 they began the Deutsches Wörterbuch, a historical dictionary of German; it was finished only in 1961, in 32 volumes, long after both brothers had died."
+  }
+}

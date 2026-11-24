@@ -1,0 +1,198 @@
+{
+  "id": "gen-2026-12-03",
+  "number": 11,
+  "date": "2026-12-03",
+  "difficulty": 3,
+  "language": {
+    "name": "Sututi",
+    "real": false
+  },
+  "checks": 3,
+  "keys": [
+    "š"
+  ],
+  "hint": "Watch for “the” versus “a” in the English.",
+  "corpus": [
+    {
+      "lang": "Ratena si tageva.",
+      "en": "A stag did not hide.",
+      "gloss": [
+        "stag",
+        "NEG",
+        "hide-PST"
+      ]
+    },
+    {
+      "lang": "Vumetamaga ratena tikeva.",
+      "en": "Princes caught a stag.",
+      "gloss": [
+        "prince-PL-ERG",
+        "stag",
+        "catch-PST"
+      ]
+    },
+    {
+      "lang": "Hibaga ratena si tišava.",
+      "en": "A hunter did not shoot a stag.",
+      "gloss": [
+        "hunter-ERG",
+        "stag",
+        "NEG",
+        "shoot-PST"
+      ]
+    },
+    {
+      "lang": "Vumetatuga hibatuki ratenatu si tiša.",
+      "en": "The prince does not shoot the hunter's stag.",
+      "gloss": [
+        "prince-DEF-ERG",
+        "hunter-DEF-GEN",
+        "stag-DEF",
+        "NEG",
+        "shoot"
+      ]
+    },
+    {
+      "lang": "Hibatuki ratenamatuga binitu tikeva.",
+      "en": "The hunter's stags caught the boar.",
+      "gloss": [
+        "hunter-DEF-GEN",
+        "stag-PL-DEF-ERG",
+        "boar-DEF",
+        "catch-PST"
+      ]
+    },
+    {
+      "lang": "Vumetatuki hibatuga ratenamatu si tišava.",
+      "en": "The prince's hunter did not shoot the stags.",
+      "gloss": [
+        "prince-DEF-GEN",
+        "hunter-DEF-ERG",
+        "stag-PL-DEF",
+        "NEG",
+        "shoot-PST"
+      ]
+    },
+    {
+      "lang": "Mitematuga hibamatuki ratenatu si tikeva.",
+      "en": "The hounds did not catch the hunters' stag.",
+      "gloss": [
+        "hound-PL-DEF-ERG",
+        "hunter-PL-DEF-GEN",
+        "stag-DEF",
+        "NEG",
+        "catch-PST"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Mitemaga ratenatu tike.",
+      "accepted": [
+        "hounds catch the stag",
+        "hounds are catching the stag",
+        "hounds will catch the stag"
+      ],
+      "explanation": "S O V order. mite-ma-ga = hound-PL-ERG; ratena-tu = stag-DEF; tike = catch."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "Hunters did not shoot the princes' stag.",
+      "accepted": [
+        "hibamaga vumetamatuki ratenatu si tišava"
+      ],
+      "explanation": "S O V order. hiba-ma-ga = hunter-PL-ERG; vumeta-ma-tu-ki = prince-PL-DEF-GEN; ratena-tu = stag-DEF; si = NEG; tiša-va = shoot-PST."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "vumeta",
+        "prince"
+      ],
+      [
+        "bini",
+        "boar"
+      ],
+      [
+        "ratena",
+        "stag"
+      ],
+      [
+        "mite",
+        "hound"
+      ],
+      [
+        "hiba",
+        "hunter"
+      ],
+      [
+        "tiša-",
+        "shoot"
+      ],
+      [
+        "tike-",
+        "catch"
+      ],
+      [
+        "tage-",
+        "hide"
+      ]
+    ],
+    "grammar": [
+      [
+        "S O V",
+        "Word order: subject, object, verb. With one participant: subject, verb."
+      ],
+      [
+        "-ma",
+        "Plural."
+      ],
+      [
+        "-tu",
+        "Definite (“the”). A noun without it means “a” (or plain plural)."
+      ],
+      [
+        "-ki",
+        "Marks the possessor (“the king's”)."
+      ],
+      [
+        "-ga",
+        "Ergative: marks the doer of a two-participant verb. The lone participant of a one-participant verb is bare, just like the object."
+      ],
+      [
+        "-va",
+        "Past tense. Without it the verb is present or future."
+      ],
+      [
+        "si",
+        "Negation: a separate word before the verb."
+      ],
+      [
+        "Suffix order",
+        "On nouns: stem-PL-DEF-GEN-ERG."
+      ],
+      [
+        "Possessor",
+        "Comes before the possessed noun."
+      ]
+    ],
+    "notes": "Checked against 1225 alternative analyses; the sentences rule out 1201, including: si appears when: negative & past."
+  },
+  "theme": "a royal hunt",
+  "shuffle": {
+    "anchors": [
+      4
+    ],
+    "order": [
+      1,
+      6,
+      0,
+      5,
+      4,
+      2,
+      3
+    ]
+  }
+}

@@ -1,0 +1,191 @@
+{
+  "id": "gen-2026-12-02",
+  "number": 10,
+  "date": "2026-12-02",
+  "difficulty": 3,
+  "language": {
+    "name": "Nera",
+    "real": false
+  },
+  "checks": 3,
+  "keys": [],
+  "hint": "In “the king's horse”, which of the two words carries the extra ending?",
+  "corpus": [
+    {
+      "lang": "Taro nonine.",
+      "en": "The apprentice does not sleep.",
+      "gloss": [
+        "apprentice",
+        "sleep-NEG"
+      ]
+    },
+    {
+      "lang": "Kumututi nonimi.",
+      "en": "The witches sleep.",
+      "gloss": [
+        "PL-witch",
+        "sleep-3PL"
+      ]
+    },
+    {
+      "lang": "Taro ganke mututi tumanatora.",
+      "en": "The apprentice stirs the witch's cauldron.",
+      "gloss": [
+        "apprentice",
+        "stir",
+        "witch",
+        "cauldron-POSS-ACC"
+      ]
+    },
+    {
+      "lang": "Kutaro gankemi tumanara.",
+      "en": "The apprentices stir the cauldron.",
+      "gloss": [
+        "PL-apprentice",
+        "stir-3PL",
+        "cauldron-ACC"
+      ]
+    },
+    {
+      "lang": "Kumututi hotemine taro tahotetora.",
+      "en": "The witches do not curse the apprentice's raven.",
+      "gloss": [
+        "PL-witch",
+        "curse-3PL-NEG",
+        "apprentice",
+        "raven-POSS-ACC"
+      ]
+    },
+    {
+      "lang": "Kumututi kutaroto gankemi tumanara.",
+      "en": "The witches' apprentices stir the cauldron.",
+      "gloss": [
+        "PL-witch",
+        "PL-apprentice-POSS",
+        "stir-3PL",
+        "cauldron-ACC"
+      ]
+    },
+    {
+      "lang": "Kumututi kutaroto gankemine kutumanara.",
+      "en": "The witches' apprentices do not stir the cauldrons.",
+      "gloss": [
+        "PL-witch",
+        "PL-apprentice-POSS",
+        "stir-3PL-NEG",
+        "PL-cauldron-ACC"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Kumututi taroto ganke kutumanara.",
+      "accepted": [
+        "the witches' apprentice stirs the cauldrons",
+        "the witches' apprentice stirs cauldrons",
+        "the witches' apprentice stirred the cauldrons",
+        "the witches' apprentice stirred cauldrons",
+        "the witches' apprentice is stirring the cauldrons",
+        "the witches' apprentice is stirring cauldrons",
+        "witches' apprentice stirs the cauldrons",
+        "witches' apprentice stirs cauldrons",
+        "witches' apprentice stirred the cauldrons",
+        "witches' apprentice stirred cauldrons",
+        "witches' apprentice is stirring the cauldrons",
+        "witches' apprentice is stirring cauldrons"
+      ],
+      "explanation": "S V O order. ku-mututi = PL-witch; taro-to = apprentice-POSS; ganke = stir; ku-tumana-ra = PL-cauldron-ACC."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "The witch stirs the apprentice's cauldron.",
+      "accepted": [
+        "mututi ganke taro tumanatora"
+      ],
+      "explanation": "S V O order. mututi = witch; ganke = stir; taro = apprentice; tumana-to-ra = cauldron-POSS-ACC."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "taro",
+        "apprentice"
+      ],
+      [
+        "tahote",
+        "raven"
+      ],
+      [
+        "tumana",
+        "cauldron"
+      ],
+      [
+        "mututi",
+        "witch"
+      ],
+      [
+        "ganke-",
+        "stir"
+      ],
+      [
+        "hote-",
+        "curse"
+      ],
+      [
+        "noni-",
+        "sleep"
+      ]
+    ],
+    "grammar": [
+      [
+        "S V O",
+        "Word order: subject, verb, object. With one participant: subject, verb."
+      ],
+      [
+        "ku-",
+        "Plural."
+      ],
+      [
+        "-to",
+        "Marks the possessed noun (“the king's horse” = king horse-POSS). The possessor itself is bare."
+      ],
+      [
+        "-ra",
+        "Accusative: marks the object."
+      ],
+      [
+        "-mi",
+        "On the verb when the subject is plural."
+      ],
+      [
+        "-ne",
+        "Negation, on the verb."
+      ],
+      [
+        "Suffix order",
+        "On nouns: stem-POSS-ACC."
+      ],
+      [
+        "Possessor",
+        "Comes before the possessed noun."
+      ]
+    ],
+    "notes": "Checked against 1191 alternative analyses; the sentences rule out 1179, including: -to appears when: possessed noun & animate."
+  },
+  "theme": "a witch's hut",
+  "shuffle": {
+    "anchors": [
+      5
+    ],
+    "order": [
+      6,
+      3,
+      0,
+      4,
+      2,
+      5,
+      1
+    ]
+  }
+}

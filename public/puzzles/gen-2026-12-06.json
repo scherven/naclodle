@@ -1,0 +1,218 @@
+{
+  "id": "gen-2026-12-06",
+  "number": 14,
+  "date": "2026-12-06",
+  "difficulty": 4,
+  "language": {
+    "name": "Tumeke",
+    "real": false
+  },
+  "checks": 3,
+  "keys": [
+    "ñ"
+  ],
+  "hint": "Watch for “the” versus “a” in the English.",
+  "corpus": [
+    {
+      "lang": "Gisipi-sipi ñupakunu kake.",
+      "en": "The shepherds snored at dawn.",
+      "gloss": [
+        "DEF-PL~shepherd",
+        "snore-PST-3PL",
+        "at.dawn"
+      ]
+    },
+    {
+      "lang": "Gisipi-sipi lon ñupakunu.",
+      "en": "The shepherds did not snore.",
+      "gloss": [
+        "DEF-PL~shepherd",
+        "NEG",
+        "snore-PST-3PL"
+      ]
+    },
+    {
+      "lang": "Gisipi kato lokeso kake.",
+      "en": "The shepherd wakes a sheepdog at dawn.",
+      "gloss": [
+        "DEF-shepherd",
+        "wake",
+        "sheepdog-ACC",
+        "at.dawn"
+      ]
+    },
+    {
+      "lang": "Giloke katoku gisipiso.",
+      "en": "The sheepdog woke the shepherd.",
+      "gloss": [
+        "DEF-sheepdog",
+        "wake-PST",
+        "DEF-shepherd-ACC"
+      ]
+    },
+    {
+      "lang": "Gisipi lon sadi keko gidutiso.",
+      "en": "The shepherd does not steal the golden hen.",
+      "gloss": [
+        "DEF-shepherd",
+        "NEG",
+        "steal",
+        "golden",
+        "DEF-hen-ACC"
+      ]
+    },
+    {
+      "lang": "Sipi-sipi lon katokunu keko lokeso.",
+      "en": "Shepherds did not wake a golden sheepdog.",
+      "gloss": [
+        "PL~shepherd",
+        "NEG",
+        "wake-PST-3PL",
+        "golden",
+        "sheepdog-ACC"
+      ]
+    },
+    {
+      "lang": "Tima sipi-sipi lon sadikunu gidutiso kake.",
+      "en": "Huge shepherds did not steal the hen at dawn.",
+      "gloss": [
+        "huge",
+        "PL~shepherd",
+        "NEG",
+        "steal-PST-3PL",
+        "DEF-hen-ACC",
+        "at.dawn"
+      ]
+    },
+    {
+      "lang": "Keko giduti-duti lon katokunu gisipi-sipiso kake.",
+      "en": "The golden hens did not wake the shepherds at dawn.",
+      "gloss": [
+        "golden",
+        "DEF-PL~hen",
+        "NEG",
+        "wake-PST-3PL",
+        "DEF-PL~shepherd-ACC",
+        "at.dawn"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Loke-loke katonu tima sipi-sipiso kake.",
+      "accepted": [
+        "sheepdogs wake huge shepherds at dawn",
+        "at dawn sheepdogs wake huge shepherds",
+        "sheepdogs are waking huge shepherds at dawn",
+        "at dawn sheepdogs are waking huge shepherds",
+        "sheepdogs will wake huge shepherds at dawn",
+        "at dawn sheepdogs will wake huge shepherds"
+      ],
+      "explanation": "S V O order. loke-loke = PL~sheepdog; kato-nu = wake-3PL; tima = huge; sipi-sipi-so = PL~shepherd-ACC; kake = at.dawn."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "The hen does not wake a golden sheepdog.",
+      "accepted": [
+        "giduti lon kato keko lokeso"
+      ],
+      "explanation": "S V O order. gi-duti = DEF-hen; lon = NEG; kato = wake; keko = golden; loke-so = sheepdog-ACC."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "sipi",
+        "shepherd"
+      ],
+      [
+        "duti",
+        "hen"
+      ],
+      [
+        "loke",
+        "sheepdog"
+      ],
+      [
+        "kato-",
+        "wake"
+      ],
+      [
+        "sadi-",
+        "steal"
+      ],
+      [
+        "ñupa-",
+        "snore"
+      ],
+      [
+        "keko",
+        "golden"
+      ],
+      [
+        "tima",
+        "huge"
+      ],
+      [
+        "kake",
+        "at dawn"
+      ]
+    ],
+    "grammar": [
+      [
+        "S V O",
+        "Word order: subject, verb, object. With one participant: subject, verb."
+      ],
+      [
+        "X-X",
+        "Plural: say the noun twice (tasige → gitasige-tasige)."
+      ],
+      [
+        "gi-",
+        "Definite (“the”). A noun without it means “a” (or plain plural)."
+      ],
+      [
+        "-so",
+        "Accusative: marks the object."
+      ],
+      [
+        "-ku",
+        "Past tense. Without it the verb is present or future."
+      ],
+      [
+        "-nu",
+        "On the verb when the subject is plural."
+      ],
+      [
+        "lon",
+        "Negation: a separate word before the verb."
+      ],
+      [
+        "Adjectives",
+        "Come before the noun. Noun endings go on the noun only; the adjective stays bare."
+      ],
+      [
+        "Time and manner words",
+        "Go at the end of the sentence."
+      ]
+    ],
+    "notes": "Checked against 1387 alternative analyses; the sentences rule out 1369, including: -ku appears when: (past or negative)."
+  },
+  "theme": "giants above the clouds",
+  "shuffle": {
+    "anchors": [
+      2
+    ],
+    "order": [
+      7,
+      0,
+      2,
+      1,
+      3,
+      6,
+      4,
+      5
+    ]
+  }
+}

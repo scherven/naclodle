@@ -1,0 +1,252 @@
+{
+  "id": "zh-1",
+  "number": 18,
+  "date": "2026-12-10",
+  "difficulty": 3,
+  "language": {
+    "name": "Mandarin Chinese",
+    "real": true,
+    "locale": "zh"
+  },
+  "theme": "Journey to the West: a monk, his monkey, a general and a princess meet dragons and rivers",
+  "checks": 3,
+  "keys": [
+    "ā",
+    "á",
+    "ǎ",
+    "à",
+    "é",
+    "ī",
+    "ì",
+    "ō",
+    "ó",
+    "ǒ",
+    "ū",
+    "ǔ"
+  ],
+  "hint": "Look at the word between the number and the noun. Why would a dragon be counted the same way as a river?",
+  "corpus": [
+    {
+      "lang": "Hóuzi kànjiàn yī tiáo lóng.",
+      "en": "The monkey sees a dragon.",
+      "gloss": [
+        "monkey",
+        "see",
+        "one",
+        "CL.long",
+        "dragon"
+      ]
+    },
+    {
+      "lang": "Jiāngjūn yǒu liǎng bǎ jiàn.",
+      "en": "The general has two swords.",
+      "gloss": [
+        "general",
+        "have",
+        "two",
+        "CL.handle",
+        "sword"
+      ]
+    },
+    {
+      "lang": "Lóng kànjiàn liǎng tiáo hé.",
+      "en": "The dragon sees two rivers.",
+      "gloss": [
+        "dragon",
+        "see",
+        "two",
+        "CL.long",
+        "river"
+      ]
+    },
+    {
+      "lang": "Gōngzhǔ yǒu yī bǎ shànzi.",
+      "en": "The princess has a fan.",
+      "gloss": [
+        "princess",
+        "have",
+        "one",
+        "CL.handle",
+        "fan"
+      ]
+    },
+    {
+      "lang": "Héshang kànjiàn sān tóu zhū.",
+      "en": "The monk sees three pigs.",
+      "gloss": [
+        "monk",
+        "see",
+        "three",
+        "CL.head",
+        "pig"
+      ]
+    },
+    {
+      "lang": "Héshang yǒu yī zhī hóuzi.",
+      "en": "The monk has a monkey.",
+      "gloss": [
+        "monk",
+        "have",
+        "one",
+        "CL.animal",
+        "monkey"
+      ]
+    },
+    {
+      "lang": "Gōngzhǔ kànjiàn liǎng zhī niǎo.",
+      "en": "The princess sees two birds.",
+      "gloss": [
+        "princess",
+        "see",
+        "two",
+        "CL.animal",
+        "bird"
+      ]
+    },
+    {
+      "lang": "Hóuzi méiyǒu shànzi.",
+      "en": "The monkey has no fan.",
+      "gloss": [
+        "monkey",
+        "NEG.have",
+        "fan"
+      ]
+    },
+    {
+      "lang": "Jiāngjūn pà lóng.",
+      "en": "The general is afraid of dragons.",
+      "gloss": [
+        "general",
+        "fear",
+        "dragon"
+      ]
+    },
+    {
+      "lang": "Héshang pà shé.",
+      "en": "The monk is afraid of snakes.",
+      "gloss": [
+        "monk",
+        "fear",
+        "snake"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Hóuzi kànjiàn liǎng bǎ jiàn.",
+      "accepted": [
+        "the monkey sees two swords",
+        "the monkey saw two swords",
+        "the monkey can see two swords",
+        "monkey sees two swords",
+        "monkey saw two swords"
+      ],
+      "explanation": "bǎ is the counting word for things held by a handle, so the last jiàn is “sword”, not the jiàn of kànjiàn “see”."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "The general sees three snakes.",
+      "accepted": [
+        "Jiāngjūn kànjiàn sān tiáo shé."
+      ],
+      "explanation": "A snake is long and winding like a dragon or a river, so it is counted with tiáo, not with zhī like the monkey and the birds."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "hóuzi",
+        "monkey"
+      ],
+      [
+        "héshang",
+        "monk"
+      ],
+      [
+        "jiāngjūn",
+        "general"
+      ],
+      [
+        "gōngzhǔ",
+        "princess"
+      ],
+      [
+        "lóng",
+        "dragon"
+      ],
+      [
+        "hé",
+        "river"
+      ],
+      [
+        "shé",
+        "snake"
+      ],
+      [
+        "zhū",
+        "pig"
+      ],
+      [
+        "niǎo",
+        "bird"
+      ],
+      [
+        "jiàn",
+        "sword"
+      ],
+      [
+        "shànzi",
+        "fan"
+      ],
+      [
+        "kànjiàn",
+        "see"
+      ],
+      [
+        "yǒu",
+        "have"
+      ],
+      [
+        "méiyǒu",
+        "not have"
+      ],
+      [
+        "pà",
+        "be afraid of"
+      ],
+      [
+        "yī / liǎng / sān",
+        "one / two / three"
+      ]
+    ],
+    "grammar": [
+      [
+        "number + classifier + noun",
+        "A number cannot go straight onto a noun; a classifier (measure word) comes in between."
+      ],
+      [
+        "tiáo",
+        "Classifier for long, winding things: dragons, rivers, snakes."
+      ],
+      [
+        "bǎ",
+        "Classifier for things you hold by a handle: swords, fans."
+      ],
+      [
+        "zhī",
+        "Classifier for many (mostly smaller) animals: monkeys, birds."
+      ],
+      [
+        "tóu",
+        "Classifier for large livestock: pigs, oxen."
+      ],
+      [
+        "bare noun",
+        "With no number (after méiyǒu or pà) there is no classifier, and the noun can mean one or many."
+      ]
+    ],
+    "notes": "English does this too with mass nouns (“two loaves of bread”, “three head of cattle”), but Mandarin needs a classifier for every noun. Which one is used is partly about shape and partly just convention; the general-purpose classifier gè is often used in casual speech.",
+    "fact": "Hanyu Pinyin, the spelling used here, was officially adopted in China in 1958. Its chief designer, Zhou Youguang, began work on it in his late 40s and lived to the age of 111."
+  }
+}

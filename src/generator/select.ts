@@ -10,7 +10,7 @@ import { checkSolvability, type CheckContext, type CheckResult, type TestItem } 
 import type { Grammar, Morpheme } from "./grammar";
 import type { EnglishLexicon, EnglishOptions } from "./english";
 import { isAnimate } from "./lexicon";
-import { enumerateMeanings, lexemesOf, meaningDistance, meaningKey, type Meaning } from "./meaning";
+import { lexemesOf, meaningDistance, meaningKey, meaningPool, type Meaning, type NounPhrase } from "./meaning";
 import { realise, sentenceText, type RealisedWord } from "./realise";
 
 export const MIN_CORPUS = 6;
@@ -41,8 +41,13 @@ function exercisesHeadline(grammar: Grammar, meaning: Meaning, words: RealisedWo
     case "circumfix": return meaning.negative;
     case "harmony": return words.some(word => word.applied.some(applied => isHarmonising(applied.morpheme)));
     case "definiteness": return !meaning.subject.definite || !!(meaning.object && !meaning.object.definite);
+    case "possessive": return phrases(meaning).some(phrase => !!phrase.possessor);
+    case "adjectivePhrase": return phrases(meaning).some(phrase => !!phrase.adjective && phrase.plural);
   }
 }
+
+const phrases = (meaning: Meaning): NounPhrase[] => [meaning.subject, ...(meaning.object ? [meaning.object] : [])];
+const hasStructure = (meaning: Meaning) => !!meaning.adverb || phrases(meaning).some(phrase => !!phrase.adjective || !!phrase.possessor);
 
 /** Does this morpheme have a vowel-harmony placeholder (uppercase vowel)? */
 export function isHarmonising(morpheme: Morpheme): boolean {
@@ -55,6 +60,8 @@ const morphemeCount = (words: RealisedWord[]) => words.reduce((sum, word) => sum
 function chooseTests(rng: Rng, grammar: Grammar, pool: Meaning[]): TestItem[] | null {
   const transitive = pool.filter(meaning => meaning.object);
   const intransitive = pool.filter(meaning => !meaning.object);
+  const dimensions = grammar.info.dimensions;
+  const structuresInUse = dimensions.adjectives || dimensions.possession || dimensions.adverbs;
   for (let attempt = 0; attempt < 400; attempt++) {
     // One item each way. The into-language item is transitive and must exercise the headline (it carries the aha).
     const toLanguage = rng.pick(transitive);
@@ -66,7 +73,9 @@ function chooseTests(rng: Rng, grammar: Grammar, pool: Meaning[]): TestItem[] | 
     // prefer both items exercising the headline; accept one after many tries
     const headlineInBoth = headlineInToLanguage && exercisesHeadline(grammar, toEnglish, words[1]);
     const rich = words.every(sentence => morphemeCount(sentence) >= 2);
-    if (different && rich && (headlineInBoth || (attempt > 200 && headlineInToLanguage)))
+    // On days with adjectives/possessives/adverbs, the into-language item uses one of them.
+    const structured = !structuresInUse || hasStructure(toLanguage) || attempt > 300;
+    if (different && rich && structured && (headlineInBoth || (attempt > 200 && headlineInToLanguage)))
       return [{ meaning: toLanguage, direction: "toLang" }, { meaning: toEnglish, direction: "toEnglish" }];
   }
   return null;
@@ -86,6 +95,27 @@ function requirementsFor(grammar: Grammar, tests: TestItem[]): Requirement[] {
     const clauseType = test.meaning.object ? "transitive" : "intransitive";
     add({ key: `clause:${clauseType}`, need: 2, covers: meaning => Number(!!meaning.object === (clauseType === "transitive")) });
   }
+  // Structures in a test need two corpus sentences showing them.
+  const structureRequirement = (name: string, present: (meaning: Meaning) => boolean) =>
+    add({ key: `structure:${name}`, need: 2, covers: meaning => Number(present(meaning)) });
+  for (const test of tests) {
+    if (phrases(test.meaning).some(phrase => phrase.adjective)) structureRequirement("adjective", meaning => phrases(meaning).some(phrase => !!phrase.adjective));
+    if (phrases(test.meaning).some(phrase => phrase.possessor)) structureRequirement("possessor", meaning => phrases(meaning).some(phrase => !!phrase.possessor));
+    if (test.meaning.adverb) structureRequirement("adverb", meaning => !!meaning.adverb);
+  }
+  // Every structure and morpheme the grammar has must actually show up (twice), or the explanation would
+  // describe things the player never saw.
+  const dimensions = grammar.info.dimensions;
+  if (dimensions.adjectives) structureRequirement("adjective", meaning => phrases(meaning).some(phrase => !!phrase.adjective));
+  if (dimensions.possession) structureRequirement("possessor", meaning => phrases(meaning).some(phrase => !!phrase.possessor));
+  if (dimensions.adverbs) structureRequirement("adverb", meaning => !!meaning.adverb);
+  for (const morpheme of grammar.morphemes)
+    add({ key: `morphemeSeen:${morpheme.id}`, need: 2, covers: (_, words) => words.filter(word => word.applied.some(applied => applied.morpheme === morpheme)).length });
+  if (grammar.info.headline === "adjectivePhrase") {
+    structureRequirement("pluralAdjective", meaning => phrases(meaning).some(phrase => !!phrase.adjective && phrase.plural));
+    add({ key: "structure:singularAdjective", need: 1, covers: meaning => Number(phrases(meaning).some(phrase => !!phrase.adjective && !phrase.plural)) });
+  }
+  if (grammar.info.headline === "possessive") structureRequirement("possessor", meaning => phrases(meaning).some(phrase => !!phrase.possessor));
   const animate = (noun: string) => isAnimate(grammar.lexicon.nouns.find(entry => entry.id === noun)!);
   if (grammar.info.headline === "ergative")
     add({ key: "contrast:animateLoneSubject", need: 2, covers: meaning => Number(!meaning.object && animate(meaning.subject.noun)) });
@@ -105,7 +135,7 @@ export interface SelectionInput {
 }
 
 export function selectData({ rng, grammar, english, englishOptions }: SelectionInput): Selection | null {
-  const pool = enumerateMeanings(grammar.lexicon, grammar.info.dimensions);
+  const pool = meaningPool(grammar.lexicon, grammar.info.dimensions, rng);
   const tests = chooseTests(rng, grammar, pool);
   if (!tests) return null;
   const testLexemes = new Set(tests.flatMap(test => lexemesOf(test.meaning)));
@@ -125,13 +155,28 @@ export function selectData({ rng, grammar, english, englishOptions }: SelectionI
       const missing = remainingNeed(requirement);
       if (missing > 0) gain += Math.min(missing, requirement.covers(meaning, wordsOf(meaning)));
     }
+    // Story focus: prefer the cast of the test items. Variety: new verbs and new noun roles.
     const strangers = lexemesOf(meaning).filter(lexeme => !testLexemes.has(lexeme)).length;
-    return gain - 0.4 * strangers;
+    const usedVerbs = new Set(corpus.map(other => other.verb));
+    const newVerb = !usedVerbs.has(meaning.verb) && usedVerbs.size < 3 ? 0.6 : 0;
+    const newRoles = nounRoles(meaning).filter(role => !corpus.some(other => nounRoles(other).includes(role))).length;
+    return gain - 0.4 * strangers + newVerb + 0.2 * newRoles;
   };
+  // No verb in more than half the sentences (checked at every prefix, so it holds at the end too).
+  const halfCap = (count: number, floor: number) => count + 1 <= Math.max(floor, Math.ceil((corpus.length + 1) / 2));
+  const countWhere = (predicate: (meaning: Meaning) => boolean) => corpus.filter(predicate).length;
+  const hasAdjective = (meaning: Meaning) => phrases(meaning).some(phrase => !!phrase.adjective);
+  const hasPossessor = (meaning: Meaning) => phrases(meaning).some(phrase => !!phrase.possessor);
+  // Likewise adverbs, adjectives and possessors: each in at most about half the sentences.
+  const verbAllowed = (meaning: Meaning) =>
+    halfCap(countWhere(other => other.verb === meaning.verb), 1) &&
+    (!meaning.adverb || halfCap(countWhere(other => !!other.adverb), 2)) &&
+    (!hasAdjective(meaning) || halfCap(countWhere(hasAdjective), 2)) &&
+    (!hasPossessor(meaning) || halfCap(countWhere(hasPossessor), 2));
   const bestCandidate = (filter: (meaning: Meaning) => boolean) => {
     let best: Meaning | null = null, bestScore = -Infinity;
     for (const meaning of candidates) {
-      if (inCorpus.has(meaningKey(meaning)) || !filter(meaning)) continue;
+      if (inCorpus.has(meaningKey(meaning)) || !verbAllowed(meaning) || !filter(meaning)) continue;
       const candidateScore = score(meaning);
       if (candidateScore > bestScore) { best = meaning; bestScore = candidateScore; }
     }
@@ -146,15 +191,26 @@ export function selectData({ rng, grammar, english, englishOptions }: SelectionI
     if (!next || score(next) <= 0) return null;
     addToCorpus(next);
   }
-  while (corpus.length < MIN_CORPUS) {
+  // Heavier days get a little more data to chew on.
+  const minimumCorpus = grammar.info.difficulty >= 4 ? MIN_CORPUS + 1 : MIN_CORPUS;
+  while (corpus.length < minimumCorpus) {
     const next = bestCandidate(() => true);
     if (!next) return null;
     addToCorpus(next);
   }
 
+  // At least three different verbs where the vocabulary has them.
+  const wantedVerbs = Math.min(3, grammar.lexicon.verbs.length);
+  while (new Set(corpus.map(meaning => meaning.verb)).size < wantedVerbs) {
+    const used = new Set(corpus.map(meaning => meaning.verb));
+    const next = bestCandidate(meaning => !used.has(meaning.verb));
+    if (!next || corpus.length >= MAX_CORPUS) return null;
+    addToCorpus(next);
+  }
+
   // 2. Counterexample-guided loop against competitor grammars.
   const blocked: string[] = [];
-  const context = (): CheckContext => ({ grammar, corpus, tests, meaningPool: pool, english, englishOptions });
+  const context = (): CheckContext => ({ grammar, corpus, tests, english, englishOptions });
   for (;;) {
     const check = checkSolvability(context());
     if (!check.harmful.length) return { corpus, tests, check, blocked };
@@ -167,6 +223,14 @@ export function selectData({ rng, grammar, english, englishOptions }: SelectionI
     blocked.push(rival.description);
     addToCorpus(distinguishing);
   }
+}
+
+/** "guard@A", "tower@P", "king@POSS": which nouns appear in which roles. */
+function nounRoles(meaning: Meaning): string[] {
+  const roles = [`${meaning.subject.noun}@${meaning.object ? "A" : "S"}`];
+  if (meaning.object) roles.push(`${meaning.object.noun}@P`);
+  for (const phrase of phrases(meaning)) if (phrase.possessor) roles.push(`${phrase.possessor.noun}@POSS`);
+  return roles;
 }
 
 /** Corpus display order: one-participant sentences first, then by number of morphemes. */

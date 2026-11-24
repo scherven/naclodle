@@ -1,0 +1,182 @@
+{
+  "id": "gen-2026-12-04",
+  "number": 12,
+  "date": "2026-12-04",
+  "difficulty": 4,
+  "language": {
+    "name": "Tarešu",
+    "real": false
+  },
+  "checks": 3,
+  "keys": [
+    "š"
+  ],
+  "hint": "Compare the noun doing the action when the verb has one participant and when it has two.",
+  "corpus": [
+    {
+      "lang": "Kokale kešo.",
+      "en": "The queen does not sing.",
+      "gloss": [
+        "sing-NEG",
+        "queen"
+      ]
+    },
+    {
+      "lang": "Koka rokešo.",
+      "en": "The queens sing.",
+      "gloss": [
+        "sing",
+        "PL-queen"
+      ]
+    },
+    {
+      "lang": "Tetini kokata rokešo.",
+      "en": "The queens sang at night.",
+      "gloss": [
+        "at.night",
+        "sing-PST",
+        "PL-queen"
+      ]
+    },
+    {
+      "lang": "Tena kereke mekamu.",
+      "en": "The eagle guards the sword.",
+      "gloss": [
+        "guard",
+        "eagle-ERG",
+        "sword"
+      ]
+    },
+    {
+      "lang": "Tetini tena rokešoke romekamu.",
+      "en": "The queens guard the swords at night.",
+      "gloss": [
+        "at.night",
+        "guard",
+        "PL-queen-ERG",
+        "PL-sword"
+      ]
+    },
+    {
+      "lang": "Kema tešutale kereke kešo.",
+      "en": "The eagle did not follow the queen again.",
+      "gloss": [
+        "again",
+        "follow-PST-NEG",
+        "eagle-ERG",
+        "queen"
+      ]
+    },
+    {
+      "lang": "Tetini tenatale rokešoke romekamu.",
+      "en": "The queens did not guard the swords at night.",
+      "gloss": [
+        "at.night",
+        "guard-PST-NEG",
+        "PL-queen-ERG",
+        "PL-sword"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Kema kokale rokešo.",
+      "accepted": [
+        "the queens do not sing again",
+        "the queens are not singing again",
+        "the queens will not sing again",
+        "queens do not sing again",
+        "queens are not singing again",
+        "queens will not sing again"
+      ],
+      "explanation": "V S order. kema = again; koka-le = sing-NEG; ro-kešo = PL-queen. One participant, so no ergative ending."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "The eagles guard the sword at night.",
+      "accepted": [
+        "tetini tena rokereke mekamu"
+      ],
+      "explanation": "V S O order. tetini = at.night; tena = guard; ro-kere-ke = PL-eagle-ERG; mekamu = sword."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "kere",
+        "eagle"
+      ],
+      [
+        "mekamu",
+        "sword"
+      ],
+      [
+        "kešo",
+        "queen"
+      ],
+      [
+        "tešu-",
+        "follow"
+      ],
+      [
+        "tena-",
+        "guard"
+      ],
+      [
+        "koka-",
+        "sing"
+      ],
+      [
+        "tetini",
+        "at night"
+      ],
+      [
+        "kema",
+        "again"
+      ]
+    ],
+    "grammar": [
+      [
+        "V S O",
+        "Word order: verb, subject, object. With one participant: verb, subject."
+      ],
+      [
+        "ro-",
+        "Plural."
+      ],
+      [
+        "-ke",
+        "Ergative: marks the doer of a two-participant verb. The lone participant of a one-participant verb is bare, just like the object."
+      ],
+      [
+        "-ta",
+        "Past tense. Without it the verb is present or future."
+      ],
+      [
+        "-le",
+        "Negation, on the verb."
+      ],
+      [
+        "Time and manner words",
+        "Go at the start of the sentence."
+      ]
+    ],
+    "notes": "Checked against 1338 alternative analyses; the sentences rule out 1334, including: ro- appears when: animate; ro- appears when: plural & animate."
+  },
+  "theme": "elves defending a cliff tower",
+  "shuffle": {
+    "anchors": [
+      0
+    ],
+    "order": [
+      0,
+      4,
+      3,
+      6,
+      1,
+      2,
+      5
+    ]
+  }
+}

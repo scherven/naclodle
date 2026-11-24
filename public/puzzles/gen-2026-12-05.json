@@ -1,0 +1,230 @@
+{
+  "id": "gen-2026-12-05",
+  "number": 13,
+  "date": "2026-12-05",
+  "difficulty": 5,
+  "language": {
+    "name": "Tami",
+    "real": false
+  },
+  "checks": 3,
+  "keys": [
+    "č"
+  ],
+  "hint": "Not every object gets the same ending. What do the marked ones have in common?",
+  "corpus": [
+    {
+      "lang": "Pamni butimbi titamu naču.",
+      "en": "White whales spot the ship.",
+      "gloss": [
+        "white",
+        "PL-whale",
+        "ship-DEF",
+        "spot"
+      ]
+    },
+    {
+      "lang": "Tibamamu timbiki pisati.",
+      "en": "The navigator followed a whale.",
+      "gloss": [
+        "navigator-DEF",
+        "whale-ACC",
+        "PST-follow"
+      ]
+    },
+    {
+      "lang": "Butimbimu butita dasati.",
+      "en": "The whales do not follow ships.",
+      "gloss": [
+        "PL-whale-DEF",
+        "PL-ship",
+        "NEG-follow"
+      ]
+    },
+    {
+      "lang": "Pamni timbimu tibamaki dapisati.",
+      "en": "The white whale did not follow a navigator.",
+      "gloss": [
+        "white",
+        "whale-DEF",
+        "navigator-ACC",
+        "NEG-PST-follow"
+      ]
+    },
+    {
+      "lang": "Bumada tibamamunu titamu ninti kinsama.",
+      "en": "Sailors mend the navigator's ship at dawn.",
+      "gloss": [
+        "PL-sailor",
+        "navigator-DEF-GEN",
+        "ship-DEF",
+        "mend",
+        "at.dawn"
+      ]
+    },
+    {
+      "lang": "Tibama butitamu dapininti.",
+      "en": "A navigator did not mend the ships.",
+      "gloss": [
+        "navigator",
+        "PL-ship-DEF",
+        "NEG-PST-mend"
+      ]
+    },
+    {
+      "lang": "Bumadamu butita dapisati.",
+      "en": "The sailors did not follow ships.",
+      "gloss": [
+        "PL-sailor-DEF",
+        "PL-ship",
+        "NEG-PST-follow"
+      ]
+    },
+    {
+      "lang": "Madamu butibamamunu titamu dapininti kinsama.",
+      "en": "The sailor did not mend the navigators' ship at dawn.",
+      "gloss": [
+        "sailor-DEF",
+        "PL-navigator-DEF-GEN",
+        "ship-DEF",
+        "NEG-PST-mend",
+        "at.dawn"
+      ]
+    },
+    {
+      "lang": "Butibamamu madamunu butimbimuki dapisati kinsama.",
+      "en": "The navigators did not follow the sailor's whales at dawn.",
+      "gloss": [
+        "PL-navigator-DEF",
+        "sailor-DEF-GEN",
+        "PL-whale-DEF-ACC",
+        "NEG-PST-follow",
+        "at.dawn"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Butibama bumadamunu timbimuki sati.",
+      "accepted": [
+        "navigators follow the sailors' whale",
+        "navigators are following the sailors' whale",
+        "navigators will follow the sailors' whale"
+      ],
+      "explanation": "S O V order. bu-tibama = PL-navigator; bu-mada-mu-nu = PL-sailor-DEF-GEN; timbi-mu-ki = whale-DEF-ACC; sati = follow."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "The sailor does not mend the navigators' ships at dawn.",
+      "accepted": [
+        "madamu butibamamunu butitamu daninti kinsama"
+      ],
+      "explanation": "S O V order. mada-mu = sailor-DEF; bu-tibama-mu-nu = PL-navigator-DEF-GEN; bu-tita-mu = PL-ship-DEF; da-ninti = NEG-mend; kinsama = at.dawn. This object is not marked."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "mada",
+        "sailor"
+      ],
+      [
+        "tita",
+        "ship"
+      ],
+      [
+        "timbi",
+        "whale"
+      ],
+      [
+        "tibama",
+        "navigator"
+      ],
+      [
+        "sati-",
+        "follow"
+      ],
+      [
+        "naču-",
+        "spot"
+      ],
+      [
+        "ninti-",
+        "mend"
+      ],
+      [
+        "pamni",
+        "white"
+      ],
+      [
+        "kinsama",
+        "at dawn"
+      ]
+    ],
+    "grammar": [
+      [
+        "S O V",
+        "Word order: subject, object, verb. With one participant: subject, verb."
+      ],
+      [
+        "bu-",
+        "Plural."
+      ],
+      [
+        "-mu",
+        "Definite (“the”). A noun without it means “a” (or plain plural)."
+      ],
+      [
+        "-nu",
+        "Marks the possessor (“the king's”)."
+      ],
+      [
+        "-ki",
+        "Marks the object, but only when it is alive (a person, animal or spirit). Other objects are bare."
+      ],
+      [
+        "pi-",
+        "Past tense. Without it the verb is present or future."
+      ],
+      [
+        "da-",
+        "Negation, on the verb."
+      ],
+      [
+        "Suffix order",
+        "On nouns: stem-DEF-GEN-ACC."
+      ],
+      [
+        "Adjectives",
+        "Come before the noun. Noun endings go on the noun only; the adjective stays bare."
+      ],
+      [
+        "Possessor",
+        "Comes before the possessed noun."
+      ],
+      [
+        "Time and manner words",
+        "Go at the end of the sentence."
+      ]
+    ],
+    "notes": "Checked against 1033 alternative analyses; the sentences rule out 1011, including: -nu appears when: possessor & past; pi- appears when: (past or plural lone-subject/object)."
+  },
+  "theme": "a navigator's sea voyage",
+  "shuffle": {
+    "anchors": [
+      8
+    ],
+    "order": [
+      2,
+      5,
+      4,
+      6,
+      7,
+      0,
+      1,
+      3,
+      8
+    ]
+  }
+}

@@ -1,0 +1,97 @@
+/**
+ * The day plan: difficulty target, headline phenomenon, word order and shuffle flag for each date.
+ *
+ * Variety rules: the headline differs from the previous two days' headlines, the same word order
+ * never runs three days in a row, and the theme differs from the previous three days'. Difficulty follows the weekday, NYT-crossword style
+ * (Mon 1, Tue 2, Wed 3, Thu 3, Fri 4, Sat 5, Sun 4). Saturdays are shuffled days.
+ *
+ * The plan is a pure function of the date: plans are computed day by day from PLAN_EPOCH, each day's
+ * choice seeded by its own date and constrained by the two days before. This is cheap (no puzzles are
+ * generated), so any date's plan can be recomputed without reading earlier files.
+ */
+
+import { Rng } from "./rng";
+import type { Headline, WordOrder } from "./grammar";
+import { THEMES } from "./themes";
+
+export interface DayPlan {
+  date: string;
+  difficulty: 1 | 2 | 3 | 4 | 5;
+  headline: Headline;
+  wordOrder: WordOrder;
+  /** Theme id; never the same as in the previous three days. */
+  theme: string;
+  shuffle: boolean;
+}
+
+/** First planned date. The two puzzles before it were generated before the planner existed. */
+export const PLAN_EPOCH = "2026-12-01";
+const HISTORY_BEFORE_EPOCH: Pick<DayPlan, "headline" | "wordOrder" | "theme">[] = [
+  { headline: "definiteness", wordOrder: "OSV", theme: "captain-spirits" }, // 2026-11-29
+  { headline: "harmony", wordOrder: "OSV", theme: "augur-envoy" }, // 2026-11-30
+];
+
+/** Indexed by getUTCDay(): Sunday = 0. */
+const WEEKDAY_DIFFICULTY: DayPlan["difficulty"][] = [4, 1, 2, 3, 3, 4, 5];
+const SHUFFLE_WEEKDAYS = new Set([6]);
+
+/** Which headlines suit which difficulty, with weights. Structural headlines start at 3. */
+const HEADLINE_WEIGHTS: Record<Headline, { minimum: number; weight: number }> = {
+  reduplication: { minimum: 1, weight: 2 },
+  circumfix: { minimum: 1, weight: 1.5 },
+  definiteness: { minimum: 1, weight: 1.5 },
+  wordOrder: { minimum: 1, weight: 1 },
+  harmony: { minimum: 2, weight: 2 },
+  differentialObject: { minimum: 2, weight: 1.5 },
+  possessive: { minimum: 3, weight: 2.5 },
+  adjectivePhrase: { minimum: 3, weight: 2.5 },
+  ergative: { minimum: 3, weight: 3 },
+};
+
+/** WALS 81A counts x interest boost; easy days stay with common orders. */
+const WORD_ORDER_WEIGHTS: [WordOrder, number][] = [
+  ["SOV", 564], ["SVO", 244], ["VSO", 285], ["VOS", 150], ["OVS", 110], ["OSV", 80],
+];
+const EASY_WORD_ORDER_WEIGHTS: [WordOrder, number][] = [["SOV", 5], ["SVO", 4], ["VSO", 2]];
+const HEADLINE_WORD_ORDER_WEIGHTS: [WordOrder, number][] = [["VOS", 3], ["OVS", 3], ["OSV", 3], ["VSO", 1]];
+
+export function addDays(date: string, offset: number): string {
+  const day = new Date(`${date}T00:00:00Z`);
+  day.setUTCDate(day.getUTCDate() + offset);
+  return day.toISOString().slice(0, 10);
+}
+
+function planOneDay(date: string, history: Pick<DayPlan, "headline" | "wordOrder" | "theme">[]): DayPlan {
+  const rng = new Rng(`naclodle-plan:${date}`);
+  const weekday = new Date(`${date}T00:00:00Z`).getUTCDay();
+  const difficulty = WEEKDAY_DIFFICULTY[weekday];
+  const recentHeadlines = history.slice(-2).map(day => day.headline);
+  const headlineChoices = (Object.entries(HEADLINE_WEIGHTS) as [Headline, { minimum: number; weight: number }][])
+    .filter(([headline, rule]) => rule.minimum <= difficulty && !recentHeadlines.includes(headline))
+    .map(([headline, rule]) => [headline, rule.weight] as const);
+  const headline = rng.weighted(headlineChoices);
+  const lastTwo = history.slice(-2);
+  const repeatedOrder = lastTwo.length === 2 && lastTwo[0].wordOrder === lastTwo[1].wordOrder ? lastTwo[0].wordOrder : null;
+  const orderWeights = headline === "wordOrder" ? HEADLINE_WORD_ORDER_WEIGHTS
+    : difficulty <= 2 ? EASY_WORD_ORDER_WEIGHTS : WORD_ORDER_WEIGHTS;
+  const wordOrder = rng.weighted(orderWeights.filter(([order]) => order !== repeatedOrder));
+  const recentThemes = history.slice(-3).map(day => day.theme);
+  const theme = rng.pick(THEMES.filter(candidate => !recentThemes.includes(candidate.id))).id;
+  return { date, difficulty, headline, wordOrder, theme, shuffle: SHUFFLE_WEEKDAYS.has(weekday) };
+}
+
+const planCache = new Map<string, DayPlan>();
+
+export function planForDate(date: string): DayPlan {
+  const cached = planCache.get(date);
+  if (cached) return cached;
+  if (date < PLAN_EPOCH) return planOneDay(date, []);
+  let history = [...HISTORY_BEFORE_EPOCH];
+  let plan: DayPlan | undefined;
+  for (let day = PLAN_EPOCH; day <= date; day = addDays(day, 1)) {
+    plan = planCache.get(day) ?? planOneDay(day, history);
+    planCache.set(day, plan);
+    history = [...history.slice(-2), plan];
+  }
+  return plan!;
+}

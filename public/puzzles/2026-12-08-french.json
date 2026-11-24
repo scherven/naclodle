@@ -1,0 +1,235 @@
+{
+  "id": "fr-1",
+  "number": 16,
+  "date": "2026-12-08",
+  "difficulty": 3,
+  "language": {
+    "name": "French",
+    "real": true,
+    "locale": "fr"
+  },
+  "theme": "Arthurian court: a crown and a shield passed between knight, fairy, queen and king",
+  "checks": 3,
+  "keys": [
+    "é",
+    "è",
+    "ê",
+    "à",
+    "ç"
+  ],
+  "hint": "The same little word can mean “the” or something else. Look at where it stands: before a noun, or before the verb?",
+  "corpus": [
+    {
+      "lang": "Le roi donne la couronne au chevalier.",
+      "en": "The king gives the crown to the knight.",
+      "gloss": [
+        "the.M",
+        "king",
+        "give.3SG",
+        "the.F",
+        "crown",
+        "to.the.M",
+        "knight"
+      ]
+    },
+    {
+      "lang": "Le chevalier la donne à la fée.",
+      "en": "The knight gives it to the fairy.",
+      "gloss": [
+        "the.M",
+        "knight",
+        "it.F",
+        "give.3SG",
+        "to",
+        "the.F",
+        "fairy"
+      ]
+    },
+    {
+      "lang": "La fée lui montre le bouclier.",
+      "en": "The fairy shows him the shield.",
+      "gloss": [
+        "the.F",
+        "fairy",
+        "to.him/her",
+        "show.3SG",
+        "the.M",
+        "shield"
+      ]
+    },
+    {
+      "lang": "Le dragon ne voit pas les chevaliers.",
+      "en": "The dragon does not see the knights.",
+      "gloss": [
+        "the.M",
+        "dragon",
+        "NEG",
+        "see.3SG",
+        "NEG",
+        "the.PL",
+        "knight.PL"
+      ]
+    },
+    {
+      "lang": "Le dragon ne les voit pas.",
+      "en": "The dragon does not see them.",
+      "gloss": [
+        "the.M",
+        "dragon",
+        "NEG",
+        "them",
+        "see.3SG",
+        "NEG"
+      ]
+    },
+    {
+      "lang": "La reine le leur montre.",
+      "en": "The queen shows it to them.",
+      "gloss": [
+        "the.F",
+        "queen",
+        "it.M",
+        "to.them",
+        "show.3SG"
+      ]
+    },
+    {
+      "lang": "Le roi ne leur donne pas le bouclier.",
+      "en": "The king does not give them the shield.",
+      "gloss": [
+        "the.M",
+        "king",
+        "NEG",
+        "to.them",
+        "give.3SG",
+        "NEG",
+        "the.M",
+        "shield"
+      ]
+    },
+    {
+      "lang": "La fée les lui donne.",
+      "en": "The fairy gives them to her.",
+      "gloss": [
+        "the.F",
+        "fairy",
+        "them",
+        "to.him/her",
+        "give.3SG"
+      ]
+    },
+    {
+      "lang": "Le chevalier ne la leur montre pas.",
+      "en": "The knight does not show it to them.",
+      "gloss": [
+        "the.M",
+        "knight",
+        "NEG",
+        "it.F",
+        "to.them",
+        "show.3SG",
+        "NEG"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Le dragon le leur donne.",
+      "accepted": [
+        "the dragon gives it to them",
+        "the dragon gives them it",
+        "the dragon gives it them",
+        "the dragon is giving it to them",
+        "the dragon is giving them it",
+        "the dragon gives him to them",
+        "the dragon is giving him to them"
+      ],
+      "explanation": "The first le is “the” (it sits before a noun); the second le sits before the verb, so it is the pronoun “it”. leur is “to them”."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "The queen does not show them to him.",
+      "accepted": [
+        "La reine ne les lui montre pas."
+      ],
+      "explanation": "Both pronouns go before the verb, “it/them” first, then “to him/her/them”, and ne … pas wraps around the whole block."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "roi",
+        "king"
+      ],
+      [
+        "reine",
+        "queen"
+      ],
+      [
+        "chevalier",
+        "knight"
+      ],
+      [
+        "fée",
+        "fairy"
+      ],
+      [
+        "dragon",
+        "dragon"
+      ],
+      [
+        "couronne",
+        "crown"
+      ],
+      [
+        "bouclier",
+        "shield"
+      ],
+      [
+        "donne",
+        "gives"
+      ],
+      [
+        "montre",
+        "shows"
+      ],
+      [
+        "voit",
+        "sees"
+      ],
+      [
+        "à / au",
+        "to / to the (masc.)"
+      ]
+    ],
+    "grammar": [
+      [
+        "le / la / les + noun",
+        "“the” (masculine / feminine / plural)."
+      ],
+      [
+        "le / la / les + verb",
+        "Object pronouns: “him, it” / “her, it” / “them”."
+      ],
+      [
+        "lui / leur",
+        "“to him or her” / “to them”."
+      ],
+      [
+        "S – pronouns – V",
+        "Object pronouns come before the verb, not after it."
+      ],
+      [
+        "le/la/les before lui/leur",
+        "When there are two, the direct object comes first."
+      ],
+      [
+        "ne … pas",
+        "Negation wraps around the pronouns and the verb together."
+      ]
+    ],
+    "notes": "French has no separate word for “it”: a thing is le or la depending on the gender of the noun it replaces (la for la couronne, le for le bouclier). lui does not mark gender at all: it is “to him” in one sentence and “to her” in another.",
+    "fact": "French nouns lost their Latin case endings centuries ago, but the pronouns kept a trace of them: le and lui both come from Latin ille “that”, and lui continues a Late Latin dative form, illui."
+  }
+}

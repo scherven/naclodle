@@ -1,11 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { validatePuzzle } from "../puzzle";
-import { checkSolvability, type TestItem } from "./checker";
+import { checkShufflePairing, checkSolvability, type TestItem } from "./checker";
 import { englishAnswers, englishSentence, makeVerbEnglish, pluralOf, type EnglishLexicon } from "./english";
 import { featureCondition, roleCondition, type Grammar } from "./grammar";
 import { generatePuzzle, themeForDate } from "./index";
 import { looksEnglish, type Lexicon } from "./lexicon";
-import { enumerateMeanings, type Meaning } from "./meaning";
+import type { Meaning } from "./meaning";
+import { planForDate, addDays } from "./plan";
 import { realise, sentenceText } from "./realise";
 import { Rng } from "./rng";
 import { THEMES } from "./themes";
@@ -51,6 +52,15 @@ describe("generated puzzles", () => {
     }
   });
 
+  it("match the day plan's difficulty and vary verbs", () => {
+    for (const { puzzle, report } of generated) {
+      expect(puzzle.difficulty, puzzle.date).toBe(report.plan.difficulty);
+      const counts = Object.values(report.verbUsage);
+      expect(Math.max(...counts), puzzle.date).toBeLessThanOrEqual(Math.ceil(puzzle.corpus.length / 2));
+      expect(counts.length, puzzle.date).toBeGreaterThanOrEqual(3);
+    }
+  });
+
   it("leave no competitor that fits the corpus but changes an answer", () => {
     for (const { report } of generated) expect(report.competitorsKilled).toBeGreaterThan(50);
   });
@@ -77,25 +87,34 @@ function ergativeGrammar(): Grammar {
       { id: "NEG", gloss: "NEG", host: "verb", exponent: { kind: "particle", form: "mo", side: "before" }, condition: featureCondition("negative"), slot: 3 },
     ],
     harmonyCondition: null,
+    adjectives: null,
+    possessorPosition: null,
+    adverbPosition: null,
     phonology: { consonants: ["t", "k", "m", "n", "s", "l"], vowels: ["a", "e", "i", "o", "u"], codas: [], codaProbability: 0, harmony: null },
     lexicon: {
       nouns: [noun("woman", "selu", "p"), noun("dog", "napo", "b"), noun("hunter", "kirime", "p")],
       verbs: [verb("see", "lumi", true), verb("sleep", "nase", false)],
+      adjectives: [{ id: "old", describes: ["p", "b"], form: "tiro" }],
+      adverbs: [],
     },
-    info: { alignment: "ergative", headline: "ergative", supporting: [], dimensions: { definiteness: false, tense: false } },
+    info: {
+      alignment: "ergative", headline: "ergative", supporting: [], difficulty: 3,
+      dimensions: { definiteness: false, tense: false, adjectives: false, possession: false, adverbs: false },
+    },
   };
 }
 
 const englishOf = (grammar: Grammar): EnglishLexicon => ({
   noun: id => grammar.lexicon.nouns.find(entry => entry.id === id)!.english,
   verb: id => grammar.lexicon.verbs.find(entry => entry.id === id)!.english,
+  adjective: id => id,
+  adverb: id => ({ english: id, time: false }),
 });
 const options = { marksDefiniteness: false, marksTense: false };
 const np = (noun: string, plural = false) => ({ noun, plural, definite: true });
 
 describe("solvability checker", () => {
   const grammar = ergativeGrammar();
-  const pool = enumerateMeanings(grammar.lexicon, grammar.info.dimensions);
   const transitiveOnly: Meaning[] = [
     { verb: "see", subject: np("woman"), object: np("dog"), negative: false, past: false },
     { verb: "see", subject: np("dog", true), object: np("hunter"), negative: true, past: false },
@@ -109,7 +128,7 @@ describe("solvability checker", () => {
 
   it("flags a corpus with no intransitive sentences as ambiguous", () => {
     // With only transitive data, "-ka marks the subject" (nominative) fits as well as "-ka marks the agent".
-    const result = checkSolvability({ grammar, corpus: transitiveOnly, tests: [intransitiveTest], meaningPool: pool, english: englishOf(grammar), englishOptions: options });
+    const result = checkSolvability({ grammar, corpus: transitiveOnly, tests: [intransitiveTest], english: englishOf(grammar), englishOptions: options });
     expect(result.harmful.length).toBeGreaterThan(0);
     expect(result.harmful.map(verdict => verdict.competitor.description).join("\n")).toMatch(/-ka appears when: agent\/lone subject/);
   });
@@ -118,7 +137,7 @@ describe("solvability checker", () => {
     const corpus = [...transitiveOnly,
       { verb: "sleep", subject: np("woman"), negative: false, past: false },
       { verb: "sleep", subject: np("dog", true), negative: true, past: false }];
-    const result = checkSolvability({ grammar, corpus, tests: [intransitiveTest], meaningPool: pool, english: englishOf(grammar), englishOptions: options });
+    const result = checkSolvability({ grammar, corpus, tests: [intransitiveTest], english: englishOf(grammar), englishOptions: options });
     expect(result.harmful).toEqual([]);
   });
 
@@ -131,13 +150,13 @@ describe("solvability checker", () => {
       { verb: "see", subject: np("dog"), object: np("hunter"), negative: true, past: false },
     ];
     const test: TestItem = { direction: "toLang", meaning: { verb: "see", subject: np("hunter", true), object: np("woman"), negative: false, past: false } };
-    const result = checkSolvability({ grammar, corpus, tests: [test], meaningPool: pool, english: englishOf(grammar), englishOptions: options });
+    const result = checkSolvability({ grammar, corpus, tests: [test], english: englishOf(grammar), englishOptions: options });
     expect(result.harmful.some(verdict => verdict.competitor.family === "slotOrder")).toBe(true);
   });
 
   it("checks into-English items by reading them under each competitor", () => {
     const test: TestItem = { direction: "toEnglish", meaning: intransitiveTest.meaning };
-    const result = checkSolvability({ grammar, corpus: transitiveOnly, tests: [test], meaningPool: pool, english: englishOf(grammar), englishOptions: options });
+    const result = checkSolvability({ grammar, corpus: transitiveOnly, tests: [test], english: englishOf(grammar), englishOptions: options });
     // No intransitive data: "kirime nase" could be "the hunters sleep" if -ti only marks plurals in
     // two-participant clauses. The checker reads the test under that competitor and flags the clash.
     const descriptions = result.harmful.map(verdict => verdict.competitor.description);
@@ -149,6 +168,8 @@ describe("English realisation", () => {
   const lexicon: EnglishLexicon = {
     noun: id => ({ wolf: { singular: "wolf", plural: "wolves" }, envoy: { singular: "envoy", plural: pluralOf("envoy") }, witch: { singular: "witch", plural: pluralOf("witch") }, ox: { singular: "ox", plural: "oxen" } })[id]!,
     verb: id => ({ bless: makeVerbEnglish("bless"), see: makeVerbEnglish("see", "saw"), carry: makeVerbEnglish("carry"), run: makeVerbEnglish("run", "ran"), stir: makeVerbEnglish("stir", "stirred") })[id]!,
+    adjective: id => id,
+    adverb: id => ({ yesterday: { english: "yesterday", time: true }, quietly: { english: "quietly", time: false } })[id]!,
   };
   const tensed = { marksDefiniteness: true, marksTense: true };
 
@@ -173,11 +194,76 @@ describe("English realisation", () => {
       .toBe("Wolves ran.");
   });
 
+  it("builds adjectives, possessors and adverbs", () => {
+    expect(englishSentence({ verb: "bless", subject: { noun: "envoy", plural: false, definite: false, adjective: "ancient" }, object: { noun: "ox", plural: true, definite: true, possessor: { noun: "witch", plural: false } }, negative: true, past: true, adverb: "yesterday" }, lexicon, tensed))
+      .toBe("An ancient envoy did not bless the witch's oxen yesterday.");
+    expect(englishSentence({ verb: "see", subject: { noun: "ox", plural: false, definite: true, possessor: { noun: "witch", plural: true } }, negative: false, past: false, adverb: "quietly" }, lexicon, tensed))
+      .toBe("The witches' ox sees quietly.");
+    const answers = englishAnswers({ verb: "run", subject: np("wolf", true), negative: false, past: true, adverb: "yesterday" }, lexicon, tensed);
+    expect(answers).toEqual(["the wolves ran yesterday", "yesterday the wolves ran"]);
+  });
+
   it("accepts both articles and tenses only when the language does not mark them", () => {
     const meaning: Meaning = { verb: "see", subject: np("ox"), negative: false, past: false };
     expect(englishAnswers(meaning, lexicon, tensed)).toEqual(["the ox sees", "the ox is seeing", "the ox will see"]);
     expect(englishAnswers(meaning, lexicon, { marksDefiniteness: false, marksTense: false }))
       .toEqual(expect.arrayContaining(["the ox sees", "the ox saw", "an ox sees", "an ox saw"]));
+  });
+});
+
+describe("noun phrase structures", () => {
+  const meaning: Meaning = { verb: "sleep", subject: { noun: "dog", plural: true, definite: true, adjective: "old" }, negative: false, past: false };
+  it("puts endings on the noun, copies them, or puts them on the last word", () => {
+    const grammar = ergativeGrammar();
+    grammar.adjectives = { position: "after", marking: "head", concord: [] };
+    expect(sentenceText(realise(grammar, meaning))).toBe("napoti tiro nase");
+    grammar.adjectives = { position: "after", marking: "concord", concord: ["PL"] };
+    expect(sentenceText(realise(grammar, meaning))).toBe("napoti tiroti nase");
+    grammar.adjectives = { position: "after", marking: "edge", concord: [] };
+    expect(sentenceText(realise(grammar, meaning))).toBe("napo tiroti nase");
+  });
+  it("marks the possessor or the possessed noun", () => {
+    const grammar = ergativeGrammar();
+    grammar.possessorPosition = "before";
+    const owned: Meaning = { verb: "sleep", subject: { noun: "dog", plural: false, definite: true, possessor: { noun: "woman", plural: false } }, negative: false, past: false };
+    grammar.morphemes.push({ id: "GEN", gloss: "GEN", host: "noun", exponent: { kind: "suffix", form: "su" }, condition: featureCondition("possessor"), slot: 4 });
+    expect(sentenceText(realise(grammar, owned))).toBe("selusu napo nase");
+    grammar.morphemes[grammar.morphemes.length - 1] = { id: "POSS", gloss: "POSS", host: "noun", exponent: { kind: "suffix", form: "su" }, condition: featureCondition("possessed"), slot: 2 };
+    expect(sentenceText(realise(grammar, owned))).toBe("selu naposu nase");
+  });
+});
+
+describe("shuffle pairing check", () => {
+  it("finds the rival pairing when two nouns are interchangeable, and anchors it away", () => {
+    // "selu" and "napo" each occur once in the same frame, so either could be "woman".
+    const grammar = ergativeGrammar();
+    const corpus: Meaning[] = [
+      { verb: "sleep", subject: np("woman"), negative: false, past: false },
+      { verb: "sleep", subject: np("dog"), negative: false, past: false },
+      { verb: "sleep", subject: np("hunter"), negative: true, past: false },
+    ];
+    const result = checkShufflePairing(grammar, corpus, new Rng("anchors"));
+    expect(result.rivalCount).toBeGreaterThan(0);
+    expect(result.unique).toBe(true);
+    expect(result.anchors.some(anchor => anchor === 0 || anchor === 1)).toBe(true);
+  });
+});
+
+describe("day plan", () => {
+  const dates = Array.from({ length: 60 }, (_, offset) => addDays("2026-12-01", offset));
+  const plans = dates.map(planForDate);
+  it("varies headline and word order across days", () => {
+    plans.forEach((plan, index) => {
+      if (index >= 1) expect(plan.headline).not.toBe(plans[index - 1].headline);
+      if (index >= 2) expect(plan.headline).not.toBe(plans[index - 2].headline);
+      if (index >= 2) expect(plan.wordOrder === plans[index - 1].wordOrder && plan.wordOrder === plans[index - 2].wordOrder).toBe(false);
+      for (const back of [1, 2, 3]) if (index >= back) expect(plan.theme).not.toBe(plans[index - back].theme);
+    });
+  });
+  it("follows the weekday difficulty ramp, with shuffled Saturdays", () => {
+    expect(planForDate("2026-12-05")).toMatchObject({ difficulty: 5, shuffle: true });
+    expect(planForDate("2026-12-07").difficulty).toBe(1);
+    expect(new Set(plans.slice(0, 7).map(plan => plan.difficulty))).toEqual(new Set([1, 2, 3, 4, 5]));
   });
 });
 

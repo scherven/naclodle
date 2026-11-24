@@ -6,12 +6,14 @@
  * Writes public/puzzles/gen-<date>.json for each date. Resumable: dates whose file already exists are
  * skipped unless --force. Each puzzle (and its index entry, with --schedule) is written as soon as it is
  * done, atomically, so Ctrl-C never loses finished work; the current date is finished before exiting.
+ * Saturdays (per the day plan in src/generator/plan.ts) are scheduled as shuffled days.
  */
 
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { generatePuzzle } from "../src/generator/index";
-import { validatePuzzle, type PuzzleIndex } from "../src/puzzle";
+import { addDays, planForDate } from "../src/generator/plan";
+import { validatePuzzle, type Puzzle, type PuzzleIndex, type ScheduleEntry } from "../src/puzzle";
 
 const PUZZLE_DIRECTORY = join(import.meta.dirname, "..", "public", "puzzles");
 const INDEX_PATH = join(PUZZLE_DIRECTORY, "index.json");
@@ -35,12 +37,6 @@ function parseArguments(argumentList: string[]): Options {
   };
 }
 
-function addDays(date: string, offset: number): string {
-  const day = new Date(`${date}T00:00:00Z`);
-  day.setUTCDate(day.getUTCDate() + offset);
-  return day.toISOString().slice(0, 10);
-}
-
 /** Write via a temporary file and rename, so an interrupted write never leaves a half-written file. */
 function writeJsonAtomically(path: string, value: unknown) {
   const temporaryPath = `${path}.tmp`;
@@ -48,7 +44,10 @@ function writeJsonAtomically(path: string, value: unknown) {
   renameSync(temporaryPath, path);
 }
 
+/** Shuffled days (from the day plan) are scheduled with shuffle: true, but only if the puzzle carries a shuffle block. */
 function scheduleInIndex(date: string, file: string, force: boolean) {
+  const puzzle: Puzzle = JSON.parse(readFileSync(join(PUZZLE_DIRECTORY, file), "utf8"));
+  const shuffled = planForDate(date).shuffle && !!puzzle.shuffle;
   const index: PuzzleIndex = existsSync(INDEX_PATH) ? JSON.parse(readFileSync(INDEX_PATH, "utf8")) : { puzzles: [] };
   const existing = index.puzzles.find(entry => entry.date === date);
   if (existing && existing.file !== file && !force) {
@@ -56,7 +55,8 @@ function scheduleInIndex(date: string, file: string, force: boolean) {
     return;
   }
   index.puzzles = index.puzzles.filter(entry => entry.date !== date);
-  index.puzzles.push({ date, file });
+  const entry: ScheduleEntry = shuffled ? { date, file, shuffle: true } : { date, file };
+  index.puzzles.push(entry);
   index.puzzles.sort((first, second) => first.date.localeCompare(second.date));
   writeJsonAtomically(INDEX_PATH, index);
 }

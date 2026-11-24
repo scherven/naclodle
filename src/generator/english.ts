@@ -48,6 +48,8 @@ export function indefiniteArticle(word: string): string {
 export interface EnglishLexicon {
   noun(nounId: string): NounEnglish;
   verb(verbId: string): VerbEnglish;
+  adjective(adjectiveId: string): string;
+  adverb(adverbId: string): { english: string; time: boolean };
 }
 
 /** Which distinctions the conlang makes. Anything it doesn't mark is accepted either way in English. */
@@ -55,12 +57,25 @@ export interface EnglishOptions { marksDefiniteness: boolean; marksTense: boolea
 
 type EnglishTense = "present" | "past" | "progressive" | "future";
 
+/** "the king's", "the kings'", "the children's". */
+function possessiveOf(word: string): string {
+  return word.endsWith("s") ? `${word}'` : `${word}'s`;
+}
+
 function nounPhraseVariants(phrase: NounPhrase, lexicon: EnglishLexicon, options: EnglishOptions): string[] {
   const noun = lexicon.noun(phrase.noun);
-  const word = phrase.plural ? noun.plural : noun.singular;
-  const indefinite = phrase.plural ? word : `${indefiniteArticle(word)} ${word}`;
-  if (!options.marksDefiniteness) return [`the ${word}`, indefinite];
-  return [phrase.definite ? `the ${word}` : indefinite];
+  const head = (phrase.adjective ? lexicon.adjective(phrase.adjective) + " " : "") + (phrase.plural ? noun.plural : noun.singular);
+  if (phrase.possessor) {
+    const owner = lexicon.noun(phrase.possessor.noun);
+    const ownerWord = possessiveOf(phrase.possessor.plural ? owner.plural : owner.singular);
+    // Possessors are definite; if the language doesn't mark definiteness, "a king's horse" is fine too.
+    const ownerVariants = options.marksDefiniteness ? [`the ${ownerWord}`]
+      : [`the ${ownerWord}`, phrase.possessor.plural ? ownerWord : `${indefiniteArticle(ownerWord)} ${ownerWord}`];
+    return ownerVariants.map(owner => `${owner} ${head}`);
+  }
+  const indefinite = phrase.plural ? head : `${indefiniteArticle(head)} ${head}`;
+  if (!options.marksDefiniteness) return [`the ${head}`, indefinite];
+  return [phrase.definite ? `the ${head}` : indefinite];
 }
 
 function verbPhrase(meaning: Meaning, lexicon: EnglishLexicon, tense: EnglishTense): string {
@@ -85,12 +100,22 @@ function acceptedTenses(meaning: Meaning, options: EnglishOptions): EnglishTense
 
 const capitalise = (text: string) => text[0].toUpperCase() + text.slice(1);
 
+/** Clause variants: adverbs go at the end (displayed), or at the start for time words. */
+function clauses(meaning: Meaning, subject: string, verb: string, object: string, lexicon: EnglishLexicon): string[] {
+  const core = `${subject} ${verb}${object ? " " + object : ""}`;
+  if (!meaning.adverb) return [core];
+  const adverb = lexicon.adverb(meaning.adverb);
+  const variants = [`${core} ${adverb.english}`];
+  if (adverb.time) variants.push(`${adverb.english} ${core}`);
+  return variants;
+}
+
 /** The sentence shown to the player. */
 export function englishSentence(meaning: Meaning, lexicon: EnglishLexicon, options: EnglishOptions): string {
   const subject = nounPhraseVariants(meaning.subject, lexicon, options)[0];
-  const object = meaning.object ? " " + nounPhraseVariants(meaning.object, lexicon, options)[0] : "";
+  const object = meaning.object ? nounPhraseVariants(meaning.object, lexicon, options)[0] : "";
   const verb = verbPhrase(meaning, lexicon, acceptedTenses(meaning, options)[0]);
-  return capitalise(`${subject} ${verb}${object}.`);
+  return capitalise(clauses(meaning, subject, verb, object, lexicon)[0]) + ".";
 }
 
 /** Every accepted English answer, lowercased without final punctuation (the app normalises further). */
@@ -100,6 +125,6 @@ export function englishAnswers(meaning: Meaning, lexicon: EnglishLexicon, option
   for (const subject of nounPhraseVariants(meaning.subject, lexicon, options))
     for (const tense of acceptedTenses(meaning, options))
       for (const object of objects)
-        answers.push(`${subject} ${verbPhrase(meaning, lexicon, tense)}${object ? " " + object : ""}`);
+        answers.push(...clauses(meaning, subject, verbPhrase(meaning, lexicon, tense), object, lexicon));
   return [...new Set(answers)];
 }
