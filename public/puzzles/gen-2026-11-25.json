@@ -1,0 +1,188 @@
+{
+  "id": "gen-2026-11-25",
+  "number": 3,
+  "date": "2026-11-25",
+  "difficulty": 4,
+  "language": {
+    "name": "Bökö",
+    "real": false
+  },
+  "checks": 3,
+  "keys": [],
+  "hint": "Some endings come in two shapes. Look at the vowels of the word they attach to.",
+  "corpus": [
+    {
+      "lang": "Tipe num nitite.",
+      "en": "A piper does not sing.",
+      "gloss": [
+        "sing",
+        "NEG",
+        "piper"
+      ]
+    },
+    {
+      "lang": "Tipe tuwolusa.",
+      "en": "The farmers sing.",
+      "gloss": [
+        "sing",
+        "farmer-PL-DEF"
+      ]
+    },
+    {
+      "lang": "Tipe num tuwolu.",
+      "en": "Farmers do not sing.",
+      "gloss": [
+        "sing",
+        "NEG",
+        "farmer-PL"
+      ]
+    },
+    {
+      "lang": "Kapo num nititeti tuwosa.",
+      "en": "A piper does not chase the farmer.",
+      "gloss": [
+        "chase",
+        "NEG",
+        "piper-ERG",
+        "farmer-DEF"
+      ]
+    },
+    {
+      "lang": "Kapo tuwolutu etelise.",
+      "en": "Farmers chase the goats.",
+      "gloss": [
+        "chase",
+        "farmer-PL-ERG",
+        "goat-PL-DEF"
+      ]
+    },
+    {
+      "lang": "Kapo num tuwolusatu nititese.",
+      "en": "The farmers do not chase the piper.",
+      "gloss": [
+        "chase",
+        "NEG",
+        "farmer-PL-DEF-ERG",
+        "piper-DEF"
+      ]
+    },
+    {
+      "lang": "Kapo num samalusatu nititelise.",
+      "en": "The geese do not chase the pipers.",
+      "gloss": [
+        "chase",
+        "NEG",
+        "goose-PL-DEF-ERG",
+        "piper-PL-DEF"
+      ]
+    },
+    {
+      "lang": "Kapo num eteliseti tuwolusa.",
+      "en": "The goats do not chase the farmers.",
+      "gloss": [
+        "chase",
+        "NEG",
+        "goat-PL-DEF-ERG",
+        "farmer-PL-DEF"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Kapo num nititeliti sama.",
+      "accepted": [
+        "pipers do not chase a goose",
+        "pipers did not chase a goose",
+        "pipers are not chasing a goose"
+      ],
+      "explanation": "V S O order. kapo = chase; num = NEG; nitite-li-ti = piper-PL-ERG; sama = goose."
+    },
+    {
+      "prompt": "Kapo tuwotu samasa.",
+      "accepted": [
+        "a farmer chases the goose",
+        "a farmer chased the goose",
+        "a farmer is chasing the goose"
+      ],
+      "explanation": "V S O order. kapo = chase; tuwo-tu = farmer-ERG; sama-sa = goose-DEF."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "Farmers do not chase the pipers.",
+      "accepted": [
+        "kapo num tuwolutu nititelise"
+      ],
+      "explanation": "V S O order. kapo = chase; num = NEG; tuwo-lu-tu = farmer-PL-ERG; nitite-li-se = piper-PL-DEF."
+    },
+    {
+      "prompt": "The farmer does not sing.",
+      "accepted": [
+        "tipe num tuwosa"
+      ],
+      "explanation": "V S order. tipe = sing; num = NEG; tuwo-sa = farmer-DEF. One participant, so no ergative ending."
+    },
+    {
+      "prompt": "The goose chases the goats.",
+      "accepted": [
+        "kapo samasatu etelise"
+      ],
+      "explanation": "V S O order. kapo = chase; sama-sa-tu = goose-DEF-ERG; ete-li-se = goat-PL-DEF."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "sama",
+        "goose"
+      ],
+      [
+        "tuwo",
+        "farmer"
+      ],
+      [
+        "ete",
+        "goat"
+      ],
+      [
+        "nitite",
+        "piper"
+      ],
+      [
+        "kapo",
+        "chase"
+      ],
+      [
+        "tipe",
+        "sing"
+      ]
+    ],
+    "grammar": [
+      [
+        "V S O",
+        "Word order: verb, subject, object. With one participant: verb, subject."
+      ],
+      [
+        "-lu / -li",
+        "Plural."
+      ],
+      [
+        "-sa / -se",
+        "Definite (“the”). A noun without it means “a” (or plain plural)."
+      ],
+      [
+        "-tu / -ti",
+        "Ergative: marks the doer of a two-participant verb. The lone participant of a one-participant verb is bare, just like the object."
+      ],
+      [
+        "num",
+        "Negation: a separate word after the verb."
+      ],
+      [
+        "Suffix order",
+        "On nouns: stem-PL-DEF-ERG."
+      ]
+    ],
+    "notes": "Vowel harmony: a word's vowels are either all back (a, o, u) or all front (e, ö, i), and suffix vowels follow the stem. Checked against 470 alternative analyses; the sentences rule out 465, including: -lu/-li appears when: plural & negative; -sa/-se appears when: definite & two-participant clause."
+  }
+}

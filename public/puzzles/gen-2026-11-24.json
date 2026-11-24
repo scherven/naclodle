@@ -1,0 +1,208 @@
+{
+  "id": "gen-2026-11-24",
+  "number": 2,
+  "date": "2026-11-24",
+  "difficulty": 4,
+  "language": {
+    "name": "Pirtere",
+    "real": false
+  },
+  "checks": 3,
+  "keys": [],
+  "hint": "Some endings come in two shapes. Look at the vowels of the word they attach to.",
+  "corpus": [
+    {
+      "lang": "Senkepe tumku.",
+      "en": "The king laughs.",
+      "gloss": [
+        "king-DEF",
+        "laugh"
+      ]
+    },
+    {
+      "lang": "Rumha tumkura.",
+      "en": "A scribe does not laugh.",
+      "gloss": [
+        "scribe",
+        "laugh-NEG"
+      ]
+    },
+    {
+      "lang": "Rumhasu tumkura.",
+      "en": "Scribes do not laugh.",
+      "gloss": [
+        "scribe-PL",
+        "laugh-NEG"
+      ]
+    },
+    {
+      "lang": "Rumhapa tenhiwene tuwara.",
+      "en": "The scribe does not send a horse.",
+      "gloss": [
+        "scribe-DEF",
+        "horse-ACC",
+        "send-NEG"
+      ]
+    },
+    {
+      "lang": "Tarasapa husana tuwara.",
+      "en": "The messenger does not send a scroll.",
+      "gloss": [
+        "messenger-DEF",
+        "scroll-ACC",
+        "send-NEG"
+      ]
+    },
+    {
+      "lang": "Tarasa senkesipene petere.",
+      "en": "A messenger does not summon the kings.",
+      "gloss": [
+        "messenger",
+        "king-PL-DEF-ACC",
+        "summon-NEG"
+      ]
+    },
+    {
+      "lang": "Tarasasupa senkepene pete.",
+      "en": "The messengers summon the king.",
+      "gloss": [
+        "messenger-PL-DEF",
+        "king-DEF-ACC",
+        "summon"
+      ]
+    },
+    {
+      "lang": "Tarasasupa senkesipene pete.",
+      "en": "The messengers summon the kings.",
+      "gloss": [
+        "messenger-PL-DEF",
+        "king-PL-DEF-ACC",
+        "summon"
+      ]
+    },
+    {
+      "lang": "Tarasasupa rumhasupana petere.",
+      "en": "The messengers do not summon the scribes.",
+      "gloss": [
+        "messenger-PL-DEF",
+        "scribe-PL-DEF-ACC",
+        "summon-NEG"
+      ]
+    },
+    {
+      "lang": "Senkesipe tenhiwesipene tuwara.",
+      "en": "The kings do not send the horses.",
+      "gloss": [
+        "king-PL-DEF",
+        "horse-PL-DEF-ACC",
+        "send-NEG"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Rumha husasupana tuwara.",
+      "accepted": [
+        "a scribe does not send the scrolls",
+        "a scribe did not send the scrolls",
+        "a scribe is not sending the scrolls"
+      ],
+      "explanation": "S O V order. rumha = scribe; husa-su-pa-na = scroll-PL-DEF-ACC; tuwa-ra = send-NEG."
+    },
+    {
+      "prompt": "Rumhasupa senkesipene petere.",
+      "accepted": [
+        "the scribes do not summon the kings",
+        "the scribes did not summon the kings",
+        "the scribes are not summoning the kings"
+      ],
+      "explanation": "S O V order. rumha-su-pa = scribe-PL-DEF; senke-si-pe-ne = king-PL-DEF-ACC; pete-re = summon-NEG."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "The messengers laugh.",
+      "accepted": [
+        "tarasasupa tumku"
+      ],
+      "explanation": "S V order. tarasa-su-pa = messenger-PL-DEF; tumku = laugh."
+    },
+    {
+      "prompt": "The kings do not send a messenger.",
+      "accepted": [
+        "senkesipe tarasana tuwara"
+      ],
+      "explanation": "S O V order. senke-si-pe = king-PL-DEF; tarasa-na = messenger-ACC; tuwa-ra = send-NEG."
+    },
+    {
+      "prompt": "The king does not send the horse.",
+      "accepted": [
+        "senkepe tenhiwepene tuwara"
+      ],
+      "explanation": "S O V order. senke-pe = king-DEF; tenhiwe-pe-ne = horse-DEF-ACC; tuwa-ra = send-NEG."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "senke",
+        "king"
+      ],
+      [
+        "tarasa",
+        "messenger"
+      ],
+      [
+        "rumha",
+        "scribe"
+      ],
+      [
+        "tenhiwe",
+        "horse"
+      ],
+      [
+        "husa",
+        "scroll"
+      ],
+      [
+        "tuwa-",
+        "send"
+      ],
+      [
+        "pete-",
+        "summon"
+      ],
+      [
+        "tumku-",
+        "laugh"
+      ]
+    ],
+    "grammar": [
+      [
+        "S O V",
+        "Word order: subject, object, verb. With one participant: subject, verb."
+      ],
+      [
+        "-su / -si",
+        "Plural."
+      ],
+      [
+        "-pa / -pe",
+        "Definite (“the”). A noun without it means “a” (or plain plural)."
+      ],
+      [
+        "-na / -ne",
+        "Accusative: marks the object."
+      ],
+      [
+        "-ra / -re",
+        "Negation, on the verb."
+      ],
+      [
+        "Suffix order",
+        "On nouns: stem-PL-DEF-ACC."
+      ]
+    ],
+    "notes": "Vowel harmony: a word's vowels are either all back (a, u) or all front (e, i), and suffix vowels follow the stem. Checked against 320 alternative analyses; the sentences rule out 316, including: -su/-si appears when: (plural or front-vowel stem); -pa/-pe appears when: (definite or front-vowel stem); -pa/-pe appears when: definite & two-participant clause."
+  }
+}

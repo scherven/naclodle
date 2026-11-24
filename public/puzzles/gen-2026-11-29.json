@@ -1,0 +1,196 @@
+{
+  "id": "gen-2026-11-29",
+  "number": 7,
+  "date": "2026-11-29",
+  "difficulty": 4,
+  "language": {
+    "name": "Tula",
+    "real": false
+  },
+  "checks": 3,
+  "keys": [],
+  "hint": "Watch for “the” versus “a” in the English.",
+  "corpus": [
+    {
+      "lang": "Tamutu tele.",
+      "en": "Sailors whisper.",
+      "gloss": [
+        "sailor-PL",
+        "whisper"
+      ]
+    },
+    {
+      "lang": "Matama la tele.",
+      "en": "The guardian does not whisper.",
+      "gloss": [
+        "guardian-DEF",
+        "NEG",
+        "whisper"
+      ]
+    },
+    {
+      "lang": "Tikelteme la telene.",
+      "en": "The captain did not whisper.",
+      "gloss": [
+        "captain-DEF",
+        "NEG",
+        "whisper-PST"
+      ]
+    },
+    {
+      "lang": "Tamutumasa telelke la kuva.",
+      "en": "A spirit does not guard the sailors.",
+      "gloss": [
+        "sailor-PL-DEF-ACC",
+        "spirit",
+        "NEG",
+        "guard"
+      ]
+    },
+    {
+      "lang": "Teltivitise matatuma kuvana.",
+      "en": "The guardians guarded stables.",
+      "gloss": [
+        "stable-PL-ACC",
+        "guardian-PL-DEF",
+        "guard-PST"
+      ]
+    },
+    {
+      "lang": "Tamumasa matatuma la sekene.",
+      "en": "The guardians did not warn the sailor.",
+      "gloss": [
+        "sailor-DEF-ACC",
+        "guardian-PL-DEF",
+        "NEG",
+        "warn-PST"
+      ]
+    },
+    {
+      "lang": "Teltivitimese telelkeme la kuvana.",
+      "en": "The spirit did not guard the stables.",
+      "gloss": [
+        "stable-PL-DEF-ACC",
+        "spirit-DEF",
+        "NEG",
+        "guard-PST"
+      ]
+    },
+    {
+      "lang": "Tikeltetimese telelketime la kuvana.",
+      "en": "The spirits did not guard the captains.",
+      "gloss": [
+        "captain-PL-DEF-ACC",
+        "spirit-PL-DEF",
+        "NEG",
+        "guard-PST"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Tikeltetimese matatuma kuvana.",
+      "accepted": [
+        "the guardians guarded the captains"
+      ],
+      "explanation": "O S V order. tikelte-ti-me-se = captain-PL-DEF-ACC; mata-tu-ma = guardian-PL-DEF; kuva-na = guard-PST."
+    },
+    {
+      "prompt": "Teltivitise telelketi kuvana.",
+      "accepted": [
+        "spirits guarded stables"
+      ],
+      "explanation": "O S V order. teltivi-ti-se = stable-PL-ACC; telelke-ti = spirit-PL; kuva-na = guard-PST."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "The guardians do not warn the sailors.",
+      "accepted": [
+        "tamutumasa matatuma la seke"
+      ],
+      "explanation": "O S V order. tamu-tu-ma-sa = sailor-PL-DEF-ACC; mata-tu-ma = guardian-PL-DEF; la = NEG; seke = warn."
+    },
+    {
+      "prompt": "Spirits do not guard the sailor.",
+      "accepted": [
+        "tamumasa telelketi la kuva"
+      ],
+      "explanation": "O S V order. tamu-ma-sa = sailor-DEF-ACC; telelke-ti = spirit-PL; la = NEG; kuva = guard."
+    },
+    {
+      "prompt": "Spirits did not whisper.",
+      "accepted": [
+        "telelketi la telene"
+      ],
+      "explanation": "S V order. telelke-ti = spirit-PL; la = NEG; tele-ne = whisper-PST."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "tikelte",
+        "captain"
+      ],
+      [
+        "tamu",
+        "sailor"
+      ],
+      [
+        "telelke",
+        "spirit"
+      ],
+      [
+        "teltivi",
+        "stable"
+      ],
+      [
+        "mata",
+        "guardian"
+      ],
+      [
+        "kuva-",
+        "guard"
+      ],
+      [
+        "seke-",
+        "warn"
+      ],
+      [
+        "tele-",
+        "whisper"
+      ]
+    ],
+    "grammar": [
+      [
+        "O S V",
+        "Word order: object, subject, verb. With one participant: subject, verb."
+      ],
+      [
+        "-tu / -ti",
+        "Plural."
+      ],
+      [
+        "-ma / -me",
+        "Definite (“the”). A noun without it means “a” (or plain plural)."
+      ],
+      [
+        "-sa / -se",
+        "Accusative: marks the object."
+      ],
+      [
+        "-na / -ne",
+        "Past tense. Without it the verb is present or future."
+      ],
+      [
+        "la",
+        "Negation: a separate word before the verb."
+      ],
+      [
+        "Suffix order",
+        "On nouns: stem-PL-DEF-ACC."
+      ]
+    ],
+    "notes": "Vowel harmony: a word's vowels are either all back (a, u) or all front (e, i), and suffix vowels follow the stem. Checked against 1305 alternative analyses; the sentences rule out 1303, including: -tu/-ti appears when: plural & two-participant clause; -ma/-me appears when: definite & animate."
+  }
+}

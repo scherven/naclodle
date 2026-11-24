@@ -1,0 +1,208 @@
+{
+  "id": "001",
+  "number": 1,
+  "date": "2026-11-23",
+  "difficulty": 2,
+  "language": {
+    "name": "Turkish",
+    "real": true,
+    "locale": "tr"
+  },
+  "checks": 3,
+  "keys": [
+    "ı",
+    "ğ",
+    "ç",
+    "ö",
+    "ü",
+    "ş"
+  ],
+  "hint": "Look at the object when it means “the” and when it means “a”.",
+  "corpus": [
+    {
+      "lang": "Adam elmayı yedi.",
+      "en": "The man ate the apple.",
+      "gloss": [
+        "man",
+        "apple-ACC",
+        "eat-PST"
+      ]
+    },
+    {
+      "lang": "Kadın ekmeği görmedi.",
+      "en": "The woman did not see the bread.",
+      "gloss": [
+        "woman",
+        "bread-ACC",
+        "see-NEG-PST"
+      ]
+    },
+    {
+      "lang": "Çocuklar adamı gördü.",
+      "en": "The children saw the man.",
+      "gloss": [
+        "child-PL",
+        "man-ACC",
+        "see-PST"
+      ]
+    },
+    {
+      "lang": "Kadın elma yedi.",
+      "en": "The woman ate an apple.",
+      "gloss": [
+        "woman",
+        "apple",
+        "eat-PST"
+      ]
+    },
+    {
+      "lang": "Adam çocukları görmedi.",
+      "en": "The man did not see the children.",
+      "gloss": [
+        "man",
+        "child-PL-ACC",
+        "see-NEG-PST"
+      ]
+    },
+    {
+      "lang": "Kadınlar balığı yedi.",
+      "en": "The women ate the fish.",
+      "gloss": [
+        "woman-PL",
+        "fish-ACC",
+        "eat-PST"
+      ]
+    },
+    {
+      "lang": "Çocuk elmaları yemedi.",
+      "en": "The child did not eat the apples.",
+      "gloss": [
+        "child",
+        "apple-PL-ACC",
+        "eat-NEG-PST"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Çocuk kadını gördü.",
+      "accepted": [
+        "the child saw the woman"
+      ],
+      "explanation": "kadın-ı: “the” object takes -ı. gör-dü: saw."
+    },
+    {
+      "prompt": "Adamlar ekmek yemedi.",
+      "accepted": [
+        "the men did not eat bread",
+        "the men did not eat any bread",
+        "the men ate no bread",
+        "the men did not eat a bread"
+      ],
+      "explanation": "ekmek has no -i, so it is indefinite. -me- negates."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "The man did not see the fish.",
+      "accepted": [
+        "adam balığı görmedi"
+      ],
+      "explanation": "balığ-ı (the fish) + gör-me-di (did not see)."
+    },
+    {
+      "prompt": "The women saw the children.",
+      "accepted": [
+        "kadınlar çocukları gördü",
+        "kadınlar çocukları gördüler"
+      ],
+      "explanation": "Plural -lar comes before -ı: çocuk-lar-ı."
+    },
+    {
+      "prompt": "The child ate a fish.",
+      "accepted": [
+        "çocuk balık yedi",
+        "çocuk bir balık yedi"
+      ],
+      "explanation": "Indefinite object is bare. ekmeği ~ ekmek shows ğ ~ k, so balığı ~ balık."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "adam",
+        "man"
+      ],
+      [
+        "kadın",
+        "woman"
+      ],
+      [
+        "çocuk",
+        "child"
+      ],
+      [
+        "elma",
+        "apple"
+      ],
+      [
+        "ekmek",
+        "bread"
+      ],
+      [
+        "balık",
+        "fish"
+      ],
+      [
+        "ye-",
+        "eat"
+      ],
+      [
+        "gör-",
+        "see"
+      ]
+    ],
+    "grammar": [
+      [
+        "S O V",
+        "Word order: subject, object, verb."
+      ],
+      [
+        "-lar / -ler",
+        "Plural."
+      ],
+      [
+        "-ı / -i / -u / -ü",
+        "Marks a definite object (“the”). After a vowel: -yı, -yi …"
+      ],
+      [
+        "-me- / -ma-",
+        "Negation, inside the verb."
+      ],
+      [
+        "-dı / -di / -du / -dü",
+        "Past tense."
+      ],
+      [
+        "k → ğ",
+        "A final k often softens to ğ before a vowel: ekmek → ekmeği."
+      ]
+    ],
+    "notes": "The suffix vowels copy the vowel before them (vowel harmony): adam-ı, ekmeğ-i, çocuk-lar-ı, gör-dü.",
+    "fact": "Turkish was written in Arabic script until 1928, when it switched to a Latin alphabet in a single year. That is when dotted i and dotless ı became separate letters."
+  },
+  "shuffle": {
+    "anchors": [
+      0
+    ],
+    "order": [
+      0,
+      4,
+      6,
+      1,
+      5,
+      2,
+      3
+    ]
+  }
+}

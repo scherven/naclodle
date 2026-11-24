@@ -1,0 +1,11 @@
+# generated design mocks and research notes stay local
+design/
+research/
+
+node_modules/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+.claude/

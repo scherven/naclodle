@@ -1,0 +1,209 @@
+{
+  "id": "gen-2026-11-26",
+  "number": 4,
+  "date": "2026-11-26",
+  "difficulty": 4,
+  "language": {
+    "name": "Tenti",
+    "real": false
+  },
+  "checks": 3,
+  "keys": [],
+  "hint": "Not every object gets the same ending. What do the marked ones have in common?",
+  "corpus": [
+    {
+      "lang": "Tutana su urepa.",
+      "en": "The sailors do not swim.",
+      "gloss": [
+        "swim-3PL",
+        "NEG",
+        "sailor-PL"
+      ]
+    },
+    {
+      "lang": "Intuna su mitunripa.",
+      "en": "The navigators do not sing.",
+      "gloss": [
+        "sing-3PL",
+        "NEG",
+        "navigator-PL"
+      ]
+    },
+    {
+      "lang": "Lati su mete mitunri.",
+      "en": "The navigator does not mend the map.",
+      "gloss": [
+        "mend",
+        "NEG",
+        "map",
+        "navigator"
+      ]
+    },
+    {
+      "lang": "Nata kimaka ure.",
+      "en": "The sailor follows the whale.",
+      "gloss": [
+        "follow",
+        "whale-ACC",
+        "sailor"
+      ]
+    },
+    {
+      "lang": "Latina metepa urepa.",
+      "en": "The sailors mend the maps.",
+      "gloss": [
+        "mend-3PL",
+        "map-PL",
+        "sailor-PL"
+      ]
+    },
+    {
+      "lang": "Nata su mitunripaka ure.",
+      "en": "The sailor does not follow the navigators.",
+      "gloss": [
+        "follow",
+        "NEG",
+        "navigator-PL-ACC",
+        "sailor"
+      ]
+    },
+    {
+      "lang": "Natana su mitunrika kimapa.",
+      "en": "The whales do not follow the navigator.",
+      "gloss": [
+        "follow-3PL",
+        "NEG",
+        "navigator-ACC",
+        "whale-PL"
+      ]
+    },
+    {
+      "lang": "Natana su mitunripaka urepa.",
+      "en": "The sailors do not follow the navigators.",
+      "gloss": [
+        "follow-3PL",
+        "NEG",
+        "navigator-PL-ACC",
+        "sailor-PL"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Latina su metepa mitunripa.",
+      "accepted": [
+        "the navigators do not mend the maps",
+        "the navigators do not mend maps",
+        "the navigators did not mend the maps",
+        "the navigators did not mend maps",
+        "the navigators are not mending the maps",
+        "the navigators are not mending maps",
+        "navigators do not mend the maps",
+        "navigators do not mend maps",
+        "navigators did not mend the maps",
+        "navigators did not mend maps",
+        "navigators are not mending the maps",
+        "navigators are not mending maps"
+      ],
+      "explanation": "V O S order. lati-na = mend-3PL; su = NEG; mete-pa = map-PL; mitunri-pa = navigator-PL. This object is not marked."
+    },
+    {
+      "prompt": "Intu mitunri.",
+      "accepted": [
+        "the navigator sings",
+        "the navigator sang",
+        "the navigator is singing",
+        "a navigator sings",
+        "a navigator sang",
+        "a navigator is singing"
+      ],
+      "explanation": "V S order. intu = sing; mitunri = navigator."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "The whales swim.",
+      "accepted": [
+        "tutana kimapa"
+      ],
+      "explanation": "V S order. tuta-na = swim-3PL; kima-pa = whale-PL."
+    },
+    {
+      "prompt": "The whale does not follow the sailors.",
+      "accepted": [
+        "nata su urepaka kima"
+      ],
+      "explanation": "V O S order. nata = follow; su = NEG; ure-pa-ka = sailor-PL-ACC; kima = whale."
+    },
+    {
+      "prompt": "The navigator follows the whales.",
+      "accepted": [
+        "nata kimapaka mitunri"
+      ],
+      "explanation": "V O S order. nata = follow; kima-pa-ka = whale-PL-ACC; mitunri = navigator."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "ure",
+        "sailor"
+      ],
+      [
+        "mete",
+        "map"
+      ],
+      [
+        "mitunri",
+        "navigator"
+      ],
+      [
+        "kima",
+        "whale"
+      ],
+      [
+        "nata-",
+        "follow"
+      ],
+      [
+        "lati-",
+        "mend"
+      ],
+      [
+        "tuta-",
+        "swim"
+      ],
+      [
+        "intu-",
+        "sing"
+      ]
+    ],
+    "grammar": [
+      [
+        "V O S",
+        "Word order: verb, object, subject. With one participant: verb, subject."
+      ],
+      [
+        "-pa",
+        "Plural."
+      ],
+      [
+        "-ka",
+        "Marks the object, but only when it is alive (a person, animal or spirit). Other objects are bare."
+      ],
+      [
+        "-na",
+        "On the verb when the subject is plural."
+      ],
+      [
+        "su",
+        "Negation: a separate word after the verb."
+      ],
+      [
+        "Suffix order",
+        "On nouns: stem-PL-ACC."
+      ]
+    ],
+    "notes": "Checked against 479 alternative analyses; the sentences rule out 476, including: -ka appears when: object & animate & human; -na appears when: (plural subject or plural lone-subject/object)."
+  }
+}
