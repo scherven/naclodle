@@ -11,7 +11,8 @@ import type { Lexicon } from "./lexicon";
 import type { MeaningDimensions } from "./meaning";
 import type { Phonology } from "./phonology";
 
-export type Role = "A" | "S" | "P";
+/** A agent, S lone subject, P object; LOC/INS/COM are the oblique phrases (place, instrument, companion). */
+export type Role = "A" | "S" | "P" | "LOC" | "INS" | "COM";
 export type WordOrder = "SOV" | "SVO" | "VSO" | "VOS" | "OVS" | "OSV";
 export const WORD_ORDERS: WordOrder[] = ["SOV", "SVO", "VSO", "VOS", "OVS", "OSV"];
 
@@ -45,10 +46,10 @@ export type Exponent =
   | { kind: "reduplication"; copy: "full" | "CV" | "CVC" }
   /** First consonant + a fixed vowel (only used as a parasitic reading of CV reduplication). */
   | { kind: "consonantCopyPrefix"; vowel: string }
-  /** A separate word next to the verb. */
+  /** A separate word: next to the verb (verb hosts) or at the edge of the noun phrase (adpositions). */
   | { kind: "particle"; form: string; side: "before" | "after" };
 
-export type MorphemeId = "PL" | "ACC" | "ERG" | "DEF" | "GEN" | "POSS" | "NEG" | "PST" | "AGR" | "SPLIT";
+export type MorphemeId = "PL" | "ACC" | "ERG" | "DEF" | "GEN" | "POSS" | "NEG" | "PST" | "AGR" | "LOC" | "INS" | "COM" | "SPLIT";
 
 export interface Morpheme {
   id: MorphemeId;
@@ -63,9 +64,10 @@ export interface Morpheme {
 
 export type Headline =
   | "ergative" | "differentialObject" | "reduplication" | "circumfix" | "harmony" | "definiteness" | "wordOrder"
-  | "possessive" | "adjectivePhrase";
+  | "possessive" | "adjectivePhrase" | "oblique";
 export const HEADLINES: Headline[] = [
   "ergative", "differentialObject", "reduplication", "circumfix", "harmony", "definiteness", "wordOrder", "possessive", "adjectivePhrase",
+  "oblique",
 ];
 
 /**
@@ -93,6 +95,8 @@ export interface Grammar {
   /** Where the possessor goes relative to the possessed noun (and its adjective). */
   possessorPosition: "before" | "after" | null;
   adverbPosition: AdverbPosition | null;
+  /** Where place / instrument / companion phrases go. */
+  obliquePosition: AdverbPosition | null;
   phonology: Phonology;
   lexicon: Lexicon;
   info: {
@@ -102,6 +106,8 @@ export interface Grammar {
     dimensions: MeaningDimensions;
     /** Weekday target the grammar was sampled for. */
     difficulty: number;
+    /** No tense marking: the English tells the story in the past (both tenses are still accepted). */
+    narrativePast: boolean;
   };
 }
 
@@ -128,7 +134,9 @@ const FEATURE_DESCRIPTIONS: Record<Feature, string> = {
   subjectPlural: "plural subject", absolutivePlural: "plural lone-subject/object", objectPlural: "plural object",
   anyPlural: "any plural noun",
 };
-const ROLE_DESCRIPTIONS: Record<Role, string> = { A: "agent", S: "lone subject", P: "object" };
+const ROLE_DESCRIPTIONS: Record<Role, string> = {
+  A: "agent", S: "lone subject", P: "object", LOC: "place phrase", INS: "instrument phrase", COM: "companion phrase",
+};
 
 /** Short human-readable rendering, used in competitor reports. */
 export function describeCondition(condition: Condition): string {

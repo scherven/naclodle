@@ -1,0 +1,242 @@
+{
+  "id": "gen-2026-12-10",
+  "number": 18,
+  "date": "2026-12-10",
+  "difficulty": 3,
+  "language": {
+    "name": "Tloxta",
+    "real": false
+  },
+  "checks": 3,
+  "keys": [],
+  "hint": "English says “with” in more than one sense. Does this language?",
+  "corpus": [
+    {
+      "lang": "Atoso texsexe tzesa.",
+      "en": "The pilgrims sleep quietly.",
+      "gloss": [
+        "pilgrim-PL",
+        "sleep-3PL",
+        "quietly"
+      ]
+    },
+    {
+      "lang": "Chatlaso texsexe.",
+      "en": "The yaks sleep.",
+      "gloss": [
+        "yak-PL",
+        "sleep-3PL"
+      ]
+    },
+    {
+      "lang": "Atoso tzaxa texsexe tex xata.",
+      "en": "The old pilgrims sleep with the abbot.",
+      "gloss": [
+        "pilgrim-PL",
+        "old",
+        "sleep-3PL",
+        "COM",
+        "abbot"
+      ]
+    },
+    {
+      "lang": "Xataso tzaxa texsexe tex atoso.",
+      "en": "The old abbots sleep with the pilgrims.",
+      "gloss": [
+        "abbot-PL",
+        "old",
+        "sleep-3PL",
+        "COM",
+        "pilgrim-PL"
+      ]
+    },
+    {
+      "lang": "Chatla tzaxa tixa yate.",
+      "en": "The old yak climbs the peak.",
+      "gloss": [
+        "yak",
+        "old",
+        "climb",
+        "peak"
+      ]
+    },
+    {
+      "lang": "Xata tlase cha setle atoso.",
+      "en": "The abbot greets the pilgrims with the scroll.",
+      "gloss": [
+        "abbot",
+        "greet",
+        "INS",
+        "scroll",
+        "pilgrim-PL"
+      ]
+    },
+    {
+      "lang": "Atoso tlasexe xataso totloti.",
+      "en": "The pilgrims greet the abbots at night.",
+      "gloss": [
+        "pilgrim-PL",
+        "greet-3PL",
+        "abbot-PL",
+        "at.night"
+      ]
+    },
+    {
+      "lang": "Xataso tlasexe cha chaxiso atoso tzaxa.",
+      "en": "The abbots greet the old pilgrims with the lamps.",
+      "gloss": [
+        "abbot-PL",
+        "greet-3PL",
+        "INS",
+        "lamp-PL",
+        "pilgrim-PL",
+        "old"
+      ]
+    },
+    {
+      "lang": "Xataso tzaxa tlasexe tex chatlaso atoso.",
+      "en": "The old abbots greet the pilgrims with the yaks.",
+      "gloss": [
+        "abbot-PL",
+        "old",
+        "greet-3PL",
+        "COM",
+        "yak-PL",
+        "pilgrim-PL"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Atoso texsexe tex chatla.",
+      "accepted": [
+        "the pilgrims sleep with the yak",
+        "the pilgrims sleep with a yak",
+        "the pilgrims slept with the yak",
+        "the pilgrims slept with a yak",
+        "the pilgrims are sleeping with the yak",
+        "the pilgrims are sleeping with a yak",
+        "pilgrims sleep with the yak",
+        "pilgrims sleep with a yak",
+        "pilgrims slept with the yak",
+        "pilgrims slept with a yak",
+        "pilgrims are sleeping with the yak",
+        "pilgrims are sleeping with a yak"
+      ],
+      "explanation": "S V order. ato-so = pilgrim-PL; texse-xe = sleep-3PL; tex = COM; chatla = yak."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "The pilgrim greets the old abbots with the yak.",
+      "accepted": [
+        "ato tlase tex chatla xataso tzaxa"
+      ],
+      "explanation": "S V O order. ato = pilgrim; tlase = greet; tex = COM; chatla = yak; xata-so = abbot-PL; tzaxa = old."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "xata",
+        "abbot"
+      ],
+      [
+        "chatla",
+        "yak"
+      ],
+      [
+        "chaxi",
+        "lamp"
+      ],
+      [
+        "ato",
+        "pilgrim"
+      ],
+      [
+        "yate",
+        "peak"
+      ],
+      [
+        "setle",
+        "scroll"
+      ],
+      [
+        "tlase-",
+        "greet"
+      ],
+      [
+        "tixa-",
+        "climb"
+      ],
+      [
+        "texse-",
+        "sleep"
+      ],
+      [
+        "tzaxa",
+        "old"
+      ],
+      [
+        "totloti",
+        "at night"
+      ],
+      [
+        "tzesa",
+        "quietly"
+      ]
+    ],
+    "grammar": [
+      [
+        "S V O",
+        "Word order: subject, verb, object. With one participant: subject, verb."
+      ],
+      [
+        "-so",
+        "Plural."
+      ],
+      [
+        "cha",
+        "A separate word before the noun phrase, marking the instrument, the thing used (“with a spear”)."
+      ],
+      [
+        "tex",
+        "A separate word before the noun phrase, marking a companion, someone doing it alongside (“with the queen”)."
+      ],
+      [
+        "-xe",
+        "On the verb when the subject is plural."
+      ],
+      [
+        "Adjectives",
+        "Come after the noun. Noun endings go on the noun only; the adjective stays bare."
+      ],
+      [
+        "Place and “with” phrases",
+        "Go just after the verb."
+      ],
+      [
+        "Time and manner words",
+        "Go at the end of the sentence."
+      ]
+    ],
+    "notes": "Checked against 458 alternative analyses; the sentences rule out 450, including: tex appears when: companion phrase & plural."
+  },
+  "theme": "a mountain monastery",
+  "shuffle": {
+    "anchors": [
+      0
+    ],
+    "order": [
+      0,
+      7,
+      5,
+      6,
+      3,
+      4,
+      8,
+      2,
+      1
+    ]
+  }
+}

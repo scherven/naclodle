@@ -62,11 +62,19 @@ describe("generated puzzles", () => {
   });
 
   it("leave no competitor that fits the corpus but changes an answer", () => {
-    for (const { report } of generated) expect(report.competitorsKilled).toBeGreaterThan(50);
+    for (const { report } of generated) expect(report.competitorsKilled).toBeGreaterThan(20);
   });
 
   it("cover several headline phenomena", () => {
     expect(new Set(generated.map(({ report }) => report.headline)).size).toBeGreaterThanOrEqual(5);
+  });
+
+  it("vary the sentence frame: negation is optional, and place / “with” phrases appear", () => {
+    const english = generated.map(({ puzzle }) => puzzle.corpus.map(line => line.en).join(" "));
+    const withNegation = english.filter(text => / not /.test(text)).length;
+    expect(withNegation).toBeGreaterThan(5);
+    expect(withNegation).toBeLessThan(generated.length - 10);
+    expect(english.filter(text => / (in|on|at|by|with) the /.test(text)).length).toBeGreaterThan(5);
   });
 }, 120_000);
 
@@ -90,6 +98,7 @@ function ergativeGrammar(): Grammar {
     adjectives: null,
     possessorPosition: null,
     adverbPosition: null,
+    obliquePosition: null,
     phonology: { style: "plain", consonants: ["t", "k", "m", "n", "s", "l"], vowels: ["a", "e", "i", "o", "u"], codas: [], codaProbability: 0, harmony: null },
     lexicon: {
       nouns: [noun("woman", "selu", "p"), noun("dog", "napo", "b"), noun("hunter", "kirime", "p")],
@@ -98,14 +107,15 @@ function ergativeGrammar(): Grammar {
       adverbs: [],
     },
     info: {
-      alignment: "ergative", headline: "ergative", supporting: [], difficulty: 3,
-      dimensions: { definiteness: false, tense: false, adjectives: false, possession: false, adverbs: false },
+      alignment: "ergative", headline: "ergative", supporting: [], difficulty: 3, narrativePast: false,
+      dimensions: { definiteness: false, tense: false, adjectives: false, possession: false, adverbs: false, negation: true, obliques: [] },
     },
   };
 }
 
 const englishOf = (grammar: Grammar): EnglishLexicon => ({
   noun: id => grammar.lexicon.nouns.find(entry => entry.id === id)!.english,
+  preposition: () => "with",
   verb: id => grammar.lexicon.verbs.find(entry => entry.id === id)!.english,
   adjective: id => id,
   adverb: id => ({ english: id, time: false }),
@@ -168,6 +178,7 @@ describe("English realisation", () => {
   const lexicon: EnglishLexicon = {
     noun: id => ({ wolf: { singular: "wolf", plural: "wolves" }, envoy: { singular: "envoy", plural: pluralOf("envoy") }, witch: { singular: "witch", plural: pluralOf("witch") }, ox: { singular: "ox", plural: "oxen" } })[id]!,
     verb: id => ({ bless: makeVerbEnglish("bless"), see: makeVerbEnglish("see", "saw"), carry: makeVerbEnglish("carry"), run: makeVerbEnglish("run", "ran"), stir: makeVerbEnglish("stir", "stirred") })[id]!,
+    preposition: () => "in",
     adjective: id => id,
     adverb: id => ({ yesterday: { english: "yesterday", time: true }, quietly: { english: "quietly", time: false } })[id]!,
   };

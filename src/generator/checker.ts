@@ -22,6 +22,8 @@
  *   possessor      possessor on the other side of the possessed noun (possessor- vs possessed-marking is
  *                  covered by the condition family: GEN "appears when: possessed noun")
  *   adverbPosition the manner/time word in any other position
+ *   obliquePosition the place / "with" phrase in any other position (and, via condition, one marker for
+ *                  several oblique kinds, or an oblique marker that also marks a core role)
  *
  * Known gaps: competitors never invent new morpheme strings beyond one-letter boundary shifts, never
  * posit free word order, and never reanalyse a stem as two morphemes. The explicit evidence check
@@ -57,7 +59,18 @@ export interface CompetitorVerdict {
   disagreesOn: number[];
 }
 
-const ALL_ROLE_SETS: Role[][] = [["A"], ["S"], ["P"], ["A", "S"], ["S", "P"], ["A", "P"], ["A", "S", "P"]];
+const CORE_ROLE_SETS: Role[][] = [["A"], ["S"], ["P"], ["A", "S"], ["S", "P"], ["A", "P"], ["A", "S", "P"]];
+
+/** Role sets a player might posit: the core sets, plus each oblique alone, merged with another oblique, or with a core role. */
+function roleSets(grammar: Grammar): Role[][] {
+  const obliques = grammar.info.dimensions.obliques;
+  const sets = [...CORE_ROLE_SETS];
+  for (const kind of obliques) {
+    sets.push([kind], [kind, "P"], [kind, "A"], [kind, "S"]);
+    for (const other of obliques) if (other > kind) sets.push([kind, other]);
+  }
+  return sets;
+}
 
 function containsRole(condition: Condition): boolean {
   switch (condition.type) {
@@ -92,6 +105,7 @@ function observableFeatures(grammar: Grammar, host: Morpheme["host"]): Feature[]
   const dimensions = grammar.info.dimensions;
   return (host === "noun" ? NOUN_FEATURES : VERB_FEATURES).filter(feature =>
     !(feature === "past" && !dimensions.tense) &&
+    !(feature === "negative" && !dimensions.negation) &&
     !((feature === "possessor" || feature === "possessed") && !dimensions.possession) &&
     !(feature === "pastTimeWord" && !grammar.lexicon.adverbs.some(adverb => adverb.requiresPast)) &&
     !(feature === "definite" && !grammar.info.dimensions.definiteness) &&
@@ -103,7 +117,7 @@ function alternativeConditions(grammar: Grammar, morpheme: Morpheme): { conditio
   const original = morpheme.condition;
   const alternatives: { condition: Condition; description: string }[] = [];
   if (containsRole(original))
-    for (const roles of ALL_ROLE_SETS) {
+    for (const roles of roleSets(grammar)) {
       const condition = replaceRoles(original, roles);
       alternatives.push({ condition, description: describeCondition(condition) });
     }
@@ -260,6 +274,10 @@ export function singleEditCompetitors(grammar: Grammar): Competitor[] {
     for (const position of ["initial", "final", "beforeVerb", "afterVerb"] as AdverbPosition[])
       if (position !== grammar.adverbPosition)
         add("adverbPosition", `adverb position: ${position}`, candidate => { candidate.adverbPosition = position; });
+  if (grammar.obliquePosition)
+    for (const position of ["initial", "final", "beforeVerb", "afterVerb"] as AdverbPosition[])
+      if (position !== grammar.obliquePosition)
+        add("obliquePosition", `place / "with" phrase position: ${position}`, candidate => { candidate.obliquePosition = position; });
 
   if (grammar.harmonyCondition) {
     add("harmony", "no vowel harmony: suffixes always have back vowels", candidate => { candidate.harmonyCondition = { type: "never" }; });
@@ -271,7 +289,7 @@ export function singleEditCompetitors(grammar: Grammar): Competitor[] {
   return competitors;
 }
 
-const TOP_LEVEL_FIELDS = ["wordOrder", "intransitiveSubjectFirst", "harmonyCondition", "adjectives", "possessorPosition", "adverbPosition"] as const;
+const TOP_LEVEL_FIELDS = ["wordOrder", "intransitiveSubjectFirst", "harmonyCondition", "adjectives", "possessorPosition", "adverbPosition", "obliquePosition"] as const;
 
 /** Combine two single edits (applied in sequence) into one competitor. */
 function combine(grammar: Grammar, first: Competitor, second: Competitor): Competitor | null {

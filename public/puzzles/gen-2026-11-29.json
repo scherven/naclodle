@@ -4,166 +4,161 @@
   "date": "2026-11-29",
   "difficulty": 4,
   "language": {
-    "name": "Kulku",
+    "name": "Isehö",
     "real": false
   },
   "checks": 3,
-  "keys": [],
+  "keys": [
+    "ö"
+  ],
   "hint": "Not every object gets the same ending. What do the marked ones have in common?",
   "corpus": [
     {
-      "lang": "Keme nato kita.",
-      "en": "The smith finds the grove.",
+      "lang": "Koma soku monsaga.",
+      "en": "The mummy sealed the urns.",
       "gloss": [
-        "find",
-        "smith",
-        "grove"
+        "seal",
+        "mummy",
+        "urn-PL"
       ]
     },
     {
-      "lang": "Rura tipu tekino.",
-      "en": "The owl pulls the axes.",
+      "lang": "Kontu höneföge lempökö.",
+      "en": "The explorers woke the jackal.",
       "gloss": [
-        "pull",
-        "owl",
-        "axe-PL"
+        "wake",
+        "explorer-PL",
+        "jackal"
       ]
     },
     {
-      "lang": "Rola nato tipuko.",
-      "en": "The smith chases the owl.",
+      "lang": "Kontu hönefö nakonopa.",
+      "en": "The explorer woke the pharaoh.",
       "gloss": [
-        "chase",
-        "smith",
-        "owl-ACC"
+        "wake",
+        "explorer",
+        "pharaoh-ACC"
       ]
     },
     {
-      "lang": "Kemelu natono kita.",
-      "en": "The smiths find the grove.",
+      "lang": "Teke lempökö monsaga inkö.",
+      "en": "The jackal guarded the sacred urns.",
       "gloss": [
-        "find-3PL",
-        "smith-PL",
-        "grove"
+        "guard",
+        "jackal",
+        "urn-PL",
+        "sacred"
       ]
     },
     {
-      "lang": "Fi rola nato tipunoko kuti.",
-      "en": "The smith does not chase the owls quietly.",
+      "lang": "Teke sokuga monsa.",
+      "en": "The mummies guarded the urn.",
       "gloss": [
-        "NEG",
-        "chase",
-        "smith",
-        "owl-PL-ACC",
-        "quietly"
+        "guard",
+        "mummy-PL",
+        "urn"
       ]
     },
     {
-      "lang": "Fi kemelu natono kitano tonti kuti.",
-      "en": "The smiths do not find the ancient groves quietly.",
+      "lang": "Kontu höneföge sokuga keki.",
+      "en": "The explorers woke the ancient mummies.",
       "gloss": [
-        "NEG",
-        "find-3PL",
-        "smith-PL",
-        "grove-PL",
-        "ancient",
-        "quietly"
+        "wake",
+        "explorer-PL",
+        "mummy-PL",
+        "ancient"
       ]
     },
     {
-      "lang": "Fi rolalu natono tipuko kuti.",
-      "en": "The smiths do not chase the owl quietly.",
+      "lang": "Teke lempököge inkö monsaga.",
+      "en": "The sacred jackals guarded the urns.",
       "gloss": [
-        "NEG",
-        "chase-3PL",
-        "smith-PL",
-        "owl-ACC",
-        "quietly"
+        "guard",
+        "jackal-PL",
+        "sacred",
+        "urn-PL"
       ]
     },
     {
-      "lang": "Fi rolalu tipuno tega natonoko kuti.",
-      "en": "The wild owls do not chase the smiths quietly.",
+      "lang": "Kontu höneföge nakonogapa.",
+      "en": "The explorers woke the pharaohs.",
       "gloss": [
-        "NEG",
-        "chase-3PL",
-        "owl-PL",
-        "wild",
-        "smith-PL-ACC",
-        "quietly"
+        "wake",
+        "explorer-PL",
+        "pharaoh-PL-ACC"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Rola tipu natonoko.",
+      "prompt": "Kontu höneföge lempököge inkö.",
       "accepted": [
-        "the owl chases the smiths",
-        "the owl chases smiths",
-        "the owl chased the smiths",
-        "the owl chased smiths",
-        "the owl is chasing the smiths",
-        "the owl is chasing smiths",
-        "an owl chases the smiths",
-        "an owl chases smiths",
-        "an owl chased the smiths",
-        "an owl chased smiths",
-        "an owl is chasing the smiths",
-        "an owl is chasing smiths"
+        "the explorers woke the sacred jackals",
+        "the explorers woke sacred jackals",
+        "the explorers wake the sacred jackals",
+        "the explorers wake sacred jackals",
+        "the explorers are waking the sacred jackals",
+        "the explorers are waking sacred jackals",
+        "explorers woke the sacred jackals",
+        "explorers woke sacred jackals",
+        "explorers wake the sacred jackals",
+        "explorers wake sacred jackals",
+        "explorers are waking the sacred jackals",
+        "explorers are waking sacred jackals"
       ],
-      "explanation": "V S O order. rola = chase; tipu = owl; nato-no-ko = smith-PL-ACC."
+      "explanation": "V S O order. kontu = wake; hönefö-ge = explorer-PL; lempökö-ge = jackal-PL; inkö = sacred. This object is not marked."
     }
   ],
   "toLang": [
     {
-      "prompt": "The owls find the groves quietly.",
+      "prompt": "The mummies guarded the sacred urns.",
       "accepted": [
-        "kemelu tipuno kitano kuti"
+        "teke sokuga monsaga inkö"
       ],
-      "explanation": "V S O order. keme-lu = find-3PL; tipu-no = owl-PL; kita-no = grove-PL; kuti = quietly. This object is not marked."
+      "explanation": "V S O order. teke = guard; soku-ga = mummy-PL; monsa-ga = urn-PL; inkö = sacred. This object is not marked."
     }
   ],
   "explain": {
     "words": [
       [
-        "kita",
-        "grove"
+        "nakono",
+        "pharaoh"
       ],
       [
-        "tipu",
-        "owl"
+        "soku",
+        "mummy"
       ],
       [
-        "nato",
-        "smith"
+        "hönefö",
+        "explorer"
       ],
       [
-        "teki",
-        "axe"
+        "monsa",
+        "urn"
       ],
       [
-        "rola-",
-        "chase"
+        "lempökö",
+        "jackal"
       ],
       [
-        "keme-",
-        "find"
+        "kontu",
+        "wake"
       ],
       [
-        "rura-",
-        "pull"
+        "koma",
+        "seal"
       ],
       [
-        "tonti",
+        "teke",
+        "guard"
+      ],
+      [
+        "keki",
         "ancient"
       ],
       [
-        "tega",
-        "wild"
-      ],
-      [
-        "kuti",
-        "quietly"
+        "inkö",
+        "sacred"
       ]
     ],
     "grammar": [
@@ -172,20 +167,12 @@
         "Word order: verb, subject, object. With one participant: verb, subject."
       ],
       [
-        "-no",
+        "-ga / -ge",
         "Plural."
       ],
       [
-        "-ko",
-        "Marks the object, but only when it is alive (a person, animal or spirit). Other objects are bare."
-      ],
-      [
-        "-lu",
-        "On the verb when the subject is plural."
-      ],
-      [
-        "fi",
-        "Negation: a separate word before the verb."
+        "-pa / -pe",
+        "Marks the object, but only when it is a person. Other objects are bare."
       ],
       [
         "Suffix order",
@@ -194,28 +181,24 @@
       [
         "Adjectives",
         "Come after the noun. Noun endings go on the noun only; the adjective stays bare."
-      ],
-      [
-        "Time and manner words",
-        "Go at the end of the sentence."
       ]
     ],
-    "notes": "Checked against 607 alternative analyses; the sentences rule out 598, including: -lu appears when: plural subject & negative."
+    "notes": "Vowel harmony: a word's vowels are either all back (a, o, u) or all front (e, ö, i), and suffix vowels follow the stem. Checked against 107 alternative analyses; the sentences rule out 100, including: suffix vowels depend on: first noun."
   },
-  "theme": "a forbidden forest",
+  "theme": "explorers in an ancient tomb",
   "shuffle": {
     "anchors": [
-      2
+      1
     ],
     "order": [
-      1,
-      4,
-      2,
-      5,
-      6,
       3,
+      1,
+      5,
+      2,
       7,
-      0
+      0,
+      4,
+      6
     ]
   }
 }

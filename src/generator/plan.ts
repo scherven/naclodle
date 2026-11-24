@@ -2,7 +2,7 @@
  * The day plan: difficulty target, headline phenomenon, word order and shuffle flag for each date.
  *
  * Variety rules: the headline differs from the previous two days' headlines, the same word order
- * never runs three days in a row, and the theme differs from the previous three days'. Difficulty follows the weekday, NYT-crossword style
+ * never runs three days in a row, and the theme differs from the previous six days'. Difficulty follows the weekday, NYT-crossword style
  * (Mon 1, Tue 2, Wed 3, Thu 3, Fri 4, Sat 5, Sun 4). Saturdays are shuffled days.
  *
  * The plan is a pure function of the date: plans are computed day by day from PLAN_EPOCH, each day's
@@ -16,25 +16,24 @@ import { THEMES } from "./themes";
 import { SOUND_STYLE_NAMES } from "./phonology";
 
 /** Share of days with a non-plain sound style. */
-const STYLE_CHANCE = 0.5;
+const STYLE_CHANCE = 0.65;
 
 export interface DayPlan {
   date: string;
   difficulty: 1 | 2 | 3 | 4 | 5;
   headline: Headline;
   wordOrder: WordOrder;
-  /** Theme id; never the same as in the previous three days. */
+  /** Theme id; never the same as in the previous six days. */
   theme: string;
   /** Sound style ("plain" or a SOUND_STYLES key); a non-plain style never repeats within six days. */
   style: string;
   shuffle: boolean;
 }
 
-/** First planned date. The two puzzles before it were generated before the planner existed. */
-export const PLAN_EPOCH = "2026-12-01";
+/** First planned date. The two puzzles before it (Turkish, Mata) were made by hand. */
+export const PLAN_EPOCH = "2026-11-24";
 const HISTORY_BEFORE_EPOCH: PlanHistory[] = [
-  { headline: "definiteness", wordOrder: "OSV", theme: "captain-spirits" }, // 2026-11-29
-  { headline: "harmony", wordOrder: "OSV", theme: "augur-envoy" }, // 2026-11-30
+  { headline: "definiteness", wordOrder: "SOV", theme: "dragon-hoard" }, // 2026-11-23, Mata
 ];
 
 /** Indexed by getUTCDay(): Sunday = 0. */
@@ -52,6 +51,7 @@ const HEADLINE_WEIGHTS: Record<Headline, { minimum: number; weight: number }> = 
   possessive: { minimum: 3, weight: 2.5 },
   adjectivePhrase: { minimum: 3, weight: 2.5 },
   ergative: { minimum: 3, weight: 3 },
+  oblique: { minimum: 2, weight: 2.5 },
 };
 
 /** WALS 81A counts x interest boost; easy days stay with common orders. */
@@ -90,10 +90,13 @@ function planOneDay(date: string, history: PlanHistory[], overrides: PlanOverrid
   const headline = rng.weighted(headlineChoices);
   const lastTwo = history.slice(-2);
   const repeatedOrder = lastTwo.length === 2 && lastTwo[0].wordOrder === lastTwo[1].wordOrder ? lastTwo[0].wordOrder : null;
+  // A heavy headline on an easy day leaves no room for a verb-initial order.
+  const heavyOnEasyDay = difficulty === 1 || (difficulty === 2 && (headline === "harmony" || headline === "differentialObject"));
   const orderWeights = headline === "wordOrder" ? HEADLINE_WORD_ORDER_WEIGHTS
+    : heavyOnEasyDay ? EASY_WORD_ORDER_WEIGHTS.filter(([order]) => order !== "VSO")
     : difficulty <= 2 ? EASY_WORD_ORDER_WEIGHTS : WORD_ORDER_WEIGHTS;
   const wordOrder = rng.weighted(orderWeights.filter(([order]) => order !== repeatedOrder));
-  const recentThemes = history.slice(-3).map(day => day.theme);
+  const recentThemes = history.slice(-6).map(day => day.theme);
   const theme = rng.pick(THEMES.filter(candidate => !recentThemes.includes(candidate.id))).id;
   // drawn last so adding styles didn't change any earlier day's headline, order or theme
   const recentStyles = history.slice(-6).map(day => day.style);

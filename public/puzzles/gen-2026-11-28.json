@@ -2,152 +2,204 @@
   "id": "gen-2026-11-28",
   "number": 6,
   "date": "2026-11-28",
-  "difficulty": 3,
+  "difficulty": 5,
   "language": {
-    "name": "Etabe",
+    "name": "Reḍiṭe",
     "real": false
   },
   "checks": 3,
-  "keys": [],
-  "hint": "Watch for “the” versus “a” in the English.",
+  "keys": [
+    "ṣ",
+    "ḍ"
+  ],
+  "hint": "Some endings come in two shapes. Look at the vowels of the word they attach to.",
   "corpus": [
     {
-      "lang": "Manto tukemubo re agi.",
-      "en": "A wolf does not follow the eagle.",
+      "lang": "Ṣethete tetemeke.",
+      "en": "The judges weep.",
       "gloss": [
-        "wolf",
-        "eagle-DEF-ACC",
-        "NEG",
-        "follow"
+        "weep-3PL",
+        "PL~judge"
       ]
     },
     {
-      "lang": "Mantomu tetukobo re agi.",
-      "en": "The wolf does not follow elves.",
+      "lang": "Tethite tetemeke.",
+      "en": "The judges wait.",
       "gloss": [
-        "wolf-DEF",
-        "elf-PL-ACC",
-        "NEG",
-        "follow"
+        "wait-3PL",
+        "PL~judge"
       ]
     },
     {
-      "lang": "Tukeko tetumubo agine.",
-      "en": "Eagles follow the elf.",
+      "lang": "Ṣethete ḍuḍutu tetemekeṣi mu kuka.",
+      "en": "The judges' ferrymen weep at the gate.",
       "gloss": [
-        "eagle-PL",
-        "elf-DEF-ACC",
-        "follow-3PL"
+        "weep-3PL",
+        "PL~ferryman",
+        "PL~judge-GEN",
+        "LOC",
+        "gate"
       ]
     },
     {
-      "lang": "Manto tukekomubo re agi.",
-      "en": "A wolf does not follow the eagles.",
+      "lang": "Keḍi temeke kuka.",
+      "en": "The judge guards the gate.",
       "gloss": [
-        "wolf",
-        "eagle-PL-DEF-ACC",
-        "NEG",
-        "follow"
+        "guard",
+        "judge",
+        "gate"
       ]
     },
     {
-      "lang": "Tetuko mantokomubo re agine.",
-      "en": "Elves do not follow the wolves.",
+      "lang": "Keḍi temeke kukuka tarsa.",
+      "en": "The judge guards the dark gates.",
       "gloss": [
-        "elf-PL",
-        "wolf-PL-DEF-ACC",
-        "NEG",
-        "follow-3PL"
+        "guard",
+        "judge",
+        "PL~gate",
+        "dark"
       ]
     },
     {
-      "lang": "Tukekomu tentantakomubo re bintene.",
-      "en": "The eagles do not guard the towers.",
+      "lang": "Keḍite tetemeke kuka tarsa.",
+      "en": "The judges guard the dark gate.",
       "gloss": [
-        "eagle-PL-DEF",
-        "tower-PL-DEF-ACC",
-        "NEG",
-        "guard-3PL"
+        "guard-3PL",
+        "PL~judge",
+        "gate",
+        "dark"
+      ]
+    },
+    {
+      "lang": "Keḍite thetherti ḍekeṣi temeke mu kuka.",
+      "en": "The ghost's hounds guard the judge at the gate.",
+      "gloss": [
+        "guard-3PL",
+        "PL~hound",
+        "ghost-GEN",
+        "judge",
+        "LOC",
+        "gate"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Tukekomu mantobo re agine.",
+      "prompt": "Keḍite tetemeke kukuka.",
       "accepted": [
-        "the eagles do not follow a wolf",
-        "the eagles did not follow a wolf",
-        "the eagles are not following a wolf"
+        "the judges guard the gates",
+        "the judges guard gates",
+        "the judges guarded the gates",
+        "the judges guarded gates",
+        "the judges are guarding the gates",
+        "the judges are guarding gates",
+        "judges guard the gates",
+        "judges guard gates",
+        "judges guarded the gates",
+        "judges guarded gates",
+        "judges are guarding the gates",
+        "judges are guarding gates"
       ],
-      "explanation": "S O V order. tuke-ko-mu = eagle-PL-DEF; manto-bo = wolf-ACC; re = NEG; agi-ne = follow-3PL."
+      "explanation": "V S O order. keḍi-te = guard-3PL; te~temeke = PL~judge; ku~kuka = PL~gate."
     }
   ],
   "toLang": [
     {
-      "prompt": "The elves do not guard a tower.",
+      "prompt": "The judges weep at the gate.",
       "accepted": [
-        "tetukomu tentantabo re bintene"
+        "ṣethete tetemeke mu kuka"
       ],
-      "explanation": "S O V order. tetu-ko-mu = elf-PL-DEF; tentanta-bo = tower-ACC; re = NEG; binte-ne = guard-3PL."
+      "explanation": "V S order. ṣethe-te = weep-3PL; te~temeke = PL~judge; mu = LOC; kuka = gate."
     }
   ],
   "explain": {
     "words": [
       [
-        "tentanta",
-        "tower"
+        "therti",
+        "hound"
       ],
       [
-        "tetu",
-        "elf"
+        "ḍeke",
+        "ghost"
       ],
       [
-        "manto",
-        "wolf"
+        "ḍutu",
+        "ferryman"
       ],
       [
-        "tuke",
-        "eagle"
+        "kuka",
+        "gate"
       ],
       [
-        "agi-",
-        "follow"
+        "temeke",
+        "judge"
       ],
       [
-        "binte-",
+        "keḍi-",
         "guard"
+      ],
+      [
+        "tethi-",
+        "wait"
+      ],
+      [
+        "ṣethe-",
+        "weep"
+      ],
+      [
+        "tarsa",
+        "dark"
       ]
     ],
     "grammar": [
       [
-        "S O V",
-        "Word order: subject, object, verb. With one participant: subject, verb."
+        "V S O",
+        "Word order: verb, subject, object. With one participant: verb, subject."
       ],
       [
-        "-ko",
-        "Plural."
+        "CV~",
+        "Plural: copy the noun's first consonant and vowel in front (thura → thuthura)."
       ],
       [
-        "-mu",
-        "Definite (“the”). A noun without it means “a” (or plain plural)."
+        "-ṣu / -ṣi",
+        "Marks the possessor (“the king's”)."
       ],
       [
-        "-bo",
-        "Accusative: marks the object."
+        "mu",
+        "A separate word before the noun phrase, marking a place (“in”, “on” or “at”)."
       ],
       [
-        "-ne",
+        "-ta / -te",
         "On the verb when the subject is plural."
       ],
       [
-        "re",
-        "Negation: a separate word before the verb."
+        "Adjectives",
+        "Come after the noun. Noun endings go on the noun only; the adjective stays bare."
       ],
       [
-        "Suffix order",
-        "On nouns: stem-PL-DEF-ACC."
+        "Possessor",
+        "Comes after the possessed noun."
+      ],
+      [
+        "Place and “with” phrases",
+        "Go at the end of the sentence."
       ]
     ],
-    "notes": "Checked against 739 alternative analyses; the sentences rule out 728, including: -ko appears when: definite; -ko appears when: plural & definite."
+    "notes": "Vowel harmony: a word's vowels are either all back (a, u) or all front (e, i), and suffix vowels follow the stem. Checked against 1505 alternative analyses; the sentences rule out 1482, including: CV reduplication appears when: animate; CV reduplication appears when: plural & animate."
+  },
+  "theme": "the ferry of the underworld",
+  "shuffle": {
+    "anchors": [
+      4
+    ],
+    "order": [
+      2,
+      5,
+      3,
+      6,
+      4,
+      1,
+      0
+    ]
   }
 }

@@ -4,158 +4,204 @@
   "date": "2026-11-27",
   "difficulty": 4,
   "language": {
-    "name": "Lutake",
+    "name": "Olake",
     "real": false
   },
   "checks": 3,
-  "keys": [
-    "ñ"
-  ],
-  "hint": "Find the verb first, then work out which noun is doing the action.",
+  "keys": [],
+  "hint": "Compare the noun doing the action when the verb has one participant and when it has two.",
   "corpus": [
     {
-      "lang": "Tañalo ñanumu señapa.",
-      "en": "The dragon does not wake the knight.",
+      "lang": "Mikowi kagi toka.",
+      "en": "The monk sleeps quietly.",
       "gloss": [
-        "knight-ACC",
-        "dragon",
-        "NEG-wake"
+        "monk",
+        "quietly",
+        "sleep"
       ]
     },
     {
-      "lang": "Ñanumulo taña ñapapi.",
-      "en": "The knight woke the dragon.",
+      "lang": "Kebaso keweto detabo.",
+      "en": "The pilgrims chanted at night.",
       "gloss": [
-        "dragon-ACC",
-        "knight",
-        "wake-PST"
+        "pilgrim-PL",
+        "at.night",
+        "PST-chant"
       ]
     },
     {
-      "lang": "Ñanumu-ñanumulo taña ñapa.",
-      "en": "The knight wakes the dragons.",
+      "lang": "Mikowiti menoso kido.",
+      "en": "The monk copies the scrolls.",
       "gloss": [
-        "PL~dragon-ACC",
-        "knight",
-        "wake"
+        "monk-ERG",
+        "scroll-PL",
+        "copy"
       ]
     },
     {
-      "lang": "Taña-tañalo ñanumu señapapi.",
-      "en": "The dragon did not wake the knights.",
+      "lang": "Mikowisoti keba keweto kama.",
+      "en": "The monks greet the pilgrim at night.",
       "gloss": [
-        "PL~knight-ACC",
-        "dragon",
-        "NEG-wake-PST"
+        "monk-PL-ERG",
+        "pilgrim",
+        "at.night",
+        "greet"
       ]
     },
     {
-      "lang": "Tañenilo taña-taña selifipifo.",
-      "en": "The knights did not guard the jewel.",
+      "lang": "Mikowiti meno dekido.",
+      "en": "The monk copied the scroll.",
       "gloss": [
-        "jewel-ACC",
-        "PL~knight",
-        "NEG-guard-PST-3PL"
+        "monk-ERG",
+        "scroll",
+        "PST-copy"
       ]
     },
     {
-      "lang": "Tañeni-tañenilo taña-taña lifipifo.",
-      "en": "The knights guarded the jewels.",
+      "lang": "Kebati menoso keweto dekido.",
+      "en": "The pilgrim copied the scrolls at night.",
       "gloss": [
-        "PL~jewel-ACC",
-        "PL~knight",
-        "guard-PST-3PL"
+        "pilgrim-ERG",
+        "scroll-PL",
+        "at.night",
+        "PST-copy"
       ]
     },
     {
-      "lang": "Tañeni-tañenilo ñanumu-ñanumu selififo.",
-      "en": "The dragons do not guard the jewels.",
+      "lang": "Mikowisoti keba menosomu kama.",
+      "en": "The monks greet the pilgrim with the scrolls.",
       "gloss": [
-        "PL~jewel-ACC",
-        "PL~dragon",
-        "NEG-guard-3PL"
+        "monk-PL-ERG",
+        "pilgrim",
+        "scroll-PL-INS",
+        "greet"
       ]
     },
     {
-      "lang": "Taña-tañalo ñanumu-ñanumu ñapapifo.",
-      "en": "The dragons woke the knights.",
+      "lang": "Mikowisoti kebaso menosomu dekama.",
+      "en": "The monks greeted the pilgrims with the scrolls.",
       "gloss": [
-        "PL~knight-ACC",
-        "PL~dragon",
-        "wake-PST-3PL"
+        "monk-PL-ERG",
+        "pilgrim-PL",
+        "scroll-PL-INS",
+        "PST-greet"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Tañenilo ñanumu-ñanumu lifipifo.",
+      "prompt": "Mikowisoti kebaso keweto dekama.",
       "accepted": [
-        "the dragons guarded the jewel",
-        "the dragons guarded a jewel",
-        "dragons guarded the jewel",
-        "dragons guarded a jewel"
+        "the monks greeted the pilgrims at night",
+        "at night the monks greeted the pilgrims",
+        "the monks greeted pilgrims at night",
+        "at night the monks greeted pilgrims",
+        "monks greeted the pilgrims at night",
+        "at night monks greeted the pilgrims",
+        "monks greeted pilgrims at night",
+        "at night monks greeted pilgrims"
       ],
-      "explanation": "O S V order. tañeni-lo = jewel-ACC; ñanumu-ñanumu = PL~dragon; lifi-pi-fo = guard-PST-3PL."
+      "explanation": "S O V order. mikowi-so-ti = monk-PL-ERG; keba-so = pilgrim-PL; keweto = at.night; de-kama = PST-greet."
     }
   ],
   "toLang": [
     {
-      "prompt": "The dragons wake the knight.",
+      "prompt": "The pilgrims copied the scroll quietly.",
       "accepted": [
-        "tañalo ñanumu-ñanumu ñapafo"
+        "kebasoti meno kagi dekido"
       ],
-      "explanation": "O S V order. taña-lo = knight-ACC; ñanumu-ñanumu = PL~dragon; ñapa-fo = wake-3PL."
+      "explanation": "S O V order. keba-so-ti = pilgrim-PL-ERG; meno = scroll; kagi = quietly; de-kido = PST-copy."
     }
   ],
   "explain": {
     "words": [
       [
-        "taña",
-        "knight"
+        "mikowi",
+        "monk"
       ],
       [
-        "ñanumu",
-        "dragon"
+        "meno",
+        "scroll"
       ],
       [
-        "tañeni",
-        "jewel"
+        "keba",
+        "pilgrim"
       ],
       [
-        "lifi-",
-        "guard"
+        "kido-",
+        "copy"
       ],
       [
-        "ñapa-",
-        "wake"
+        "kama-",
+        "greet"
+      ],
+      [
+        "toka-",
+        "sleep"
+      ],
+      [
+        "tabo-",
+        "chant"
+      ],
+      [
+        "kagi",
+        "quietly"
+      ],
+      [
+        "keweto",
+        "at night"
       ]
     ],
     "grammar": [
       [
-        "O S V",
-        "Word order: object, subject, verb. With one participant: subject, verb."
+        "S O V",
+        "Word order: subject, object, verb. With one participant: subject, verb."
       ],
       [
-        "X-X",
-        "Plural: say the noun twice (mekatu → mekatu-mekatu)."
+        "-so",
+        "Plural."
       ],
       [
-        "-lo",
-        "Accusative: marks the object."
+        "-ti",
+        "Ergative: marks the doer of a two-participant verb. The lone participant of a one-participant verb is bare, just like the object."
       ],
       [
-        "-pi",
+        "-mu",
+        "Marks the instrument, the thing used (“with a spear”)."
+      ],
+      [
+        "de-",
         "Past tense. Without it the verb is present or future."
       ],
       [
-        "-fo",
-        "On the verb when the subject is plural."
+        "Suffix order",
+        "On nouns: stem-PL-ERG-INS."
       ],
       [
-        "se-",
-        "Negation, on the verb."
+        "Place and “with” phrases",
+        "Go just before the verb."
+      ],
+      [
+        "Time and manner words",
+        "Go just before the verb."
       ]
     ],
-    "notes": "Checked against 549 alternative analyses; the sentences rule out 538, including: -pi appears when: (past or plural subject); -fo appears when: plural subject & plural lone-subject/object."
+    "notes": "Checked against 452 alternative analyses; the sentences rule out 442, including: de- appears when: (past or plural lone-subject/object)."
+  },
+  "theme": "a mountain monastery",
+  "shuffle": {
+    "anchors": [
+      4
+    ],
+    "order": [
+      2,
+      3,
+      6,
+      1,
+      4,
+      0,
+      7,
+      5
+    ]
   }
 }

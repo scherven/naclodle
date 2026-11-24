@@ -10,6 +10,7 @@ import { checkSolvability, type CheckContext, type CheckResult, type TestItem } 
 import type { Grammar, Morpheme } from "./grammar";
 import type { EnglishLexicon, EnglishOptions } from "./english";
 import { isAnimate } from "./lexicon";
+import { obliqueKind, type ObliqueKind } from "./themes";
 import { lexemesOf, meaningDistance, meaningKey, meaningPool, type Meaning, type NounPhrase } from "./meaning";
 import { realise, sentenceText, type RealisedWord } from "./realise";
 
@@ -43,11 +44,15 @@ function exercisesHeadline(grammar: Grammar, meaning: Meaning, words: RealisedWo
     case "definiteness": return !meaning.subject.definite || !!(meaning.object && !meaning.object.definite);
     case "possessive": return phrases(meaning).some(phrase => !!phrase.possessor);
     case "adjectivePhrase": return phrases(meaning).some(phrase => !!phrase.adjective && phrase.plural);
+    case "oblique": return !!meaning.oblique && obliqueOf(grammar, meaning) !== "LOC";
   }
 }
 
 const phrases = (meaning: Meaning): NounPhrase[] => [meaning.subject, ...(meaning.object ? [meaning.object] : [])];
-const hasStructure = (meaning: Meaning) => !!meaning.adverb || phrases(meaning).some(phrase => !!phrase.adjective || !!phrase.possessor);
+const hasStructure = (meaning: Meaning) =>
+  !!meaning.adverb || !!meaning.oblique || phrases(meaning).some(phrase => !!phrase.adjective || !!phrase.possessor);
+const obliqueOf = (grammar: Grammar, meaning: Meaning): ObliqueKind | null =>
+  meaning.oblique ? obliqueKind(grammar.lexicon.nouns.find(noun => noun.id === meaning.oblique!.noun)!) : null;
 
 /** Does this morpheme have a vowel-harmony placeholder (uppercase vowel)? */
 export function isHarmonising(morpheme: Morpheme): boolean {
@@ -61,10 +66,12 @@ function chooseTests(rng: Rng, grammar: Grammar, pool: Meaning[]): TestItem[] | 
   const transitive = pool.filter(meaning => meaning.object);
   const intransitive = pool.filter(meaning => !meaning.object);
   const dimensions = grammar.info.dimensions;
-  const structuresInUse = dimensions.adjectives || dimensions.possession || dimensions.adverbs;
+  const structuresInUse = dimensions.adjectives || dimensions.possession || dimensions.adverbs || dimensions.obliques.length > 0;
+  const structuredIntransitive = intransitive.filter(hasStructure);
   for (let attempt = 0; attempt < 400; attempt++) {
-    // One item each way. The into-language item is transitive and must exercise the headline (it carries the aha).
-    const toLanguage = rng.pick(transitive);
+    // One item each way. The into-language item must exercise the headline (it carries the aha); it is
+    // usually transitive, sometimes a one-participant sentence with a place or "with" phrase.
+    const toLanguage = structuredIntransitive.length && rng.chance(0.25) ? rng.pick(structuredIntransitive) : rng.pick(transitive);
     const toEnglish = rng.pick(rng.chance(0.7) ? transitive : intransitive);
     const meanings = [toLanguage, toEnglish];
     const words = meanings.map(meaning => realise(grammar, meaning));
@@ -102,6 +109,8 @@ function requirementsFor(grammar: Grammar, tests: TestItem[]): Requirement[] {
     if (phrases(test.meaning).some(phrase => phrase.adjective)) structureRequirement("adjective", meaning => phrases(meaning).some(phrase => !!phrase.adjective));
     if (phrases(test.meaning).some(phrase => phrase.possessor)) structureRequirement("possessor", meaning => phrases(meaning).some(phrase => !!phrase.possessor));
     if (test.meaning.adverb) structureRequirement("adverb", meaning => !!meaning.adverb);
+    const kind = obliqueOf(grammar, test.meaning);
+    if (kind) structureRequirement(`oblique:${kind}`, meaning => obliqueOf(grammar, meaning) === kind);
   }
   // Every structure and morpheme the grammar has must actually show up (twice), or the explanation would
   // describe things the player never saw.
@@ -109,6 +118,9 @@ function requirementsFor(grammar: Grammar, tests: TestItem[]): Requirement[] {
   if (dimensions.adjectives) structureRequirement("adjective", meaning => phrases(meaning).some(phrase => !!phrase.adjective));
   if (dimensions.possession) structureRequirement("possessor", meaning => phrases(meaning).some(phrase => !!phrase.possessor));
   if (dimensions.adverbs) structureRequirement("adverb", meaning => !!meaning.adverb);
+  for (const kind of dimensions.obliques) structureRequirement(`oblique:${kind}`, meaning => obliqueOf(grammar, meaning) === kind);
+  // Negation, when the language has it, shows up at least twice.
+  if (dimensions.negation) add({ key: "contrast:negative", need: 2, covers: meaning => Number(meaning.negative) });
   for (const morpheme of grammar.morphemes)
     add({ key: `morphemeSeen:${morpheme.id}`, need: 2, covers: (_, words) => words.filter(word => word.applied.some(applied => applied.morpheme === morpheme)).length });
   if (grammar.info.headline === "adjectivePhrase") {
@@ -171,6 +183,8 @@ export function selectData({ rng, grammar, english, englishOptions }: SelectionI
   const verbAllowed = (meaning: Meaning) =>
     halfCap(countWhere(other => other.verb === meaning.verb), 1) &&
     (!meaning.adverb || halfCap(countWhere(other => !!other.adverb), 2)) &&
+    (!meaning.oblique || halfCap(countWhere(other => !!other.oblique), 2)) &&
+    (!meaning.negative || halfCap(countWhere(other => other.negative), 2)) &&
     (!hasAdjective(meaning) || halfCap(countWhere(hasAdjective), 2)) &&
     (!hasPossessor(meaning) || halfCap(countWhere(hasPossessor), 2));
   const bestCandidate = (filter: (meaning: Meaning) => boolean) => {
@@ -230,6 +244,7 @@ function nounRoles(meaning: Meaning): string[] {
   const roles = [`${meaning.subject.noun}@${meaning.object ? "A" : "S"}`];
   if (meaning.object) roles.push(`${meaning.object.noun}@P`);
   for (const phrase of phrases(meaning)) if (phrase.possessor) roles.push(`${phrase.possessor.noun}@POSS`);
+  if (meaning.oblique) roles.push(`${meaning.oblique.noun}@OBL`);
   return roles;
 }
 

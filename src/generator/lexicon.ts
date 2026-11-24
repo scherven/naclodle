@@ -1,7 +1,7 @@
 /** Lexicon: a themed subset of English concepts, each given a conlang stem from the sampled phonology. */
 
 import type { Rng } from "./rng";
-import { allowsAgent, allowsPatient, type Adverb, type Theme, type ThemeAdjective, type ThemeNoun, type ThemeVerb } from "./themes";
+import { allowsAgent, allowsOblique, allowsPatient, obliqueKind, type Adverb, type ObliqueKind, type Theme, type ThemeAdjective, type ThemeNoun, type ThemeVerb } from "./themes";
 import { ENGLISH_WORDS, REAL_NAMES } from "./blocklist";
 import { distinctiveSegments, editDistance, makeStem, resolveHarmony, VOWEL_LETTERS, type Phonology } from "./phonology";
 
@@ -32,20 +32,31 @@ export const isHuman = (noun: ThemeNoun) => noun.semanticClass === "p";
  * possible subjects and an object, and some transitive verb has at least two possible objects.
  * Adjectives and adverbs are only included when the grammar uses them.
  */
-export function chooseVocabulary(rng: Rng, theme: Theme, adverbs: Adverb[]): Vocabulary | null {
+export function chooseVocabulary(rng: Rng, theme: Theme, adverbs: Adverb[], obliques: ObliqueKind[] = []): Vocabulary | null {
   for (let attempt = 0; attempt < 30; attempt++) {
-    const vocabulary = tryVocabulary(rng, theme, adverbs);
+    const vocabulary = tryVocabulary(rng, theme, adverbs, obliques);
     if (vocabulary) return vocabulary;
   }
   return null;
 }
 
-function tryVocabulary(rng: Rng, theme: Theme, adverbs: Adverb[]): Vocabulary | null {
+function tryVocabulary(rng: Rng, theme: Theme, adverbs: Adverb[], obliques: ObliqueKind[]): Vocabulary | null {
   const transitiveVerbs = rng.shuffle(theme.verbs.filter(verb => verb.transitive)).slice(0, rng.int(3, 4));
   const intransitiveVerbs = rng.shuffle(theme.verbs.filter(verb => !verb.transitive)).slice(0, rng.int(1, 2));
   const verbs = [...transitiveVerbs, ...intransitiveVerbs];
   const usefulNouns = theme.nouns.filter(noun => verbs.some(verb => allowsAgent(verb, noun) || allowsPatient(verb, noun)));
   const nouns = rng.shuffle(usefulNouns).slice(0, rng.int(6, 8));
+  // Places only ever appear in place phrases, so add two when the language has them.
+  if (obliques.includes("LOC")) {
+    const places = rng.shuffle(theme.nouns.filter(noun => obliqueKind(noun) === "LOC" && !nouns.includes(noun)));
+    while (nouns.filter(noun => obliqueKind(noun) === "LOC").length < 2 && places.length) nouns.push(places.shift()!);
+  }
+  // Each oblique kind needs at least two nouns that can fill it in some sentence.
+  const obliqueFillers = (kind: ObliqueKind) => nouns.filter(oblique => obliqueKind(oblique) === kind && verbs.some(verb =>
+    nouns.some(subject => allowsAgent(verb, subject) && (verb.transitive
+      ? nouns.some(object => allowsPatient(verb, object) && allowsOblique(verb, subject, object, oblique))
+      : allowsOblique(verb, subject, undefined, oblique))))).length;
+  if (obliques.some(kind => obliqueFillers(kind) < 2)) return null;
   const agentCount = (verb: ThemeVerb) => nouns.filter(noun => allowsAgent(verb, noun)).length;
   const patientCount = (verb: ThemeVerb) => nouns.filter(noun => allowsPatient(verb, noun)).length;
   const usable = verbs.every(verb => agentCount(verb) >= 2 && (!verb.transitive || patientCount(verb) >= 1)) &&
@@ -141,9 +152,13 @@ export function affixVariants(phonology: Phonology, affix: string): string[] {
 export function makeLanguageName(rng: Rng, phonology: Phonology): string {
   const distinctive = distinctiveSegments(phonology);
   let fallback: string | null = null;
+  // Aim for a first letter picked uniformly from the language's sounds, so names don't all start with t or k.
+  const initials = [...phonology.consonants, ...phonology.vowels].map(segment => segment[0]);
+  const wantedInitial = rng.pick(initials);
   for (let attempt = 0; attempt < 300; attempt++) {
     const name = makeStem(rng, phonology, rng.int(2, 3), phonology.harmony ? rng.chance(0.5) : null);
     if (looksEnglish(name)) continue;
+    if (attempt < 200 && name[0] !== wantedInitial) continue;
     // capitalise the first letter that has a capital (ʻ and ǃ don't)
     const capitalised = name.replace(/\p{Ll}/u, letter => letter.toUpperCase());
     if (!distinctive.length || distinctive.some(segment => name.includes(segment))) return capitalised;

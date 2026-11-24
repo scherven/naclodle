@@ -1,0 +1,196 @@
+{
+  "id": "gen-2026-12-08",
+  "number": 16,
+  "date": "2026-12-08",
+  "difficulty": 2,
+  "language": {
+    "name": "Gyáltasza",
+    "real": false
+  },
+  "checks": 3,
+  "keys": [
+    "ö",
+    "é",
+    "ő",
+    "ü",
+    "á",
+    "ű"
+  ],
+  "hint": "Not every object gets the same ending. What do the marked ones have in common?",
+  "corpus": [
+    {
+      "lang": "Gyultönyu kéti.",
+      "en": "The toads croaked.",
+      "gloss": [
+        "toad-PL",
+        "croak"
+      ]
+    },
+    {
+      "lang": "Szőku gyikéti.",
+      "en": "The raven did not croak.",
+      "gloss": [
+        "raven",
+        "NEG-croak"
+      ]
+    },
+    {
+      "lang": "Ligyulszö talgya szőkunyu.",
+      "en": "The apprentice chased the ravens.",
+      "gloss": [
+        "apprentice",
+        "chase",
+        "raven-PL"
+      ]
+    },
+    {
+      "lang": "Szőkunyu talgya csőligyulszö.",
+      "en": "The ravens chased the apprentice.",
+      "gloss": [
+        "raven-PL",
+        "chase",
+        "ACC-apprentice"
+      ]
+    },
+    {
+      "lang": "Ligyulszönyu lüszá szükanyu.",
+      "en": "The apprentices brewed the potions.",
+      "gloss": [
+        "apprentice-PL",
+        "brew",
+        "potion-PL"
+      ]
+    },
+    {
+      "lang": "Szőkunyu talgya gyultönyu.",
+      "en": "The ravens chased the toads.",
+      "gloss": [
+        "raven-PL",
+        "chase",
+        "toad-PL"
+      ]
+    },
+    {
+      "lang": "Kágyé gyikűsze csőligyulszönyu.",
+      "en": "The witch did not curse the apprentices.",
+      "gloss": [
+        "witch",
+        "NEG-curse",
+        "ACC-apprentice-PL"
+      ]
+    },
+    {
+      "lang": "Gyultönyu gyitalgya csőligyulszönyu.",
+      "en": "The toads did not chase the apprentices.",
+      "gloss": [
+        "toad-PL",
+        "NEG-chase",
+        "ACC-apprentice-PL"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Szőkunyu gyitalgya gyultö.",
+      "accepted": [
+        "the ravens did not chase the toad",
+        "the ravens did not chase a toad",
+        "the ravens do not chase the toad",
+        "the ravens do not chase a toad",
+        "the ravens are not chasing the toad",
+        "the ravens are not chasing a toad",
+        "ravens did not chase the toad",
+        "ravens did not chase a toad",
+        "ravens do not chase the toad",
+        "ravens do not chase a toad",
+        "ravens are not chasing the toad",
+        "ravens are not chasing a toad"
+      ],
+      "explanation": "S V O order. szőku-nyu = raven-PL; gyi-talgya = NEG-chase; gyultö = toad. This object is not marked."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "The toad did not chase the apprentice.",
+      "accepted": [
+        "gyultö gyitalgya csőligyulszö"
+      ],
+      "explanation": "S V O order. gyultö = toad; gyi-talgya = NEG-chase; cső-ligyulszö = ACC-apprentice."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "szüka",
+        "potion"
+      ],
+      [
+        "kágyé",
+        "witch"
+      ],
+      [
+        "gyultö",
+        "toad"
+      ],
+      [
+        "szőku",
+        "raven"
+      ],
+      [
+        "ligyulszö",
+        "apprentice"
+      ],
+      [
+        "lüszá-",
+        "brew"
+      ],
+      [
+        "talgya-",
+        "chase"
+      ],
+      [
+        "kűsze-",
+        "curse"
+      ],
+      [
+        "kéti-",
+        "croak"
+      ]
+    ],
+    "grammar": [
+      [
+        "S V O",
+        "Word order: subject, verb, object. With one participant: subject, verb."
+      ],
+      [
+        "-nyu",
+        "Plural."
+      ],
+      [
+        "cső-",
+        "Marks the object, but only when it is a person. Other objects are bare."
+      ],
+      [
+        "gyi-",
+        "Negation, on the verb."
+      ]
+    ],
+    "notes": "Checked against 224 alternative analyses; the sentences rule out 220, including: cső- appears when: object & human & plural; gyi- appears when: negative & plural lone-subject/object."
+  },
+  "theme": "a witch's hut",
+  "shuffle": {
+    "anchors": [
+      3
+    ],
+    "order": [
+      1,
+      2,
+      6,
+      3,
+      5,
+      7,
+      0,
+      4
+    ]
+  }
+}

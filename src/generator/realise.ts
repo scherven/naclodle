@@ -2,6 +2,7 @@
 
 import { holds, type Grammar, type Morpheme, type Role, type WordContext } from "./grammar";
 import { isAnimate, isHuman } from "./lexicon";
+import { obliqueKind } from "./themes";
 import type { Meaning, NounPhrase } from "./meaning";
 import { isFrontWord, resolveHarmony, VOWEL_LETTERS } from "./phonology";
 
@@ -104,7 +105,10 @@ function inflect(grammar: Grammar, stem: string, stemGloss: string, lexeme: stri
 const isPrefixLike = (morpheme: Morpheme) => morpheme.exponent.kind === "prefix" || morpheme.exponent.kind === "consonantCopyPrefix";
 const isStemProcess = (morpheme: Morpheme) => morpheme.exponent.kind === "reduplication";
 
-/** Words of one noun phrase: [possessor] + (adjective, noun in the grammar's order), or the mirror image. */
+/**
+ * Words of one noun phrase: [possessor] + (adjective, noun in the grammar's order), or the mirror image.
+ * Adpositions (particle morphemes on the noun) go at the edge of the whole phrase.
+ */
 function nounPhraseWords(grammar: Grammar, clause: ClauseContext, phrase: NounPhrase, role: Role, firstNoun: boolean): RealisedWord[] {
   const noun = grammar.lexicon.nouns.find(entry => entry.id === phrase.noun);
   if (!noun) throw new Error(`unknown noun ${phrase.noun}`);
@@ -112,7 +116,9 @@ function nounPhraseWords(grammar: Grammar, clause: ClauseContext, phrase: NounPh
     ...clause, role, plural: phrase.plural, definite: phrase.definite, animate: isAnimate(noun), human: isHuman(noun),
     firstNoun, frontStem: isFrontWord(grammar.phonology, noun.form), possessor: false, possessed: !!phrase.possessor,
   };
-  const nounMorphemes = grammar.morphemes.filter(morpheme => morpheme.host === "noun" && holds(morpheme.condition, headContext));
+  const allNounMorphemes = grammar.morphemes.filter(morpheme => morpheme.host === "noun" && holds(morpheme.condition, headContext));
+  const adpositions = allNounMorphemes.filter(morpheme => morpheme.exponent.kind === "particle");
+  const nounMorphemes = allNounMorphemes.filter(morpheme => morpheme.exponent.kind !== "particle");
   const adjective = phrase.adjective ? grammar.lexicon.adjectives.find(entry => entry.id === phrase.adjective) : undefined;
   if (phrase.adjective && !adjective) throw new Error(`unknown adjective ${phrase.adjective}`);
 
@@ -137,16 +143,26 @@ function nounPhraseWords(grammar: Grammar, clause: ClauseContext, phrase: NounPh
     group = adjectiveFirst ? [adjectiveWord, nounWord] : [nounWord, adjectiveWord];
   }
 
-  if (!phrase.possessor) return group;
+  const withAdpositions = (words: RealisedWord[]) => {
+    if (!adpositions.length) return words;
+    const particles = inflect(grammar, noun.form, noun.english.singular, noun.id, adpositions, headContext).particles;
+    return [
+      ...particles.filter(particle => particle.side === "before").map(particle => particle.word),
+      ...words,
+      ...particles.filter(particle => particle.side === "after").map(particle => particle.word),
+    ];
+  };
+  if (!phrase.possessor) return withAdpositions(group);
   const owner = grammar.lexicon.nouns.find(entry => entry.id === phrase.possessor!.noun);
   if (!owner) throw new Error(`unknown noun ${phrase.possessor.noun}`);
   const ownerContext: WordContext = {
     ...clause, role: null, plural: phrase.possessor.plural, definite: true, animate: isAnimate(owner), human: isHuman(owner),
     firstNoun: false, frontStem: isFrontWord(grammar.phonology, owner.form), possessor: true, possessed: false,
   };
-  const ownerMorphemes = grammar.morphemes.filter(morpheme => morpheme.host === "noun" && holds(morpheme.condition, ownerContext));
+  const ownerMorphemes = grammar.morphemes.filter(morpheme =>
+    morpheme.host === "noun" && morpheme.exponent.kind !== "particle" && holds(morpheme.condition, ownerContext));
   const ownerWord = inflect(grammar, owner.form, owner.english.singular, owner.id, ownerMorphemes, ownerContext).word;
-  return grammar.possessorPosition === "after" ? [...group, ownerWord] : [ownerWord, ...group];
+  return withAdpositions(grammar.possessorPosition === "after" ? [...group, ownerWord] : [ownerWord, ...group]);
 }
 
 export function realise(grammar: Grammar, meaning: Meaning): RealisedWord[] {
@@ -177,14 +193,28 @@ export function realise(grammar: Grammar, meaning: Meaning): RealisedWord[] {
     if (!adverb) throw new Error(`unknown adverb ${meaning.adverb}`);
     adverbWord = { form: adverb.form, segmented: adverb.form, gloss: adverb.english.replace(/ /g, "."), lexeme: `adv:${adverb.id}`, applied: [] };
   }
+  let obliqueWords: RealisedWord[] = [];
+  if (meaning.oblique) {
+    const obliqueNoun = grammar.lexicon.nouns.find(entry => entry.id === meaning.oblique!.noun);
+    if (!obliqueNoun) throw new Error(`unknown noun ${meaning.oblique.noun}`);
+    obliqueWords = nounPhraseWords(grammar, clause, meaning.oblique, obliqueKind(obliqueNoun), false);
+  }
+  // The oblique phrase sits closer to the verb (or the clause) than a time or manner word.
+  let verbSlot = verbGroup;
+  const obliquePosition = grammar.obliquePosition ?? "final";
+  if (obliquePosition === "beforeVerb") verbSlot = [...obliqueWords, ...verbSlot];
+  if (obliquePosition === "afterVerb") verbSlot = [...verbSlot, ...obliqueWords];
   const position = grammar.adverbPosition ?? "final";
+  if (adverbWord && position === "beforeVerb") verbSlot = [adverbWord, ...verbSlot];
+  if (adverbWord && position === "afterVerb") verbSlot = [...verbSlot, adverbWord];
   const slots: Record<string, RealisedWord[]> = {
     S: nounPhraseWords(grammar, clause, meaning.subject, subjectRole, subjectFirst),
     O: meaning.object ? nounPhraseWords(grammar, clause, meaning.object, "P", !subjectFirst) : [],
-    V: adverbWord && position === "beforeVerb" ? [adverbWord, ...verbGroup]
-      : adverbWord && position === "afterVerb" ? [...verbGroup, adverbWord] : verbGroup,
+    V: verbSlot,
   };
   const words = [...order].flatMap(letter => slots[letter]);
+  if (obliquePosition === "initial") words.unshift(...obliqueWords);
+  if (obliquePosition === "final") words.push(...obliqueWords);
   if (adverbWord && position === "initial") words.unshift(adverbWord);
   if (adverbWord && position === "final") words.push(adverbWord);
   return words;

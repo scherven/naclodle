@@ -2,133 +2,162 @@
   "id": "gen-2026-11-24",
   "number": 2,
   "date": "2026-11-24",
-  "difficulty": 4,
+  "difficulty": 2,
   "language": {
-    "name": "Niti",
+    "name": "Mëlalï",
     "real": false
   },
   "checks": 3,
-  "keys": [],
-  "hint": "Some endings come in two shapes. Look at the vowels of the word they attach to.",
+  "keys": [
+    "ë",
+    "ï"
+  ],
+  "hint": "English says “with” in more than one sense. Does this language?",
   "corpus": [
     {
-      "lang": "Tenhiwe husana kinrire.",
-      "en": "A horse does not carry a scroll.",
+      "lang": "Sevantho thisëro.",
+      "en": "The navigators swam.",
       "gloss": [
-        "horse",
-        "scroll-ACC",
-        "carry-NEG"
+        "PL-navigator",
+        "swim-3PL"
       ]
     },
     {
-      "lang": "Rumhapa tarasasuna pete.",
-      "en": "The scribe summons messengers.",
+      "lang": "Sesïnthena vantho deth thisëro.",
+      "en": "The whales swam with the navigator.",
       "gloss": [
-        "scribe-DEF",
-        "messenger-PL-ACC",
-        "summon"
+        "PL-whale",
+        "navigator",
+        "COM",
+        "swim-3PL"
       ]
     },
     {
-      "lang": "Tenhiwesipe husana kinri.",
-      "en": "The horses carry a scroll.",
+      "lang": "Onlï vantho wola.",
+      "en": "The sailor followed the navigator.",
       "gloss": [
-        "horse-PL-DEF",
-        "scroll-ACC",
-        "carry"
+        "sailor",
+        "navigator",
+        "follow"
       ]
     },
     {
-      "lang": "Tarasasupa husasupana kinri.",
-      "en": "The messengers carry the scrolls.",
+      "lang": "Sesïnthena sevantho wolaro.",
+      "en": "The whales followed the navigators.",
       "gloss": [
-        "messenger-PL-DEF",
-        "scroll-PL-DEF-ACC",
-        "carry"
+        "PL-whale",
+        "PL-navigator",
+        "follow-3PL"
       ]
     },
     {
-      "lang": "Tarasapa husasupana kinrire.",
-      "en": "The messenger does not carry the scrolls.",
+      "lang": "Onlï sesïnthena semethilï thi sëne.",
+      "en": "The sailor spotted the whales with the nets.",
       "gloss": [
-        "messenger-DEF",
-        "scroll-PL-DEF-ACC",
-        "carry-NEG"
+        "sailor",
+        "PL-whale",
+        "PL-net",
+        "INS",
+        "spot"
       ]
     },
     {
-      "lang": "Rumhapa husasupana kinrire.",
-      "en": "The scribe does not carry the scrolls.",
+      "lang": "Seonlï vantho sevïna thi wolaro.",
+      "en": "The sailors followed the navigator with the ships.",
       "gloss": [
-        "scribe-DEF",
-        "scroll-PL-DEF-ACC",
-        "carry-NEG"
+        "PL-sailor",
+        "navigator",
+        "PL-ship",
+        "INS",
+        "follow-3PL"
       ]
     },
     {
-      "lang": "Tenhiwesipe husasupana kinrire.",
-      "en": "The horses do not carry the scrolls.",
+      "lang": "Sevantho sïnthena seonlï deth wolaro.",
+      "en": "The navigators followed the whale with the sailors.",
       "gloss": [
-        "horse-PL-DEF",
-        "scroll-PL-DEF-ACC",
-        "carry-NEG"
-      ]
-    },
-    {
-      "lang": "Tarasasupa rumhasupana petere.",
-      "en": "The messengers do not summon the scribes.",
-      "gloss": [
-        "messenger-PL-DEF",
-        "scribe-PL-DEF-ACC",
-        "summon-NEG"
+        "PL-navigator",
+        "whale",
+        "PL-sailor",
+        "COM",
+        "follow-3PL"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Rumhapa tarasana petere.",
+      "prompt": "Onlï vantho sesïnthena deth wola.",
       "accepted": [
-        "the scribe does not summon a messenger",
-        "the scribe did not summon a messenger",
-        "the scribe is not summoning a messenger"
+        "the sailor followed the navigator with the whales",
+        "the sailor followed the navigator with whales",
+        "the sailor followed a navigator with the whales",
+        "the sailor followed a navigator with whales",
+        "the sailor follows the navigator with the whales",
+        "the sailor follows the navigator with whales",
+        "the sailor follows a navigator with the whales",
+        "the sailor follows a navigator with whales",
+        "the sailor is following the navigator with the whales",
+        "the sailor is following the navigator with whales",
+        "the sailor is following a navigator with the whales",
+        "the sailor is following a navigator with whales",
+        "a sailor followed the navigator with the whales",
+        "a sailor followed the navigator with whales",
+        "a sailor followed a navigator with the whales",
+        "a sailor followed a navigator with whales",
+        "a sailor follows the navigator with the whales",
+        "a sailor follows the navigator with whales",
+        "a sailor follows a navigator with the whales",
+        "a sailor follows a navigator with whales",
+        "a sailor is following the navigator with the whales",
+        "a sailor is following the navigator with whales",
+        "a sailor is following a navigator with the whales",
+        "a sailor is following a navigator with whales"
       ],
-      "explanation": "S O V order. rumha-pa = scribe-DEF; tarasa-na = messenger-ACC; pete-re = summon-NEG."
+      "explanation": "S O V order. onlï = sailor; vantho = navigator; se-sïnthena = PL-whale; deth = COM; wola = follow."
     }
   ],
   "toLang": [
     {
-      "prompt": "The horse carries the scrolls.",
+      "prompt": "The whale swam with the navigators.",
       "accepted": [
-        "tenhiwepe husasupana kinri"
+        "sïnthena sevantho deth thisë"
       ],
-      "explanation": "S O V order. tenhiwe-pe = horse-DEF; husa-su-pa-na = scroll-PL-DEF-ACC; kinri = carry."
+      "explanation": "S V order. sïnthena = whale; se-vantho = PL-navigator; deth = COM; thisë = swim."
     }
   ],
   "explain": {
     "words": [
       [
-        "tarasa",
-        "messenger"
+        "onlï",
+        "sailor"
       ],
       [
-        "rumha",
-        "scribe"
+        "vantho",
+        "navigator"
       ],
       [
-        "tenhiwe",
-        "horse"
+        "vïna",
+        "ship"
       ],
       [
-        "husa",
-        "scroll"
+        "methilï",
+        "net"
       ],
       [
-        "pete-",
-        "summon"
+        "sïnthena",
+        "whale"
       ],
       [
-        "kinri-",
-        "carry"
+        "wola-",
+        "follow"
+      ],
+      [
+        "sëne-",
+        "spot"
+      ],
+      [
+        "thisë-",
+        "swim"
       ]
     ],
     "grammar": [
@@ -137,26 +166,41 @@
         "Word order: subject, object, verb. With one participant: subject, verb."
       ],
       [
-        "-su / -si",
+        "se-",
         "Plural."
       ],
       [
-        "-pa / -pe",
-        "Definite (“the”). A noun without it means “a” (or plain plural)."
+        "thi",
+        "A separate word after the noun phrase, marking the instrument, the thing used (“with a spear”)."
       ],
       [
-        "-na / -ne",
-        "Accusative: marks the object."
+        "deth",
+        "A separate word after the noun phrase, marking a companion, someone doing it alongside (“with the queen”)."
       ],
       [
-        "-ra / -re",
-        "Negation, on the verb."
+        "-ro",
+        "On the verb when the subject is plural."
       ],
       [
-        "Suffix order",
-        "On nouns: stem-PL-DEF-ACC."
+        "Place and “with” phrases",
+        "Go just before the verb."
       ]
     ],
-    "notes": "Vowel harmony: a word's vowels are either all back (a, u) or all front (e, i), and suffix vowels follow the stem. Checked against 302 alternative analyses; the sentences rule out 293, including: -su/-si appears when: plural & definite; -su/-si appears when: (plural or front-vowel stem)."
+    "notes": "Checked against 476 alternative analyses; the sentences rule out 467, including: se- appears when: animate; se- appears when: plural & animate."
+  },
+  "theme": "a navigator's sea voyage",
+  "shuffle": {
+    "anchors": [
+      3
+    ],
+    "order": [
+      5,
+      6,
+      0,
+      3,
+      2,
+      1,
+      4
+    ]
   }
 }

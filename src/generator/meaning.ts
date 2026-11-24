@@ -2,7 +2,7 @@
 
 import type { Rng } from "./rng";
 import type { Lexicon } from "./lexicon";
-import { allowsAdjective, allowsAgent, allowsPatient, canPossess } from "./themes";
+import { allowsAdjective, allowsAgent, allowsOblique, allowsPatient, canPossess, obliqueKind, type ObliqueKind, type ThemeNoun } from "./themes";
 
 /** "the king's": possessors are always definite. */
 export interface Possessor { noun: string; plural: boolean }
@@ -21,6 +21,8 @@ export interface Meaning {
   verb: string;
   subject: NounPhrase;
   object?: NounPhrase;
+  /** "in the tower", "with a spear", "with the queen": the kind follows from the noun (obliqueKind). */
+  oblique?: NounPhrase;
   negative: boolean;
   past: boolean;
   adverb?: string;
@@ -33,6 +35,10 @@ export interface MeaningDimensions {
   adjectives: boolean;
   possession: boolean;
   adverbs: boolean;
+  /** Does the language show negative sentences at all? */
+  negation: boolean;
+  /** Which oblique phrases it uses. */
+  obliques: ObliqueKind[];
 }
 
 const nounPhraseKey = (phrase: NounPhrase) =>
@@ -41,7 +47,8 @@ const nounPhraseKey = (phrase: NounPhrase) =>
 
 export const meaningKey = (meaning: Meaning) =>
   [meaning.verb, nounPhraseKey(meaning.subject), meaning.object ? nounPhraseKey(meaning.object) : "-",
-    meaning.negative ? "neg" : "pos", meaning.past ? "past" : "nonpast", meaning.adverb ?? "-"].join("|");
+    meaning.negative ? "neg" : "pos", meaning.past ? "past" : "nonpast", meaning.adverb ?? "-",
+    meaning.oblique ? nounPhraseKey(meaning.oblique) : "-"].join("|");
 
 function nounPhraseDistance(first: NounPhrase, second: NounPhrase): number {
   let distance = Number(first.noun !== second.noun) + Number(first.plural !== second.plural) + Number(first.definite !== second.definite);
@@ -59,6 +66,8 @@ export function meaningDistance(first: Meaning, second: Meaning): number {
   else if (first.object && second.object) distance += nounPhraseDistance(first.object, second.object);
   distance += Number(first.negative !== second.negative) + Number(first.past !== second.past);
   distance += Number(first.adverb !== second.adverb);
+  if (!!first.oblique !== !!second.oblique) distance += 2;
+  else if (first.oblique && second.oblique) distance += nounPhraseDistance(first.oblique, second.oblique);
   return distance;
 }
 
@@ -69,6 +78,7 @@ const phraseLexemes = (phrase: NounPhrase) =>
 export const lexemesOf = (meaning: Meaning) => [
   meaning.verb, ...phraseLexemes(meaning.subject), ...(meaning.object ? phraseLexemes(meaning.object) : []),
   ...(meaning.adverb ? [`adv:${meaning.adverb}`] : []),
+  ...(meaning.oblique ? [meaning.oblique.noun] : []),
 ];
 
 /** Meanings without adjectives, possessors or adverbs. */
@@ -77,6 +87,7 @@ export function enumerateBaseMeanings(lexicon: Lexicon, dimensions: MeaningDimen
   const booleans = [false, true];
   const definiteValues = dimensions.definiteness ? booleans : [true];
   const pastValues = dimensions.tense ? booleans : [false];
+  const negativeValues = dimensions.negation ? booleans : [false];
   const phrasesFor = (noun: string): NounPhrase[] =>
     booleans.flatMap(plural => definiteValues.map(definite => ({ noun, plural, definite })));
   for (const verb of lexicon.verbs) {
@@ -87,14 +98,14 @@ export function enumerateBaseMeanings(lexicon: Lexicon, dimensions: MeaningDimen
       for (const patient of patients)
         for (const subject of phrasesFor(agent.id))
           for (const object of patient ? phrasesFor(patient.id) : [undefined])
-            for (const negative of booleans)
+            for (const negative of negativeValues)
               for (const past of pastValues) meanings.push({ verb: verb.id, subject, object, negative, past });
     }
   }
   return meanings;
 }
 
-/** Variants of a base meaning with at most one noun-phrase modifier and at most one adverb. */
+/** Variants of a base meaning with at most one noun-phrase modifier, and at most one adverb or oblique phrase. */
 export function decorate(lexicon: Lexicon, dimensions: MeaningDimensions, base: Meaning): Meaning[] {
   const nounOf = (id: string) => lexicon.nouns.find(noun => noun.id === id)!;
   const usedNouns = new Set([base.subject.noun, base.object?.noun]);
@@ -112,14 +123,27 @@ export function decorate(lexicon: Lexicon, dimensions: MeaningDimensions, base: 
   const withModifier: Meaning[] = [base];
   for (const subject of phraseVariants(base.subject)) withModifier.push({ ...base, subject });
   if (base.object) for (const object of phraseVariants(base.object)) withModifier.push({ ...base, object });
-  if (!dimensions.adverbs) return withModifier;
+  if (!dimensions.adverbs && !dimensions.obliques.length) return withModifier;
+  const verb = lexicon.verbs.find(entry => entry.id === base.verb)!;
   const decorated: Meaning[] = [];
   for (const meaning of withModifier) {
     decorated.push(meaning);
-    for (const adverb of lexicon.adverbs)
-      if (!adverb.requiresPast || meaning.past) decorated.push({ ...meaning, adverb: adverb.id });
+    if (dimensions.adverbs)
+      for (const adverb of lexicon.adverbs)
+        if (!adverb.requiresPast || meaning.past) decorated.push({ ...meaning, adverb: adverb.id });
+    const taken = new Set([meaning.subject.possessor?.noun, meaning.object?.possessor?.noun]);
+    for (const noun of lexicon.nouns)
+      if (dimensions.obliques.includes(obliqueKind(noun)) && !taken.has(noun.id) &&
+          allowsOblique(verb, nounOf(meaning.subject.noun), meaning.object ? nounOf(meaning.object.noun) : undefined, noun))
+        for (const oblique of obliquePhrases(noun, dimensions)) decorated.push({ ...meaning, oblique });
   }
   return decorated;
+}
+
+/** Place phrases are singular ("in the tower"); companions and instruments can be plural ("with the wolves"). */
+function obliquePhrases(noun: ThemeNoun, dimensions: MeaningDimensions): NounPhrase[] {
+  const pluralValues = obliqueKind(noun) === "LOC" ? [false] : [false, true];
+  return pluralValues.flatMap(plural => (dimensions.definiteness ? [false, true] : [true]).map(definite => ({ noun: noun.id, plural, definite })));
 }
 
 /**
@@ -128,7 +152,7 @@ export function decorate(lexicon: Lexicon, dimensions: MeaningDimensions, base: 
  */
 export function meaningPool(lexicon: Lexicon, dimensions: MeaningDimensions, rng: Rng, decoratedLimit = 5000): Meaning[] {
   const base = enumerateBaseMeanings(lexicon, dimensions);
-  if (!dimensions.adjectives && !dimensions.possession && !dimensions.adverbs) return base;
+  if (!dimensions.adjectives && !dimensions.possession && !dimensions.adverbs && !dimensions.obliques.length) return base;
   const decorated = base.flatMap(meaning => decorate(lexicon, dimensions, meaning).slice(1));
   const sampled = decorated.length <= decoratedLimit ? decorated : rng.shuffle(decorated).slice(0, decoratedLimit);
   return [...base, ...sampled];
@@ -142,23 +166,29 @@ export function meaningPool(lexicon: Lexicon, dimensions: MeaningDimensions, rng
 export function relatedMeanings(lexicon: Lexicon, dimensions: MeaningDimensions, meaning: Meaning): Meaning[] {
   const verb = lexicon.verbs.find(entry => entry.id === meaning.verb)!;
   const nounOf = (id: string) => lexicon.nouns.find(noun => noun.id === id)!;
-  const nouns = [meaning.subject.noun, meaning.object?.noun, meaning.subject.possessor?.noun, meaning.object?.possessor?.noun]
+  const nouns = [meaning.subject.noun, meaning.object?.noun, meaning.oblique?.noun, meaning.subject.possessor?.noun, meaning.object?.possessor?.noun]
     .filter((noun): noun is string => !!noun);
   const adjective = meaning.subject.adjective ?? meaning.object?.adjective;
   const booleans = [false, true];
   const definiteValues = dimensions.definiteness ? booleans : [true];
+  const negativeValues = dimensions.negation ? booleans : [false];
   const pastValues = meaning.adverb && lexicon.adverbs.find(adverb => adverb.id === meaning.adverb)?.requiresPast ? [true]
     : dimensions.tense ? booleans : [false];
   const results: Meaning[] = [];
 
-  const headCount = verb.transitive ? 2 : 1;
+  const headCount = (verb.transitive ? 2 : 1) + (meaning.oblique ? 1 : 0);
   const permutations = (items: string[]): string[][] =>
     items.length <= 1 ? [items] : items.flatMap((item, index) => permutations([...items.slice(0, index), ...items.slice(index + 1)]).map(rest => [item, ...rest]));
   for (const arrangement of permutations(nouns)) {
-    const [subjectNoun, objectNoun] = verb.transitive ? arrangement : [arrangement[0], undefined];
+    const subjectNoun = arrangement[0];
+    const objectNoun = verb.transitive ? arrangement[1] : undefined;
+    const obliqueNoun = meaning.oblique ? arrangement[verb.transitive ? 2 : 1] : undefined;
     const possessorNoun = arrangement[headCount];
     if (!allowsAgent(verb, nounOf(subjectNoun))) continue;
     if (objectNoun && !allowsPatient(verb, nounOf(objectNoun))) continue;
+    if (obliqueNoun && (!dimensions.obliques.includes(obliqueKind(nounOf(obliqueNoun))) ||
+        !allowsOblique(verb, nounOf(subjectNoun), objectNoun ? nounOf(objectNoun) : undefined, nounOf(obliqueNoun)))) continue;
+    const obliqueOptions: (NounPhrase | undefined)[] = obliqueNoun ? obliquePhrases(nounOf(obliqueNoun), dimensions) : [undefined];
     const owners = possessorNoun ? (objectNoun ? ["subject", "object"] : ["subject"]) : [null];
     for (const owner of owners) {
       const ownedNoun = owner === "object" ? objectNoun! : subjectNoun;
@@ -183,9 +213,14 @@ export function relatedMeanings(lexicon: Lexicon, dimensions: MeaningDimensions,
         };
         for (const subject of phrases(subjectNoun, "subject"))
           for (const object of objectNoun ? phrases(objectNoun, "object") : [undefined])
-            for (const negative of booleans)
-              for (const past of pastValues)
-                results.push({ verb: verb.id, subject, object, negative, past, ...(meaning.adverb ? { adverb: meaning.adverb } : {}) });
+            for (const oblique of obliqueOptions)
+              for (const negative of negativeValues)
+                for (const past of pastValues)
+                  results.push({
+                    verb: verb.id, subject, object, negative, past,
+                    ...(oblique ? { oblique } : {}),
+                    ...(meaning.adverb ? { adverb: meaning.adverb } : {}),
+                  });
       }
     }
   }

@@ -20,6 +20,7 @@ const HINTS: Record<Headline, string> = {
   wordOrder: "Find the verb first, then work out which noun is doing the action.",
   possessive: "In “the king's horse”, which of the two words carries the extra ending?",
   adjectivePhrase: "When a describing word is added, where do the noun's usual endings go?",
+  oblique: "English says “with” in more than one sense. Does this language?",
 };
 
 const ORDER_NAMES: Record<string, string> = { S: "subject", O: "object", V: "verb" };
@@ -27,6 +28,7 @@ const ORDER_NAMES: Record<string, string> = { S: "subject", O: "object", V: "ver
 export function englishLexiconOf(grammar: Grammar): EnglishLexicon {
   return {
     noun: id => grammar.lexicon.nouns.find(entry => entry.id === id)!.english,
+    preposition: id => grammar.lexicon.nouns.find(entry => entry.id === id)!.preposition ?? "with",
     verb: id => grammar.lexicon.verbs.find(entry => entry.id === id)!.english,
     adjective: id => grammar.lexicon.adjectives.find(entry => entry.id === id)!.id,
     adverb: id => grammar.lexicon.adverbs.find(entry => entry.id === id)!,
@@ -34,7 +36,11 @@ export function englishLexiconOf(grammar: Grammar): EnglishLexicon {
 }
 
 export function englishOptionsOf(grammar: Grammar): EnglishOptions {
-  return { marksDefiniteness: grammar.info.dimensions.definiteness, marksTense: grammar.info.dimensions.tense };
+  return {
+    marksDefiniteness: grammar.info.dimensions.definiteness,
+    marksTense: grammar.info.dimensions.tense,
+    narrativePast: grammar.info.narrativePast,
+  };
 }
 
 function morphemeForms(grammar: Grammar, morpheme: Morpheme): string {
@@ -79,12 +85,20 @@ function describeMorpheme(grammar: Grammar, morpheme: Morpheme): string {
     case "AGR": return morpheme.gloss === "PL.ABS"
       ? "On the verb when the lone participant, or the object, is plural. A plural doer does not trigger it."
       : "On the verb when the subject is plural.";
+    case "LOC": return obliqueDescription(exponent, "a place", "“in”, “on” or “at”");
+    case "INS": return obliqueDescription(exponent, "the instrument, the thing used", "“with a spear”");
+    case "COM": return obliqueDescription(exponent, "a companion, someone doing it alongside", "“with the queen”");
     case "NEG":
       if (exponent.kind === "particle") return `Negation: a separate word ${exponent.side} the verb.`;
       if (exponent.kind === "circumfix") return "Negation: both parts wrap around the verb.";
       return "Negation, on the verb.";
     default: return "";
   }
+}
+
+function obliqueDescription(exponent: Morpheme["exponent"], what: string, english: string): string {
+  if (exponent.kind === "particle") return `A separate word ${exponent.side} the noun phrase, marking ${what} (${english}).`;
+  return `Marks ${what} (${english}).`;
 }
 
 function orderLine(grammar: Grammar): [string, string] {
@@ -104,6 +118,10 @@ function structureLines(grammar: Grammar): [string, string][] {
     lines.push(["Adjectives", `Come ${where} the noun. ${marking}`]);
   }
   if (grammar.possessorPosition) lines.push(["Possessor", `Comes ${grammar.possessorPosition} the possessed noun.`]);
+  if (grammar.obliquePosition) {
+    const where = { initial: "at the start of the sentence", final: "at the end of the sentence", beforeVerb: "just before the verb", afterVerb: "just after the verb" }[grammar.obliquePosition];
+    lines.push(["Place and “with” phrases", `Go ${where}.`]);
+  }
   if (grammar.adverbPosition) {
     const where = { initial: "at the start of the sentence", final: "at the end of the sentence", beforeVerb: "just before the verb", afterVerb: "just after the verb" }[grammar.adverbPosition];
     lines.push(["Time and manner words", `Go ${where}.`]);

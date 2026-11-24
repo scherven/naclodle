@@ -2,109 +2,150 @@
   "id": "gen-2026-11-25",
   "number": 3,
   "date": "2026-11-25",
-  "difficulty": 4,
+  "difficulty": 3,
   "language": {
-    "name": "Poko",
+    "name": "Rűgyő",
     "real": false
   },
   "checks": 3,
   "keys": [
-    "ö"
+    "á",
+    "ö",
+    "é",
+    "ü"
   ],
-  "hint": "Some endings come in two shapes. Look at the vowels of the word they attach to.",
+  "hint": "Negation touches the verb in two places.",
   "corpus": [
     {
-      "lang": "Moma num nitite.",
-      "en": "A piper does not dance.",
+      "lang": "Tázsirzságyö tévá.",
+      "en": "An envoy does not sing.",
       "gloss": [
-        "dance",
-        "NEG",
-        "piper"
+        "NEG-sing-NEG",
+        "envoy"
       ]
     },
     {
-      "lang": "Moma nititeli.",
-      "en": "Pipers dance.",
+      "lang": "Zsirzsá gyarkesze.",
+      "en": "The augur sings.",
       "gloss": [
-        "dance",
-        "piper-PL"
+        "sing",
+        "augur-DEF"
       ]
     },
     {
-      "lang": "Önö nititeliti eteli.",
-      "en": "Pipers milk goats.",
+      "lang": "Zsirzsábü kurgya vutérkuvü.",
+      "en": "Ancient ancestors sing.",
       "gloss": [
-        "milk",
-        "piper-PL-ERG",
-        "goat-PL"
+        "sing-3PL",
+        "ancient",
+        "ancestor-PL"
       ]
     },
     {
-      "lang": "Önö nititeliseti ete.",
-      "en": "The pipers milk a goat.",
+      "lang": "Tázsirzsábügyö gyeke vutérkuvü.",
+      "en": "Silent ancestors do not sing.",
       "gloss": [
-        "milk",
-        "piper-PL-DEF-ERG",
-        "goat"
+        "NEG-sing-3PL-NEG",
+        "silent",
+        "ancestor-PL"
       ]
     },
     {
-      "lang": "Önö nititeseti etelise.",
-      "en": "The piper milks the goats.",
+      "lang": "Százsö tévásze gyarkevü.",
+      "en": "The envoy ignores augurs.",
       "gloss": [
-        "milk",
-        "piper-DEF-ERG",
-        "goat-PL-DEF"
+        "ignore",
+        "envoy-DEF",
+        "augur-PL"
       ]
     },
     {
-      "lang": "Önö num nititeliseti etelise.",
-      "en": "The pipers do not milk the goats.",
+      "lang": "Szirzsü gyarkesze tévávüsze.",
+      "en": "The augur greets the envoys.",
       "gloss": [
-        "milk",
-        "NEG",
-        "piper-PL-DEF-ERG",
-        "goat-PL-DEF"
+        "greet",
+        "augur-DEF",
+        "envoy-PL-DEF"
+      ]
+    },
+    {
+      "lang": "Tászázsöbügyö gyeke tévávüsze koszavüsze.",
+      "en": "The silent envoys do not ignore the omens.",
+      "gloss": [
+        "NEG-ignore-3PL-NEG",
+        "silent",
+        "envoy-PL-DEF",
+        "omen-PL-DEF"
+      ]
+    },
+    {
+      "lang": "Tászázsöbügyö tévávüsze gyeke gyarkevüsze.",
+      "en": "The envoys do not ignore the silent augurs.",
+      "gloss": [
+        "NEG-ignore-3PL-NEG",
+        "envoy-PL-DEF",
+        "silent",
+        "augur-PL-DEF"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Moma num nititelise.",
+      "prompt": "Tászázsöbügyö gyeke tévávü gyarkevüsze.",
       "accepted": [
-        "the pipers do not dance",
-        "the pipers did not dance",
-        "the pipers are not dancing"
+        "silent envoys do not ignore the augurs",
+        "silent envoys did not ignore the augurs",
+        "silent envoys are not ignoring the augurs"
       ],
-      "explanation": "V S order. moma = dance; num = NEG; nitite-li-se = piper-PL-DEF. One participant, so no ergative ending."
+      "explanation": "V S O order. tá-százsö-bü-gyö = NEG-ignore-3PL-NEG; gyeke = silent; tévá-vü = envoy-PL; gyarke-vü-sze = augur-PL-DEF."
     }
   ],
   "toLang": [
     {
-      "prompt": "A piper does not milk the goat.",
+      "prompt": "The ancient ancestors do not sing.",
       "accepted": [
-        "önö num nititeti etese"
+        "tázsirzsábügyö kurgya vutérkuvüsze"
       ],
-      "explanation": "V S O order. önö = milk; num = NEG; nitite-ti = piper-ERG; ete-se = goat-DEF."
+      "explanation": "V S order. tá-zsirzsá-bü-gyö = NEG-sing-3PL-NEG; kurgya = ancient; vutérku-vü-sze = ancestor-PL-DEF."
     }
   ],
   "explain": {
     "words": [
       [
-        "ete",
-        "goat"
+        "tévá",
+        "envoy"
       ],
       [
-        "nitite",
-        "piper"
+        "vutérku",
+        "ancestor"
       ],
       [
-        "önö",
-        "milk"
+        "kosza",
+        "omen"
       ],
       [
-        "moma",
-        "dance"
+        "gyarke",
+        "augur"
+      ],
+      [
+        "szirzsü-",
+        "greet"
+      ],
+      [
+        "százsö-",
+        "ignore"
+      ],
+      [
+        "zsirzsá-",
+        "sing"
+      ],
+      [
+        "kurgya",
+        "ancient"
+      ],
+      [
+        "gyeke",
+        "silent"
       ]
     ],
     "grammar": [
@@ -113,26 +154,46 @@
         "Word order: verb, subject, object. With one participant: verb, subject."
       ],
       [
-        "-lu / -li",
+        "-vü",
         "Plural."
       ],
       [
-        "-sa / -se",
+        "-sze",
         "Definite (“the”). A noun without it means “a” (or plain plural)."
       ],
       [
-        "-tu / -ti",
-        "Ergative: marks the doer of a two-participant verb. The lone participant of a one-participant verb is bare, just like the object."
+        "-bü",
+        "On the verb when the subject is plural."
       ],
       [
-        "num",
-        "Negation: a separate word after the verb."
+        "tá- … -gyö",
+        "Negation: both parts wrap around the verb."
       ],
       [
         "Suffix order",
-        "On nouns: stem-PL-DEF-ERG."
+        "On nouns: stem-PL-DEF."
+      ],
+      [
+        "Adjectives",
+        "Come before the noun. Noun endings go on the noun only; the adjective stays bare."
       ]
     ],
-    "notes": "Vowel harmony: a word's vowels are either all back (a, o, u) or all front (e, ö, i), and suffix vowels follow the stem. Checked against 988 alternative analyses; the sentences rule out 976, including: -lu/-li appears when: definite; -lu/-li appears when: plural & definite."
+    "notes": "Checked against 751 alternative analyses; the sentences rule out 748, including: -vü appears when: (plural or negative); -sze appears when: definite & human."
+  },
+  "theme": "an augur and an envoy at a shrine",
+  "shuffle": {
+    "anchors": [
+      2
+    ],
+    "order": [
+      3,
+      7,
+      2,
+      1,
+      0,
+      6,
+      4,
+      5
+    ]
   }
 }

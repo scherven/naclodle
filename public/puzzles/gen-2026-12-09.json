@@ -1,0 +1,199 @@
+{
+  "id": "gen-2026-12-09",
+  "number": 17,
+  "date": "2026-12-09",
+  "difficulty": 3,
+  "language": {
+    "name": "Nīkēwo",
+    "real": false
+  },
+  "checks": 3,
+  "keys": [
+    "ū",
+    "ī",
+    "ō",
+    "ē",
+    "ā",
+    "ʻ"
+  ],
+  "hint": "Find the verb first, then work out which noun is doing the action.",
+  "corpus": [
+    {
+      "lang": "Lupamū mawa kukoka kīho.",
+      "en": "The griffin kicks the heavy trough.",
+      "gloss": [
+        "trough-ACC",
+        "heavy",
+        "griffin",
+        "kick"
+      ]
+    },
+    {
+      "lang": "Hahīnamū hakenō leke.",
+      "en": "The riders ride the mule.",
+      "gloss": [
+        "mule-ACC",
+        "rider-PL",
+        "ride"
+      ]
+    },
+    {
+      "lang": "Lukeminōmū kukokanō lēna kakā.",
+      "en": "The proud griffins carry the grooms.",
+      "gloss": [
+        "groom-PL-ACC",
+        "griffin-PL",
+        "proud",
+        "carry"
+      ]
+    },
+    {
+      "lang": "Hakenōmū lukeminōʻo hahīna kīho.",
+      "en": "The grooms' mule kicks the riders.",
+      "gloss": [
+        "rider-PL-ACC",
+        "groom-PL-GEN",
+        "mule",
+        "kick"
+      ]
+    },
+    {
+      "lang": "Hakenōʻo kukokanōmū lukemi leke.",
+      "en": "The groom rides the riders' griffins.",
+      "gloss": [
+        "rider-PL-GEN",
+        "griffin-PL-ACC",
+        "groom",
+        "ride"
+      ]
+    },
+    {
+      "lang": "Lukeminōʻo lupanōmū hahīnanō kīho.",
+      "en": "The mules kick the grooms' troughs.",
+      "gloss": [
+        "groom-PL-GEN",
+        "trough-PL-ACC",
+        "mule-PL",
+        "kick"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Lukemiʻo hahīnamū hakenō leke.",
+      "accepted": [
+        "the riders ride the groom's mule",
+        "the riders ride a groom's mule",
+        "the riders rode the groom's mule",
+        "the riders rode a groom's mule",
+        "the riders are riding the groom's mule",
+        "the riders are riding a groom's mule",
+        "riders ride the groom's mule",
+        "riders ride a groom's mule",
+        "riders rode the groom's mule",
+        "riders rode a groom's mule",
+        "riders are riding the groom's mule",
+        "riders are riding a groom's mule"
+      ],
+      "explanation": "O S V order. lukemi-ʻo = groom-GEN; hahīna-mū = mule-ACC; hake-nō = rider-PL; leke = ride."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "The griffins kick the heavy troughs.",
+      "accepted": [
+        "lupanōmū mawa kukokanō kīho"
+      ],
+      "explanation": "O S V order. lupa-nō-mū = trough-PL-ACC; mawa = heavy; kukoka-nō = griffin-PL; kīho = kick."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "lukemi",
+        "groom"
+      ],
+      [
+        "hahīna",
+        "mule"
+      ],
+      [
+        "kukoka",
+        "griffin"
+      ],
+      [
+        "lupa",
+        "trough"
+      ],
+      [
+        "hake",
+        "rider"
+      ],
+      [
+        "leke",
+        "ride"
+      ],
+      [
+        "kīho",
+        "kick"
+      ],
+      [
+        "kakā",
+        "carry"
+      ],
+      [
+        "lēna",
+        "proud"
+      ],
+      [
+        "mawa",
+        "heavy"
+      ]
+    ],
+    "grammar": [
+      [
+        "O S V",
+        "Word order: object, subject, verb. With one participant: subject, verb."
+      ],
+      [
+        "-nō",
+        "Plural."
+      ],
+      [
+        "-ʻo",
+        "Marks the possessor (“the king's”)."
+      ],
+      [
+        "-mū",
+        "Accusative: marks the object."
+      ],
+      [
+        "Suffix order",
+        "On nouns: stem-PL-GEN-ACC."
+      ],
+      [
+        "Adjectives",
+        "Come after the noun. Noun endings go on the noun only; the adjective stays bare."
+      ],
+      [
+        "Possessor",
+        "Comes before the possessed noun."
+      ]
+    ],
+    "notes": "Checked against 195 alternative analyses; the sentences rule out 179, including: -nō appears when: animate; -nō appears when: plural & animate."
+  },
+  "theme": "the griffin stables",
+  "shuffle": {
+    "anchors": [
+      0
+    ],
+    "order": [
+      0,
+      3,
+      5,
+      2,
+      1,
+      4
+    ]
+  }
+}

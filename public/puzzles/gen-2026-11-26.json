@@ -2,161 +2,190 @@
   "id": "gen-2026-11-26",
   "number": 4,
   "date": "2026-11-26",
-  "difficulty": 4,
+  "difficulty": 3,
   "language": {
-    "name": "Mita",
+    "name": "Nekisa",
     "real": false
   },
   "checks": 3,
   "keys": [],
-  "hint": "Not every object gets the same ending. What do the marked ones have in common?",
+  "hint": "How does a noun change when there is more than one? Look at the start of the word.",
   "corpus": [
     {
-      "lang": "Lati mete ure.",
-      "en": "The sailor mends the map.",
+      "lang": "Bemki vatatike tika.",
+      "en": "The archer waits on the cliff.",
       "gloss": [
-        "mend",
-        "map",
-        "sailor"
+        "archer",
+        "cliff-LOC",
+        "wait"
       ]
     },
     {
-      "lang": "Nata kimapaka mitunri.",
-      "en": "The navigator follows the whales.",
+      "lang": "Teti rekite-rekite tive.",
+      "en": "The eagles find the queen.",
       "gloss": [
-        "follow",
-        "whale-PL-ACC",
-        "navigator"
+        "queen",
+        "PL~eagle",
+        "find"
       ]
     },
     {
-      "lang": "Nata kimapaka ure.",
-      "en": "The sailor follows the whales.",
+      "lang": "Bemki-bemki rekite norema tabesa.",
+      "en": "The eagle does not follow the archers at dawn.",
       "gloss": [
-        "follow",
-        "whale-PL-ACC",
-        "sailor"
+        "PL~archer",
+        "eagle",
+        "at.dawn",
+        "follow-NEG"
       ]
     },
     {
-      "lang": "Natana mitunrika urepa.",
-      "en": "The sailors follow the navigator.",
+      "lang": "Nuviba teti-teti tanva tivesa.",
+      "en": "The queens do not find the sword again.",
       "gloss": [
-        "follow-3PL",
-        "navigator-ACC",
-        "sailor-PL"
+        "sword",
+        "PL~queen",
+        "again",
+        "find-NEG"
       ]
     },
     {
-      "lang": "Nakina kutasipa urepa.",
-      "en": "The sailors steer the ships.",
+      "lang": "Rekite-rekite bemki-bemki norema tabesa.",
+      "en": "The archers do not follow the eagles at dawn.",
       "gloss": [
-        "steer-3PL",
-        "ship-PL",
-        "sailor-PL"
+        "PL~eagle",
+        "PL~archer",
+        "at.dawn",
+        "follow-NEG"
       ]
     },
     {
-      "lang": "Natana su mitunripaka kimapa.",
-      "en": "The whales do not follow the navigators.",
+      "lang": "Teti-teti rekite-rekite kananeke tive.",
+      "en": "The eagles find the queens in the glade.",
       "gloss": [
-        "follow-3PL",
-        "NEG",
-        "navigator-PL-ACC",
-        "whale-PL"
+        "PL~queen",
+        "PL~eagle",
+        "glade-LOC",
+        "find"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Natana urepaka kimapa.",
+      "prompt": "Nuviba-nuviba rekite-rekite tanva tivesa.",
       "accepted": [
-        "the whales follow the sailors",
-        "the whales follow sailors",
-        "the whales followed the sailors",
-        "the whales followed sailors",
-        "the whales are following the sailors",
-        "the whales are following sailors",
-        "whales follow the sailors",
-        "whales follow sailors",
-        "whales followed the sailors",
-        "whales followed sailors",
-        "whales are following the sailors",
-        "whales are following sailors"
+        "the eagles do not find the swords again",
+        "the eagles do not find swords again",
+        "the eagles did not find the swords again",
+        "the eagles did not find swords again",
+        "the eagles are not finding the swords again",
+        "the eagles are not finding swords again",
+        "eagles do not find the swords again",
+        "eagles do not find swords again",
+        "eagles did not find the swords again",
+        "eagles did not find swords again",
+        "eagles are not finding the swords again",
+        "eagles are not finding swords again"
       ],
-      "explanation": "V O S order. nata-na = follow-3PL; ure-pa-ka = sailor-PL-ACC; kima-pa = whale-PL."
+      "explanation": "O S V order. nuviba-nuviba = PL~sword; rekite-rekite = PL~eagle; tanva = again; tive-sa = find-NEG."
     }
   ],
   "toLang": [
     {
-      "prompt": "The navigators follow the whale.",
+      "prompt": "The queens do not follow the archers at dawn.",
       "accepted": [
-        "natana kimaka mitunripa"
+        "bemki-bemki teti-teti norema tabesa"
       ],
-      "explanation": "V O S order. nata-na = follow-3PL; kima-ka = whale-ACC; mitunri-pa = navigator-PL."
+      "explanation": "O S V order. bemki-bemki = PL~archer; teti-teti = PL~queen; norema = at.dawn; tabe-sa = follow-NEG."
     }
   ],
   "explain": {
     "words": [
       [
-        "ure",
-        "sailor"
+        "teti",
+        "queen"
       ],
       [
-        "mete",
-        "map"
+        "nuviba",
+        "sword"
       ],
       [
-        "mitunri",
-        "navigator"
+        "rekite",
+        "eagle"
       ],
       [
-        "kima",
-        "whale"
+        "bemki",
+        "archer"
       ],
       [
-        "kutasi",
-        "ship"
+        "kanane",
+        "glade"
       ],
       [
-        "naki-",
-        "steer"
+        "vatati",
+        "cliff"
       ],
       [
-        "nata-",
+        "tabe-",
         "follow"
       ],
       [
-        "lati-",
-        "mend"
+        "tive-",
+        "find"
+      ],
+      [
+        "tika-",
+        "wait"
+      ],
+      [
+        "tanva",
+        "again"
+      ],
+      [
+        "norema",
+        "at dawn"
       ]
     ],
     "grammar": [
       [
-        "V O S",
-        "Word order: verb, object, subject. With one participant: verb, subject."
+        "O S V",
+        "Word order: object, subject, verb. With one participant: subject, verb."
       ],
       [
-        "-pa",
-        "Plural."
+        "X-X",
+        "Plural: say the noun twice (teti → teti-teti)."
       ],
       [
-        "-ka",
-        "Marks the object, but only when it is alive (a person, animal or spirit). Other objects are bare."
+        "-ke",
+        "Marks a place (“in”, “on” or “at”)."
       ],
       [
-        "-na",
-        "On the verb when the subject is plural."
+        "-sa",
+        "Negation, on the verb."
       ],
       [
-        "su",
-        "Negation: a separate word after the verb."
+        "Place and “with” phrases",
+        "Go just before the verb."
       ],
       [
-        "Suffix order",
-        "On nouns: stem-PL-ACC."
+        "Time and manner words",
+        "Go just before the verb."
       ]
     ],
-    "notes": "Checked against 407 alternative analyses; the sentences rule out 393, including: -pa appears when: animate; -pa appears when: plural & animate."
+    "notes": "Checked against 467 alternative analyses; the sentences rule out 458, including: full reduplication appears when: animate; full reduplication appears when: plural & not animate."
+  },
+  "theme": "elves defending a cliff tower",
+  "shuffle": {
+    "anchors": [
+      3
+    ],
+    "order": [
+      1,
+      2,
+      0,
+      3,
+      5,
+      4
+    ]
   }
 }

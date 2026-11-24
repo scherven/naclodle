@@ -15,11 +15,11 @@ import {
 import { affixVariants, assignForms, chooseVocabulary, looksEnglish } from "./lexicon";
 import { makeAffix, samplePhonology, type Phonology } from "./phonology";
 import type { DayPlan } from "./plan";
-import { ADVERBS, type Theme } from "./themes";
+import { ADVERBS, type ObliqueKind, type Theme } from "./themes";
 
 const HEADLINE_COST: Record<Headline, number> = {
   reduplication: 1, circumfix: 1, definiteness: 1.25, wordOrder: 1.25, harmony: 2,
-  differentialObject: 2, possessive: 2, adjectivePhrase: 2, ergative: 2.5,
+  differentialObject: 2, possessive: 2, adjectivePhrase: 2, ergative: 2.5, oblique: 1.5,
 };
 const ORDER_COST: Record<WordOrder, number> = { SOV: 0, SVO: 0, VSO: 0.5, VOS: 1, OVS: 1, OSV: 1 };
 
@@ -38,6 +38,9 @@ export function difficultyScore(grammar: Grammar): number {
     score += { head: 0.5, concord: 1, edge: 1.5 }[grammar.adjectives.marking];
   if (grammar.possessorPosition && headline !== "possessive") score += has("POSS") ? 1.5 : 1;
   if (grammar.adverbPosition) score += 0.5;
+  const obliqueCount = grammar.info.dimensions.obliques.length;
+  if (headline !== "oblique") score += 0.5 * obliqueCount;
+  else if (obliqueCount > 2) score += 0.5;
   if (grammar.morphemes.some(morpheme => morpheme.id === "PST" && JSON.stringify(morpheme.condition).includes("pastTimeWord"))) score += 0.5;
   return score;
 }
@@ -73,8 +76,10 @@ function affixFactory(rng: Rng, phonology: Phonology): AffixFactory {
 export const sampleFailures: Record<string, number> = {};
 const fail = (reason: string) => { sampleFailures[reason] = (sampleFailures[reason] ?? 0) + 1; return null; };
 
-type Option = "case" | "tense" | "agreement" | "definiteness" | "harmony" | "adjectives" | "possession" | "adverbs" | "timeWordTense";
-const STRUCTURES: Option[] = ["adjectives", "possession", "adverbs"];
+type Option = "case" | "tense" | "agreement" | "definiteness" | "harmony" | "adjectives" | "possession" | "adverbs" | "timeWordTense" | "obliques";
+const STRUCTURES: Option[] = ["adjectives", "possession", "adverbs", "obliques"];
+/** Share of languages whose puzzle shows negative sentences at all (circumfix days always do). */
+const NEGATION_CHANCE = 0.4;
 
 export function sampleGrammar(rng: Rng, theme: Theme, plan: DayPlan): Grammar | null {
   const { headline, wordOrder } = plan;
@@ -83,7 +88,7 @@ export function sampleGrammar(rng: Rng, theme: Theme, plan: DayPlan): Grammar | 
   const chosen = new Set<Option>();
   const cost = (option: Option): number => ({
     case: 0.5, tense: 0.5, agreement: 0.5, definiteness: 0.5, harmony: 1,
-    adjectives: 0.5, possession: 1, adverbs: 0.5, timeWordTense: 0.5,
+    adjectives: 0.5, possession: 1, adverbs: 0.5, timeWordTense: 0.5, obliques: 0.5,
   })[option];
   const take = (option: Option) => { chosen.add(option); budget -= cost(option); };
 
@@ -92,11 +97,13 @@ export function sampleGrammar(rng: Rng, theme: Theme, plan: DayPlan): Grammar | 
   if (headline === "definiteness") chosen.add("definiteness");
   if (headline === "possessive") chosen.add("possession");
   if (headline === "adjectivePhrase") chosen.add("adjectives");
+  if (headline === "oblique") chosen.add("obliques");
   const caseFromHeadline = headline === "ergative" || headline === "differentialObject";
 
-  // Harder days get at least one structure beyond "S O V + affixes".
-  if (target >= 3 && !STRUCTURES.some(structure => chosen.has(structure))) take(rng.pick(STRUCTURES));
-  const optional: Option[] = rng.shuffle(["case", "tense", "agreement", "definiteness", "harmony", "adjectives", "possession", "adverbs"] as Option[])
+  // Harder days get at least one structure beyond "S O V + affixes"; middling days often get a place phrase or an adverb.
+  if (target >= 3 && budget >= 0.5 && !STRUCTURES.some(structure => chosen.has(structure))) take(rng.pick(STRUCTURES));
+  if (target === 2 && !chosen.has("obliques") && rng.chance(0.4)) take(rng.pick(["obliques", "adverbs"] as Option[]));
+  const optional: Option[] = rng.shuffle(["case", "tense", "agreement", "definiteness", "harmony", "adjectives", "possession", "adverbs", "obliques"] as Option[])
     .filter(option => !chosen.has(option) && !(option === "case" && caseFromHeadline))
     .filter(option => target >= 3 || !STRUCTURES.includes(option));
   for (const option of optional) {
@@ -163,16 +170,37 @@ export function sampleGrammar(rng: Rng, theme: Theme, plan: DayPlan): Grammar | 
     add("AGR", controller === "absolutivePlural" ? "PL.ABS" : "3PL", "verb", { kind: "suffix", form: affixes.suffix() }, featureCondition(controller), 2);
   }
 
-  // Negation (WALS 112A/143A: particles slightly more common than affixes; NegV preferred).
+  // Oblique phrases: case suffixes, or adpositions (postpositions in verb-final languages, prepositions otherwise).
+  let obliques: ObliqueKind[] = [];
+  if (chosen.has("obliques"))
+    obliques = headline === "oblique"
+      ? (rng.chance(0.5) ? ["LOC", "INS", "COM"] : ["INS", "COM"])
+      : rng.weighted<ObliqueKind[]>([[["LOC"], 4], [["COM"], 1.5], [["INS"], 1]]);
+  if (obliques.length) {
+    const useCase = rng.chance(alignment !== "none" || verbFinal(wordOrder) ? 0.7 : 0.35);
+    const side = verbFinal(wordOrder) ? "after" : "before";
+    for (const kind of obliques)
+      add(kind, kind, "noun", useCase ? { kind: "suffix", form: affixes.suffix() } : { kind: "particle", form: affixes.particle(), side }, roleCondition(kind), 5);
+  }
+  const obliquePosition: AdverbPosition | null = !obliques.length ? null
+    : verbFinal(wordOrder) ? rng.weighted<AdverbPosition>([["beforeVerb", 3], ["initial", 1]])
+    : rng.weighted<AdverbPosition>([["final", 3], ["afterVerb", wordOrder.startsWith("V") ? 0 : 1], ["initial", 0.5]]);
+
+  // Negation (WALS 112A/143A: particles slightly more common than affixes; NegV preferred). Not every puzzle has it.
+  // Harmony needs two harmonising suffixes; when nothing else supplies the second, negation does.
+  const suffixCount = morphemes.filter(morpheme => morpheme.exponent.kind === "suffix").length;
+  const negationForHarmony = headline === "harmony" && suffixCount < 2;
+  const hasNegation = headline === "circumfix" || negationForHarmony || rng.chance(NEGATION_CHANCE);
   const negationKind = headline === "circumfix"
     ? "circumfix"
+    : negationForHarmony ? "suffix"
     : rng.weighted([["particleBefore", 4], ["particleAfter", 1.5], ["prefix", hasHarmony ? 0 : 1.5], ["suffix", 2]] as const);
   const negationExponent: Exponent =
     negationKind === "circumfix" ? { kind: "circumfix", prefix: affixes.prefix(), suffix: affixes.suffix() }
     : negationKind === "prefix" ? { kind: "prefix", form: affixes.prefix() }
     : negationKind === "suffix" ? { kind: "suffix", form: affixes.suffix() }
     : { kind: "particle", form: affixes.particle(), side: negationKind === "particleBefore" ? "before" : "after" };
-  add("NEG", "NEG", "verb", negationExponent, featureCondition("negative"), 3);
+  if (hasNegation) add("NEG", "NEG", "verb", negationExponent, featureCondition("negative"), 3);
 
   if (headline === "harmony" && morphemes.filter(morpheme => morpheme.exponent.kind === "suffix").length < 2) return fail("harmony needs suffixes");
 
@@ -195,7 +223,7 @@ export function sampleGrammar(rng: Rng, theme: Theme, plan: DayPlan): Grammar | 
       .slice(0, 3);
   if (chosen.has("timeWordTense") && !adverbs.some(adverb => adverb.requiresPast)) adverbs.unshift(ADVERBS[0]);
 
-  const vocabulary = chooseVocabulary(rng, theme, adverbs);
+  const vocabulary = chooseVocabulary(rng, theme, adverbs, obliques);
   if (!vocabulary) return fail("vocabulary");
   if (!chosen.has("adjectives")) vocabulary.adjectives = [];
   else if (vocabulary.adjectives.length < 2) return fail("adjectives");
@@ -212,7 +240,8 @@ export function sampleGrammar(rng: Rng, theme: Theme, plan: DayPlan): Grammar | 
 
   const supporting = [...chosen].filter(option =>
     !(headline === "harmony" && option === "harmony") && !(headline === "definiteness" && option === "definiteness") &&
-    !(headline === "possessive" && option === "possession") && !(headline === "adjectivePhrase" && option === "adjectives"));
+    !(headline === "possessive" && option === "possession") && !(headline === "adjectivePhrase" && option === "adjectives") &&
+    !(headline === "oblique" && option === "obliques"));
   const grammar: Grammar = {
     wordOrder,
     intransitiveSubjectFirst: agentBeforeVerb(wordOrder),
@@ -221,13 +250,16 @@ export function sampleGrammar(rng: Rng, theme: Theme, plan: DayPlan): Grammar | 
     adjectives,
     possessorPosition,
     adverbPosition,
+    obliquePosition,
     phonology,
     lexicon,
     info: {
       alignment, headline, supporting, difficulty: target,
+      narrativePast: !chosen.has("tense") && rng.chance(0.5),
       dimensions: {
         definiteness: chosen.has("definiteness"), tense: chosen.has("tense"),
         adjectives: chosen.has("adjectives"), possession: chosen.has("possession"), adverbs: chosen.has("adverbs"),
+        negation: hasNegation, obliques,
       },
     },
   };

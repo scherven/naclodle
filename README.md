@@ -33,7 +33,7 @@ npm run build      # static site in dist/
 | `src/generator/` | Artificial-language puzzle generator. |
 | `scripts/generate.ts` | Generator CLI (see below). |
 | `scripts/real-puzzle.ts`, `scripts/prompts/` | Has Claude Code write a real-language puzzle. |
-| `public/puzzles/` | Puzzle files plus `index.json`, the schedule. |
+| `public/puzzles/` | Puzzle files plus `index.json`, the schedule. `shelved/` holds finished puzzles that aren't scheduled. |
 
 ## Making puzzles
 

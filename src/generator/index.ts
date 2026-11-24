@@ -13,7 +13,7 @@ import { sampleGrammar } from "./sample";
 import { orderCorpus, selectData } from "./select";
 import { THEMES, type Theme } from "./themes";
 
-export const GENERATOR_VERSION = "2";
+export const GENERATOR_VERSION = "3";
 
 export interface GenerationReport {
   date: string;

@@ -47,13 +47,20 @@ export function indefiniteArticle(word: string): string {
 
 export interface EnglishLexicon {
   noun(nounId: string): NounEnglish;
+  /** "in", "on", "at" for places; "with" for instruments and companions. */
+  preposition(nounId: string): string;
   verb(verbId: string): VerbEnglish;
   adjective(adjectiveId: string): string;
   adverb(adverbId: string): { english: string; time: boolean };
 }
 
 /** Which distinctions the conlang makes. Anything it doesn't mark is accepted either way in English. */
-export interface EnglishOptions { marksDefiniteness: boolean; marksTense: boolean }
+export interface EnglishOptions {
+  marksDefiniteness: boolean;
+  marksTense: boolean;
+  /** Without tense marking: show the story in the past (the present is still accepted). */
+  narrativePast?: boolean;
+}
 
 type EnglishTense = "present" | "past" | "progressive" | "future";
 
@@ -94,15 +101,15 @@ function verbPhrase(meaning: Meaning, lexicon: EnglishLexicon, tense: EnglishTen
 
 /** The first tense is the one displayed; the rest are accepted answers. */
 function acceptedTenses(meaning: Meaning, options: EnglishOptions): EnglishTense[] {
-  if (!options.marksTense) return ["present", "past", "progressive"];
+  if (!options.marksTense) return options.narrativePast ? ["past", "present", "progressive"] : ["present", "past", "progressive"];
   return meaning.past ? ["past"] : ["present", "progressive", "future"];
 }
 
 const capitalise = (text: string) => text[0].toUpperCase() + text.slice(1);
 
-/** Clause variants: adverbs go at the end (displayed), or at the start for time words. */
-function clauses(meaning: Meaning, subject: string, verb: string, object: string, lexicon: EnglishLexicon): string[] {
-  const core = `${subject} ${verb}${object ? " " + object : ""}`;
+/** Clause variants: the oblique phrase follows the object; adverbs go at the end (displayed), or at the start for time words. */
+function clauses(meaning: Meaning, subject: string, verb: string, object: string, oblique: string, lexicon: EnglishLexicon): string[] {
+  const core = `${subject} ${verb}${object ? " " + object : ""}${oblique ? " " + oblique : ""}`;
   if (!meaning.adverb) return [core];
   const adverb = lexicon.adverb(meaning.adverb);
   const variants = [`${core} ${adverb.english}`];
@@ -110,12 +117,19 @@ function clauses(meaning: Meaning, subject: string, verb: string, object: string
   return variants;
 }
 
+function obliqueVariants(meaning: Meaning, lexicon: EnglishLexicon, options: EnglishOptions): string[] {
+  if (!meaning.oblique) return [""];
+  const preposition = lexicon.preposition(meaning.oblique.noun);
+  return nounPhraseVariants(meaning.oblique, lexicon, options).map(phrase => `${preposition} ${phrase}`);
+}
+
 /** The sentence shown to the player. */
 export function englishSentence(meaning: Meaning, lexicon: EnglishLexicon, options: EnglishOptions): string {
   const subject = nounPhraseVariants(meaning.subject, lexicon, options)[0];
   const object = meaning.object ? nounPhraseVariants(meaning.object, lexicon, options)[0] : "";
   const verb = verbPhrase(meaning, lexicon, acceptedTenses(meaning, options)[0]);
-  return capitalise(clauses(meaning, subject, verb, object, lexicon)[0]) + ".";
+  const oblique = obliqueVariants(meaning, lexicon, options)[0];
+  return capitalise(clauses(meaning, subject, verb, object, oblique, lexicon)[0]) + ".";
 }
 
 /** Every accepted English answer, lowercased without final punctuation (the app normalises further). */
@@ -125,6 +139,7 @@ export function englishAnswers(meaning: Meaning, lexicon: EnglishLexicon, option
   for (const subject of nounPhraseVariants(meaning.subject, lexicon, options))
     for (const tense of acceptedTenses(meaning, options))
       for (const object of objects)
-        answers.push(...clauses(meaning, subject, verbPhrase(meaning, lexicon, tense), object, lexicon));
+        for (const oblique of obliqueVariants(meaning, lexicon, options))
+          answers.push(...clauses(meaning, subject, verbPhrase(meaning, lexicon, tense), object, oblique, lexicon));
   return [...new Set(answers)];
 }

@@ -26,7 +26,8 @@
     },
     {
       "date": "2026-11-28",
-      "file": "gen-2026-11-28.json"
+      "file": "gen-2026-11-28.json",
+      "shuffle": true
     },
     {
       "date": "2026-11-29",
@@ -67,15 +68,15 @@
     },
     {
       "date": "2026-12-08",
-      "file": "2026-12-08-french.json"
+      "file": "gen-2026-12-08.json"
     },
     {
       "date": "2026-12-09",
-      "file": "2026-12-09-german.json"
+      "file": "gen-2026-12-09.json"
     },
     {
       "date": "2026-12-10",
-      "file": "2026-12-10-chinese.json"
+      "file": "gen-2026-12-10.json"
     },
     {
       "date": "2026-12-11",
