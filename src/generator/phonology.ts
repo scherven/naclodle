@@ -13,7 +13,9 @@ export interface VowelHarmony {
 }
 
 export interface Phonology {
-  /** Ordered most to least frequent. */
+  /** The sound style: "plain", or one of the SOUND_STYLES below. */
+  style: string;
+  /** Ordered most to least frequent. A "consonant" may be a cluster ("tkʼ") or a click ("ǃ"). */
   consonants: string[];
   vowels: string[];
   codas: string[];
@@ -37,13 +39,59 @@ const HARMONY_SYSTEMS: [string[], string[]][] = [
   [["a", "u"], ["e", "i"]],
 ];
 
-export function samplePhonology(rng: Rng, wantHarmony: boolean): Phonology {
-  const extraConsonants = rng.shuffle(CONSONANT_POOL)
-    .filter(([, probability]) => rng.chance(probability))
-    .map(([consonant]) => consonant)
-    .slice(0, rng.int(6, 9));
-  const consonants = ["t", "k", "n", "m", ...extraConsonants];
-  if (rng.chance(0.55)) consonants.splice(rng.int(3, consonants.length), 0, rng.pick(FLAVOUR_CONSONANTS));
+/** Every vowel letter any style uses. Used wherever code needs to tell vowels from consonants. */
+export const VOWEL_LETTERS = "aeiouäöüæøåáàéèíìóòúùāēīōūãẽõũëï";
+
+/**
+ * Optional sound styles, for fun: some days the language sounds alien. Consonant lists are ordered
+ * most to least frequent; vowels are ignored when the grammar needs vowel harmony (harmony keeps its pairs).
+ */
+interface SoundStyle { consonants: string[]; vowels: string[]; codas: string[]; codaProbability: number }
+export const SOUND_STYLES: Record<string, SoundStyle> = {
+  // Salish/Caucasus-like: consonant clusters, ejectives (ʼ), lateral fricatives (ɬ), uvulars (q), few vowels
+  clusters: { consonants: ["t", "k", "q", "s", "tk", "kʼ", "x", "ɬ", "qʼ", "sk", "tɬ", "xʷ", "sq", "m", "n", "l"], vowels: ["a", "i", "u"], codas: [], codaProbability: 0 },
+  // liquids and glides everywhere: soft, flowing words
+  glides: { consonants: ["l", "w", "y", "r", "n", "h", "m"], vowels: ["a", "e", "i", "o", "u"], codas: ["l", "r", "n"], codaProbability: 0.2 },
+  // Khoisan-like click consonants
+  clicks: { consonants: ["ǃ", "k", "ǀ", "n", "ǂ", "t", "ǁ", "s", "h", "g", "m"], vowels: ["a", "e", "i", "o", "u"], codas: ["n"], codaProbability: 0.15 },
+  // tone written with accents (high ´, low `), plus prenasalised stops
+  tones: { consonants: ["mb", "nd", "k", "ŋg", "t", "s", "l", "m", "n", "b", "d", "w", "y", "f"], vowels: ["a", "á", "à", "i", "í", "ì", "u", "ú", "ù", "e", "é", "è", "o", "ó", "ò"], codas: [], codaProbability: 0 },
+  // Polynesian-like: tiny inventory, glottal stop (ʻ), long vowels (macron)
+  island: { consonants: ["k", "ʻ", "h", "l", "m", "n", "p", "w"], vowels: ["a", "e", "i", "o", "u", "ā", "ē", "ī", "ō", "ū"], codas: [], codaProbability: 0 },
+  // Old Norse look: thorn, eth, ash, slashed o
+  northern: { consonants: ["t", "r", "k", "þ", "s", "l", "ð", "n", "m", "v", "g", "h", "sk", "st"], vowels: ["a", "e", "i", "o", "u", "æ", "ø", "å"], codas: ["r", "n", "l", "s"], codaProbability: 0.3 },
+  // nasal vowels with tildes
+  nasal: { consonants: ["n", "m", "s", "t", "k", "ñ", "w", "p", "ŋ", "y", "r"], vowels: ["a", "ã", "e", "ẽ", "i", "o", "õ", "u", "ũ"], codas: [], codaProbability: 0 },
+  // Sanskrit-like: aspirated and retroflex (dotted) consonants, long vowels
+  dotted: { consonants: ["t", "k", "th", "ṭ", "n", "ṇ", "kh", "ṣ", "ḍ", "ph", "r", "v", "m", "s", "dh", "bh"], vowels: ["a", "ā", "i", "ī", "u", "ū", "e", "o"], codas: ["n", "r"], codaProbability: 0.15 },
+  // Finnish-like: long vowels written double, soft consonants
+  lakes: { consonants: ["t", "k", "s", "l", "v", "j", "h", "n", "r", "m", "p"], vowels: ["a", "aa", "i", "ii", "u", "uu", "e", "ee", "o", "oo", "ä", "ö"], codas: ["n", "l", "s"], codaProbability: 0.25 },
+  // Semitic-like: pharyngeals ʕ ḥ, glottal stop ʔ, emphatic ṣ ṭ, three vowels plus long ones
+  desert: { consonants: ["q", "ḥ", "ʔ", "s", "ṣ", "ʕ", "ṭ", "k", "r", "l", "m", "n", "d", "b", "z", "š"], vowels: ["a", "i", "u", "ā", "ī", "ū"], codas: ["r", "l", "n", "m"], codaProbability: 0.3 },
+  // Nahuatl-like: tl, tz, x and ch
+  highland: { consonants: ["tl", "t", "tz", "x", "k", "ch", "m", "n", "w", "y", "l", "p", "s"], vowels: ["a", "e", "i", "o"], codas: ["n", "l", "x"], codaProbability: 0.2 },
+  // airy and elvish: soft consonants, vowels with diaereses
+  airy: { consonants: ["l", "th", "s", "n", "r", "v", "f", "m", "d", "w"], vowels: ["a", "e", "i", "ë", "ï", "o"], codas: ["l", "n", "r", "th"], codaProbability: 0.3 },
+};
+export const SOUND_STYLE_NAMES = Object.keys(SOUND_STYLES);
+
+/** `styleName` comes from the day plan ("plain" or a SOUND_STYLES key), so styles are spread across days. */
+export function samplePhonology(rng: Rng, wantHarmony: boolean, styleName = "plain"): Phonology {
+  const style = SOUND_STYLES[styleName];
+  let consonants: string[];
+  if (style) {
+    // keep the most frequent few, then a random selection of the rest, so each language of a style differs
+    const core = style.consonants.slice(0, 4);
+    const rest = rng.shuffle(style.consonants.slice(4)).slice(0, rng.int(3, 6));
+    consonants = [...core, ...rest];
+  } else {
+    const extraConsonants = rng.shuffle(CONSONANT_POOL)
+      .filter(([, probability]) => rng.chance(probability))
+      .map(([consonant]) => consonant)
+      .slice(0, rng.int(6, 9));
+    consonants = ["t", "k", "n", "m", ...extraConsonants];
+    if (rng.chance(0.55)) consonants.splice(rng.int(3, consonants.length), 0, rng.pick(FLAVOUR_CONSONANTS));
+  }
   let vowels: string[];
   let harmony: VowelHarmony | null = null;
   if (wantHarmony) {
@@ -51,10 +99,14 @@ export function samplePhonology(rng: Rng, wantHarmony: boolean): Phonology {
     harmony = { pairs: backVowels.map((back, index) => [back, frontVowels[index]] as [string, string]) };
     vowels = [...backVowels, ...frontVowels];
   } else {
-    vowels = rng.weighted(VOWEL_SYSTEMS);
+    vowels = style ? style.vowels : rng.weighted(VOWEL_SYSTEMS);
+  }
+  if (style) {
+    const codas = style.codas.filter(coda => consonants.includes(coda));
+    return { style: styleName, consonants, vowels, codas, codaProbability: codas.length ? style.codaProbability : 0, harmony };
   }
   const codas = ["n", "m", "l", "r", "s"].filter(consonant => consonants.includes(consonant)).slice(0, rng.int(1, 3));
-  return { consonants, vowels, codas, codaProbability: codas.length ? rng.pick([0, 0.15, 0.3]) : 0, harmony };
+  return { style: "plain", consonants, vowels, codas, codaProbability: codas.length ? rng.pick([0, 0.15, 0.3]) : 0, harmony };
 }
 
 /** Vowels available to a stem of the given harmony class (null = any). */
@@ -85,10 +137,10 @@ export function resolveHarmony(phonology: Phonology, affix: string, front: boole
 }
 
 /** Sequences that look unnatural in romanisation: yi, wu, and doubled consonants. */
-const UNNATURAL_SEQUENCE = /yi|wu|([^aeiouäöü])\1/;
+const UNNATURAL_SEQUENCE = new RegExp(`yi|wu|([^${VOWEL_LETTERS}])\\1`);
 
 function makeSyllable(rng: Rng, phonology: Phonology, vowels: string[], wordInitial: boolean, wordFinal: boolean): string {
-  const onsetChoices = phonology.consonants.filter(consonant => consonant !== "ŋ" || !wordInitial);
+  const onsetChoices = phonology.consonants.filter(consonant => !consonant.startsWith("ŋ") || consonant.length > 1 || !wordInitial);
   const onset = wordInitial && rng.chance(0.08) ? "" : rng.dropoff(onsetChoices);
   const vowel = rng.dropoff(vowels, 0.5);
   const coda = !wordFinal && rng.chance(phonology.codaProbability) ? rng.pick(phonology.codas) : "";

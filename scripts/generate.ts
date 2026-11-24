@@ -9,6 +9,7 @@
  * Options for next / date / draft:
  *   --difficulty 1-5     override the weekday difficulty
  *   --shuffle            make it a shuffled puzzle (--no-shuffle to turn a Saturday off)
+ *   --style NAME         sound style: plain, or one of src/generator/phonology.ts SOUND_STYLES (clicks, tones, …)
  *   --force              replace puzzles that already exist (otherwise they're skipped)
  *   --report-dir DIR     write a solvability report per puzzle (spoilers)
  *
@@ -20,6 +21,7 @@ import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "
 import { join } from "node:path";
 import { generatePuzzle, type GenerateOptions } from "../src/generator/index";
 import { addDays, planWithOverrides } from "../src/generator/plan";
+import { SOUND_STYLE_NAMES } from "../src/generator/phonology";
 import { validatePuzzle, type Puzzle, type PuzzleIndex, type ScheduleEntry } from "../src/puzzle";
 
 const PUZZLE_DIRECTORY = join(import.meta.dirname, "..", "public", "puzzles");
@@ -66,6 +68,12 @@ function parseArguments(argumentList: string[]): Options {
     const level = Number(difficulty);
     if (![1, 2, 3, 4, 5].includes(level)) throw new Error("--difficulty must be 1 to 5");
     overrides.difficulty = level as 1 | 2 | 3 | 4 | 5;
+  }
+  const style = valueOf("--style");
+  if (style !== undefined) {
+    if (style !== "plain" && !SOUND_STYLE_NAMES.includes(style))
+      throw new Error(`--style must be plain or one of: ${SOUND_STYLE_NAMES.join(", ")}`);
+    overrides.style = style;
   }
   if (argumentList.includes("--shuffle")) overrides.shuffle = true;
   if (argumentList.includes("--no-shuffle")) overrides.shuffle = false;

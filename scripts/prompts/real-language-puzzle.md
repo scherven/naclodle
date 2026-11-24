@@ -10,7 +10,7 @@ The person who runs this wants to play the puzzle unspoiled. Your final message 
 
 Read first:
 - src/puzzle.ts: the format and validatePuzzle. There must be exactly one toEnglish and one toLang item, and one gloss per whitespace-separated word of each corpus `lang` line, in Leipzig style like "apple-ACC".
-- public/puzzles/2026-11-23-turkish.json: the style to match (corpus, hint, per-item explanation, explain.words/grammar/notes/fact).
+- public/puzzles/2026-11-22-turkish.json: the style to match (corpus, hint, per-item explanation, explain.words/grammar/notes/fact).
 - src/game/text.ts: grading. It lowercases with the puzzle's locale, strips punctuation and hyphens, and expands English contractions. "near" covers accent slips or one wrong word. `accepted` must list EVERY acceptable answer, including English variants (a/the only where the language leaves it open, present simple vs progressive where both fit, he/she where unmarked, and alternative word orders the language allows).
 
 Design:

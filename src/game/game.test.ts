@@ -9,7 +9,7 @@ import { closestAccepted, grade, normalise } from "./text";
 const DIR = join(__dirname, "../../public/puzzles");
 const load = (file: string) => JSON.parse(readFileSync(join(DIR, file), "utf8")) as Puzzle;
 // the Turkish file carries a shuffle block; the schedule decides whether a day uses it
-const shuffled = load("2026-11-23-turkish.json");
+const shuffled = load("2026-11-22-turkish.json");
 const turkish: Puzzle = { ...shuffled, shuffle: undefined };
 
 describe("normalisation and grading", () => {

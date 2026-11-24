@@ -2,8 +2,8 @@
 
 import type { Rng } from "./rng";
 import { allowsAgent, allowsPatient, type Adverb, type Theme, type ThemeAdjective, type ThemeNoun, type ThemeVerb } from "./themes";
-import { ENGLISH_WORDS } from "./blocklist";
-import { editDistance, makeStem, resolveHarmony, type Phonology } from "./phonology";
+import { ENGLISH_WORDS, REAL_NAMES } from "./blocklist";
+import { editDistance, makeStem, resolveHarmony, VOWEL_LETTERS, type Phonology } from "./phonology";
 
 export interface LexiconNoun extends ThemeNoun { form: string }
 export interface LexiconVerb extends ThemeVerb { form: string }
@@ -56,7 +56,7 @@ function tryVocabulary(rng: Rng, theme: Theme, adverbs: Adverb[]): Vocabulary | 
 
 /** Would this form read as English, or echo its own gloss (griffin -> "grif")? */
 export function looksEnglish(form: string, gloss?: string): boolean {
-  if (ENGLISH_WORDS.has(form)) return true;
+  if (ENGLISH_WORDS.has(form) || REAL_NAMES.has(form.toLowerCase())) return true;
   if (!gloss) return false;
   if (form.slice(0, 3) === gloss.slice(0, 3)) return true;
   return editDistance(form, gloss) <= Math.ceil(gloss.length / 2);
@@ -92,7 +92,7 @@ export function assignForms(
       const form = makeStem(rng, phonology, syllableCount(), front);
       const clashes =
         looksEnglish(form, gloss) ||
-        (constraints.consonantInitial && /^[aeiouäöü]/.test(form)) ||
+        (constraints.consonantInitial && VOWEL_LETTERS.includes(form[0])) ||
         taken.some(other => editDistance(form, other) < 2) ||
         constraints.suffixes.some(suffix => form.endsWith(suffix)) ||
         constraints.prefixes.some(prefix => form.startsWith(prefix));
@@ -141,7 +141,8 @@ export function affixVariants(phonology: Phonology, affix: string): string[] {
 export function makeLanguageName(rng: Rng, phonology: Phonology): string {
   for (let attempt = 0; attempt < 100; attempt++) {
     const name = makeStem(rng, phonology, rng.int(2, 3), phonology.harmony ? rng.chance(0.5) : null);
-    if (!looksEnglish(name)) return name[0].toUpperCase() + name.slice(1);
+    // capitalise the first letter that has a capital (ʻ and ǃ don't)
+    if (!looksEnglish(name)) return name.replace(/\p{Ll}/u, letter => letter.toUpperCase());
   }
   return "Tanu";
 }

@@ -4,133 +4,130 @@
   "date": "2026-12-07",
   "difficulty": 1,
   "language": {
-    "name": "Niša",
+    "name": "Jalka",
     "real": false
   },
   "checks": 3,
-  "keys": [],
+  "keys": [
+    "ä"
+  ],
   "hint": "How does a noun change when there is more than one? Look at the start of the word.",
   "corpus": [
     {
-      "lang": "Tunewe menta.",
-      "en": "The judge waits.",
+      "lang": "Luluutä lahaa.",
+      "en": "The judges weep.",
       "gloss": [
-        "judge",
-        "wait"
+        "PL~judge",
+        "weep"
       ]
     },
     {
-      "lang": "Kiti mamo tunewe.",
-      "en": "The ferryman pays the judge.",
+      "lang": "Kätiha kistii luutä.",
+      "en": "The hound guards the judge.",
       "gloss": [
-        "ferryman",
-        "pay",
+        "hound",
+        "guard",
         "judge"
       ]
     },
     {
-      "lang": "Tunewe koka kara-kara.",
-      "en": "The judge crosses the rivers.",
+      "lang": "Luutä toosti taal titiiki.",
+      "en": "The judge does not carry the coin.",
       "gloss": [
         "judge",
-        "cross",
-        "PL~river"
-      ]
-    },
-    {
-      "lang": "Tunewe ma koka kara.",
-      "en": "The judge does not cross the river.",
-      "gloss": [
-        "judge",
+        "carry",
         "NEG",
-        "cross",
-        "river"
+        "coin"
       ]
     },
     {
-      "lang": "Kiti-kiti koka kara-kara.",
-      "en": "The ferrymen cross the rivers.",
-      "gloss": [
-        "PL~ferryman",
-        "cross",
-        "PL~river"
-      ]
-    },
-    {
-      "lang": "Tunewe-tunewe ma mamo kiti.",
-      "en": "The judges do not pay the ferryman.",
+      "lang": "Luluutä toosti titiiki.",
+      "en": "The judges carry the coin.",
       "gloss": [
         "PL~judge",
-        "NEG",
-        "pay",
-        "ferryman"
+        "carry",
+        "coin"
       ]
     },
     {
-      "lang": "Kiti-kiti ma mamo tunewe-tunewe.",
-      "en": "The ferrymen do not pay the judges.",
+      "lang": "Kätiha kistii taal luluutä.",
+      "en": "The hound does not guard the judges.",
       "gloss": [
-        "PL~ferryman",
+        "hound",
+        "guard",
         "NEG",
-        "pay",
         "PL~judge"
+      ]
+    },
+    {
+      "lang": "Käkätiha kistii taal tutuko.",
+      "en": "The hounds do not guard the rivers.",
+      "gloss": [
+        "PL~hound",
+        "guard",
+        "NEG",
+        "PL~river"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Kiti-kiti ma koka kara.",
+      "prompt": "Käkätiha kistii luluutä.",
       "accepted": [
-        "the ferrymen do not cross the river",
-        "the ferrymen do not cross a river",
-        "the ferrymen did not cross the river",
-        "the ferrymen did not cross a river",
-        "the ferrymen are not crossing the river",
-        "the ferrymen are not crossing a river",
-        "ferrymen do not cross the river",
-        "ferrymen do not cross a river",
-        "ferrymen did not cross the river",
-        "ferrymen did not cross a river",
-        "ferrymen are not crossing the river",
-        "ferrymen are not crossing a river"
+        "the hounds guard the judges",
+        "the hounds guard judges",
+        "the hounds guarded the judges",
+        "the hounds guarded judges",
+        "the hounds are guarding the judges",
+        "the hounds are guarding judges",
+        "hounds guard the judges",
+        "hounds guard judges",
+        "hounds guarded the judges",
+        "hounds guarded judges",
+        "hounds are guarding the judges",
+        "hounds are guarding judges"
       ],
-      "explanation": "S V O order. kiti-kiti = PL~ferryman; ma = NEG; koka = cross; kara = river."
+      "explanation": "S V O order. kä~kätiha = PL~hound; kistii = guard; lu~luutä = PL~judge."
     }
   ],
   "toLang": [
     {
-      "prompt": "The judges pay the ferrymen.",
+      "prompt": "The judges do not carry the coins.",
       "accepted": [
-        "tunewe-tunewe mamo kiti-kiti"
+        "luluutä toosti taal tititiiki"
       ],
-      "explanation": "S V O order. tunewe-tunewe = PL~judge; mamo = pay; kiti-kiti = PL~ferryman."
+      "explanation": "S V O order. lu~luutä = PL~judge; toosti = carry; taal = NEG; ti~titiiki = PL~coin."
     }
   ],
   "explain": {
     "words": [
       [
-        "kiti",
-        "ferryman"
+        "titiiki",
+        "coin"
       ],
       [
-        "kara",
-        "river"
+        "kätiha",
+        "hound"
       ],
       [
-        "tunewe",
+        "luutä",
         "judge"
       ],
       [
-        "koka",
-        "cross"
+        "tuko",
+        "river"
       ],
       [
-        "mamo",
-        "pay"
+        "toosti",
+        "carry"
       ],
       [
-        "menta",
-        "wait"
+        "kistii",
+        "guard"
+      ],
+      [
+        "lahaa",
+        "weep"
       ]
     ],
     "grammar": [
@@ -139,29 +136,28 @@
         "Word order: subject, verb, object. With one participant: subject, verb."
       ],
       [
-        "X-X",
-        "Plural: say the noun twice (wemšoke → wemšoke-wemšoke)."
+        "CV~",
+        "Plural: copy the noun's first consonant and vowel in front (seesha → seseesha)."
       ],
       [
-        "ma",
-        "Negation: a separate word before the verb."
+        "taal",
+        "Negation: a separate word after the verb."
       ]
     ],
-    "notes": "Checked against 143 alternative analyses; the sentences rule out 141, including: ma appears when: (negative or plural subject)."
+    "notes": "Checked against 259 alternative analyses; the sentences rule out 257, including: CV reduplication appears when: animate; CV reduplication appears when: plural & animate."
   },
   "theme": "the ferry of the underworld",
   "shuffle": {
     "anchors": [
-      0
+      5
     ],
     "order": [
-      0,
       3,
-      6,
-      4,
-      5,
       2,
-      1
+      0,
+      4,
+      1,
+      5
     ]
   }
 }

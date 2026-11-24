@@ -4,140 +4,130 @@
   "date": "2026-12-03",
   "difficulty": 3,
   "language": {
-    "name": "Sututi",
+    "name": "Ṇābhotho",
     "real": false
   },
   "checks": 3,
   "keys": [
-    "š"
+    "ū",
+    "ī",
+    "ṣ",
+    "ṭ",
+    "ṇ",
+    "ā"
   ],
   "hint": "Watch for “the” versus “a” in the English.",
   "corpus": [
     {
-      "lang": "Ratena si tageva.",
-      "en": "A stag did not hide.",
+      "lang": "Thikota dhūtīṣe.",
+      "en": "Princes run.",
       "gloss": [
-        "stag",
-        "NEG",
-        "hide-PST"
+        "PL-prince",
+        "run-3PL"
       ]
     },
     {
-      "lang": "Vumetamaga ratena tikeva.",
-      "en": "Princes caught a stag.",
+      "lang": "Kotakha kathiṭo dha ṭaṇi.",
+      "en": "The prince does not shoot a stag.",
       "gloss": [
-        "prince-PL-ERG",
+        "prince-DEF",
         "stag",
-        "catch-PST"
-      ]
-    },
-    {
-      "lang": "Hibaga ratena si tišava.",
-      "en": "A hunter did not shoot a stag.",
-      "gloss": [
-        "hunter-ERG",
-        "stag",
-        "NEG",
-        "shoot-PST"
-      ]
-    },
-    {
-      "lang": "Vumetatuga hibatuki ratenatu si tiša.",
-      "en": "The prince does not shoot the hunter's stag.",
-      "gloss": [
-        "prince-DEF-ERG",
-        "hunter-DEF-GEN",
-        "stag-DEF",
         "NEG",
         "shoot"
       ]
     },
     {
-      "lang": "Hibatuki ratenamatuga binitu tikeva.",
-      "en": "The hunter's stags caught the boar.",
+      "lang": "Kathiṭokha thubhakhatā thiṣudhaṇa dhīdha.",
+      "en": "The hunter's stag tracks boars.",
       "gloss": [
-        "hunter-DEF-GEN",
-        "stag-PL-DEF-ERG",
-        "boar-DEF",
-        "catch-PST"
-      ]
-    },
-    {
-      "lang": "Vumetatuki hibatuga ratenamatu si tišava.",
-      "en": "The prince's hunter did not shoot the stags.",
-      "gloss": [
-        "prince-DEF-GEN",
-        "hunter-DEF-ERG",
-        "stag-PL-DEF",
-        "NEG",
-        "shoot-PST"
-      ]
-    },
-    {
-      "lang": "Mitematuga hibamatuki ratenatu si tikeva.",
-      "en": "The hounds did not catch the hunters' stag.",
-      "gloss": [
-        "hound-PL-DEF-ERG",
-        "hunter-PL-DEF-GEN",
         "stag-DEF",
+        "hunter-DEF-GEN",
+        "PL-boar",
+        "track"
+      ]
+    },
+    {
+      "lang": "Thikota thikathiṭo dha dhīdhaṣe.",
+      "en": "Princes do not track stags.",
+      "gloss": [
+        "PL-prince",
+        "PL-stag",
         "NEG",
-        "catch-PST"
+        "track-3PL"
+      ]
+    },
+    {
+      "lang": "Thithubhakha kathiṭokha kotakhatā dha ṭaṇiṣe.",
+      "en": "The hunters do not shoot the prince's stag.",
+      "gloss": [
+        "PL-hunter-DEF",
+        "stag-DEF",
+        "prince-DEF-GEN",
+        "NEG",
+        "shoot-3PL"
+      ]
+    },
+    {
+      "lang": "Thikota kathiṭokha thithubhakhatā dha dhīdhaṣe.",
+      "en": "Princes do not track the hunters' stag.",
+      "gloss": [
+        "PL-prince",
+        "stag-DEF",
+        "PL-hunter-DEF-GEN",
+        "NEG",
+        "track-3PL"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Mitemaga ratenatu tike.",
+      "prompt": "Thikota kathiṭo dha ṭaṇiṣe.",
       "accepted": [
-        "hounds catch the stag",
-        "hounds are catching the stag",
-        "hounds will catch the stag"
+        "princes do not shoot a stag",
+        "princes did not shoot a stag",
+        "princes are not shooting a stag"
       ],
-      "explanation": "S O V order. mite-ma-ga = hound-PL-ERG; ratena-tu = stag-DEF; tike = catch."
+      "explanation": "S O V order. thi-kota = PL-prince; kathiṭo = stag; dha = NEG; ṭaṇi-ṣe = shoot-3PL."
     }
   ],
   "toLang": [
     {
-      "prompt": "Hunters did not shoot the princes' stag.",
+      "prompt": "A hunter tracks the prince's stag.",
       "accepted": [
-        "hibamaga vumetamatuki ratenatu si tišava"
+        "thubha kathiṭokha kotakhatā dhīdha"
       ],
-      "explanation": "S O V order. hiba-ma-ga = hunter-PL-ERG; vumeta-ma-tu-ki = prince-PL-DEF-GEN; ratena-tu = stag-DEF; si = NEG; tiša-va = shoot-PST."
+      "explanation": "S O V order. thubha = hunter; kathiṭo-kha = stag-DEF; kota-kha-tā = prince-DEF-GEN; dhīdha = track."
     }
   ],
   "explain": {
     "words": [
       [
-        "vumeta",
+        "kota",
         "prince"
       ],
       [
-        "bini",
-        "boar"
-      ],
-      [
-        "ratena",
-        "stag"
-      ],
-      [
-        "mite",
-        "hound"
-      ],
-      [
-        "hiba",
+        "thubha",
         "hunter"
       ],
       [
-        "tiša-",
+        "ṣudhaṇa",
+        "boar"
+      ],
+      [
+        "kathiṭo",
+        "stag"
+      ],
+      [
+        "ṭaṇi-",
         "shoot"
       ],
       [
-        "tike-",
-        "catch"
+        "dhīdha-",
+        "track"
       ],
       [
-        "tage-",
-        "hide"
+        "dhūtī-",
+        "run"
       ]
     ],
     "grammar": [
@@ -146,53 +136,48 @@
         "Word order: subject, object, verb. With one participant: subject, verb."
       ],
       [
-        "-ma",
+        "thi-",
         "Plural."
       ],
       [
-        "-tu",
+        "-kha",
         "Definite (“the”). A noun without it means “a” (or plain plural)."
       ],
       [
-        "-ki",
+        "-tā",
         "Marks the possessor (“the king's”)."
       ],
       [
-        "-ga",
-        "Ergative: marks the doer of a two-participant verb. The lone participant of a one-participant verb is bare, just like the object."
+        "-ṣe",
+        "On the verb when the subject is plural."
       ],
       [
-        "-va",
-        "Past tense. Without it the verb is present or future."
-      ],
-      [
-        "si",
+        "dha",
         "Negation: a separate word before the verb."
       ],
       [
         "Suffix order",
-        "On nouns: stem-PL-DEF-GEN-ERG."
+        "On nouns: stem-DEF-GEN."
       ],
       [
         "Possessor",
-        "Comes before the possessed noun."
+        "Comes after the possessed noun."
       ]
     ],
-    "notes": "Checked against 1225 alternative analyses; the sentences rule out 1201, including: si appears when: negative & past."
+    "notes": "Checked against 704 alternative analyses; the sentences rule out 690, including: thi- appears when: definite; thi- appears when: plural & definite."
   },
   "theme": "a royal hunt",
   "shuffle": {
     "anchors": [
-      4
+      1
     ],
     "order": [
+      2,
       1,
-      6,
-      0,
       5,
       4,
-      2,
-      3
+      3,
+      0
     ]
   }
 }

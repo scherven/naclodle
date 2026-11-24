@@ -19,5 +19,30 @@ oath obey odor okay omen once only onto open oral oven over pace pack page paid 
 race rack raft rage raid rail rain rake ramp rang rank rare rash rate read real reap rear reed reef rely rent rest rice rich ride rife ring riot rise risk road roam roar robe rock rode role roll roof room root rope rose rosy ruby rude ruin rule rush rust
 safe saga sage said sail sake sale salt same sand sane sang sank save seal seam seat seed seek seem seen self sell send sent shed shin ship shoe shop shot show shut sick side sigh sign silk sing sink site size skin slam slap sled slid slim slip slit slow snow soak soap soar sock soda sofa soft soil sold sole solo some song soon sore sort soul soup sour spin spot star stay stem step stew stir stop such suit sumo sung sure swam swan swim
 tail take tale talk tall tame tank tape task taxi team tear tell tend tent term test text than that them then they thin this thus tide tidy tile till time tiny tire toad toga told toll tomb tone took tool tore torn tour town trap tray tree trim trip true tube tuna tune turn twin type ugly undo unit upon used user vain vary vase vast veil vein verb very vest veto view vine visa void vote wade wage wait wake walk wall wand want warm warn wash wave wavy weak wear week well went were west what when whip wide wife wild will wind wine wing wipe wire wise wish with woke wolf womb wood wool word wore work worm wrap yard yarn yawn year yell yoga yoke your zero zone zoom
-banana camera canoe karate kimono lasagna llama mango tomato potato salami salsa sauna tango tuba tulip pizza pasta piano opera panda koala sofa hula mama papa nana lama coma soma mamba samba rumba bingo lingo limbo bimbo dildo nipple penis anus anal porn slut damn hell shit fuck cunt dick cock twat tit tits nazi
+banana sonata cantata fiesta sierra tortilla vanilla sauna camera canoe karate kimono lasagna llama mango tomato potato salami salsa sauna tango tuba tulip pizza pasta piano opera panda koala sofa hula mama papa nana lama coma soma mamba samba rumba bingo lingo limbo bimbo dildo nipple penis anus anal porn slut damn hell shit fuck cunt dick cock twat tit tits nazi
+`.split(/\s+/).filter(Boolean));
+
+/**
+ * Real-world names and well-known foreign words a generated word or language name must not equal:
+ * common first names and surnames from many languages, countries, cities, rivers, gods, brands,
+ * and famous words that would read as borrowings (aloha, sushi…). Lowercase; checked case-insensitively.
+ */
+export const REAL_NAMES = new Set(`
+adam alan alex ali alice amy ana anna anne amir arya asha ava ben bella bob carl cara carla carlo chen chloe dan dana dani david diana dina eli ella ellen emma eric eva evan ezra fatima finn gina greta hana hanna hans hari helen ian ida ina ira isa ivan jack jade jake jana jane jean jin joe john jose juan julia kai kali kara karen kate kati kayla kemal kim kira kofi kumar lana lara laura lea lena leo lia lila lily lina lisa liu lola luca lucy luis luka luna mai maria mara mari mario mark marta mary maya mia mika mila mina mira mohamed musa nadia nala nana naomi nia nico nina noa noah nora olga oli omar otto paul pedro petra ravi rita rosa ruth sam sami sana sara sarah sean sena sita sofia sven tara tina toma tomas tony uma vera wang yara yuki yuko yuri zara zoe
+tanaka suzuki sato satou takahashi watanabe ito yamamoto nakamura kobayashi kato yoshida yamada sasaki matsumoto inoue kimura hayashi shimizu yamaguchi mori abe ikeda hashimoto ishikawa ogawa okada maeda fujita goto murakami kondo sakamoto endo aoki fujii nishimura fukuda ota miura okamoto matsuda nakajima harada ono tamura takeda ueda morita hara shibata sakai kudo yokoyama miyazaki miyamoto uchida takagi ando taniguchi ohno maruyama imai kono fujiwara
+kim lee park choi jung kang cho yoon jang lim han oh seo shin kwon hwang ahn song yoo hong jeon ko moon yang son bae baek heo nam
+nguyen tran le pham hoang phan vu dang bui do ho ngo duong ly
+smith jones brown taylor wilson davies evans thomas johnson roberts walker wright robinson thompson white hughes edwards green hall wood harris lewis martin jackson clarke clark turner hill scott cooper morris ward moore king watson baker
+garcia rodriguez martinez hernandez lopez gonzalez perez sanchez ramirez torres flores rivera gomez diaz reyes morales ortiz silva santos costa oliveira souza rossi russo ferrari esposito bianchi romano colombo ricci marino greco bruno gallo conti
+muller schmidt schneider fischer weber meyer wagner becker schulz hoffmann koch richter klein wolf neumann
+patel singh sharma gupta khan shah rao reddy iyer nair das bose sen roy mehta joshi
+ivanov petrov smirnov popov sokolov novak horvat kowalski nowak
+china india japan korea kenya chad mali peru cuba fiji iran iraq oman laos nepal togo niger congo gabon ghana egypt libya sudan tonga samoa nauru palau malta italy spain wales chile haiti benin qatar yemen syria
+paris rome roma tokyo kyoto osaka lima oslo bern doha dubai cairo delhi dhaka hanoi kabul kiev kyiv lagos milan milano madrid moscow mumbai nairobi seoul sofia tunis vienna wien berlin london sydney toronto boston denver dallas miami austin seattle venice napoli lisbon dakar accra quito bogota havana manila jakarta bali java sumatra tibet texas utah ohio iowa maine idaho nevada kansas alaska hawaii yukon nile amazon volga ganges danube tiber indus andes alps etna fuji everest sahara gobi
+zeus hera thor odin loki freya ra isis osiris anubis horus amun shiva vishnu kali rama krishna buddha allah yahweh jesus mary maui pele kane lono ku hina
+nike sony honda toyota mazda nissan subaru suzuki yamaha kia hyundai nokia ikea lego rolex gucci prada adidas puma fanta pepsi visa uber tesla kodak canon nikon ricoh sega atari nintendo pokemon yoda gollum
+aloha mahalo hula luau lei kahuna sushi sake saki sumo samurai ninja kimono karate judo tofu miso ramen manga anime kami neko kawaii sayonara arigato konnichiwa
+taco tapas salsa siesta fiesta mañana amigo hola adios gracias pasta pizza ciao bella mama papa nonna dolce vita opera
+namaste karma yoga guru chai curry mantra nirvana avatar
+hakuna matata jambo safari simba asante honu
 `.split(/\s+/).filter(Boolean));

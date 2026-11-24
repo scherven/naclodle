@@ -4,154 +4,160 @@
   "date": "2026-12-11",
   "difficulty": 4,
   "language": {
-    "name": "Tanaka",
+    "name": "Kuǀone",
     "real": false
   },
   "checks": 3,
-  "keys": [],
+  "keys": [
+    "ǀ",
+    "ǂ",
+    "ǃ"
+  ],
   "hint": "In “the king's horse”, which of the two words carries the extra ending?",
   "corpus": [
     {
-      "lang": "Tusa tanami muka.",
-      "en": "The navigator blesses the king.",
+      "lang": "Kuǀeǂega ǀiǃeki.",
+      "en": "The king knelt.",
       "gloss": [
-        "navigator",
-        "king-ACC",
-        "bless"
+        "king-DEF",
+        "kneel-PST"
       ]
     },
     {
-      "lang": "Tunaka tamikami ki sipata.",
-      "en": "The soldier did not guard the temple.",
+      "lang": "Kuǀeǂe-kuǀeǂega ǃoǂahe-ǃoǂahemuga hoǃaǃe ǀiǃeǂa.",
+      "en": "The kings' navigators kneel at night.",
       "gloss": [
-        "soldier",
-        "temple-ACC",
-        "NEG",
+        "PL~king-DEF",
+        "PL~navigator-POSS-DEF",
+        "at.night",
+        "kneel-3PL"
+      ]
+    },
+    {
+      "lang": "Kuǀeǂe-kuǀeǂe ǃaka nokukiǂa.",
+      "en": "Kings carried a shield.",
+      "gloss": [
+        "PL~king",
+        "shield",
+        "carry-PST-3PL"
+      ]
+    },
+    {
+      "lang": "ǃoǂahe kuǀeǂe-kuǀeǂega tegeki.",
+      "en": "A navigator guarded the kings.",
+      "gloss": [
+        "navigator",
+        "PL~king-DEF",
         "guard-PST"
       ]
     },
     {
-      "lang": "Tunaka tana-tanami bika ki hati.",
-      "en": "The soldier does not praise the young kings.",
+      "lang": "ǃatega teǀa-teǀaga ǀunokuki.",
+      "en": "The priest did not carry the crowns.",
       "gloss": [
-        "soldier",
-        "PL~king-ACC",
-        "young",
-        "NEG",
-        "praise"
+        "priest-DEF",
+        "PL~crown-DEF",
+        "NEG-carry-PST"
       ]
     },
     {
-      "lang": "Tana-tana tusa-tusaxi tamikami sipaba.",
-      "en": "The kings' navigators guard the temple.",
+      "lang": "ǃoǂahe-ǃoǂahe kuǀeǂe-kuǀeǂega ǃakamuga hoǃaǃe ǀunokuǂa.",
+      "en": "Navigators do not carry the kings' shield at night.",
       "gloss": [
-        "PL~king",
-        "PL~navigator-POSS",
-        "temple-ACC",
-        "guard-3PL"
+        "PL~navigator",
+        "PL~king-DEF",
+        "shield-POSS-DEF",
+        "at.night",
+        "NEG-carry-3PL"
       ]
     },
     {
-      "lang": "Tana-tana tunaka-tunaka tamikaximi sipaba.",
-      "en": "The kings guard the soldiers' temple.",
+      "lang": "ǃate-ǃatega ǃoǂahega ǃaka-ǃakamuga hoǃaǃe ǀunokukiǂa.",
+      "en": "The priests did not carry the navigator's shields at night.",
       "gloss": [
-        "PL~king",
-        "PL~soldier",
-        "temple-POSS-ACC",
-        "guard-3PL"
+        "PL~priest-DEF",
+        "navigator-DEF",
+        "PL~shield-POSS-DEF",
+        "at.night",
+        "NEG-carry-PST-3PL"
       ]
     },
     {
-      "lang": "Tana-tana tamika-tamikami tiya mukataba.",
-      "en": "The kings blessed the holy temples.",
+      "lang": "Kuǀeǂe-kuǀeǂega ǃate-ǃatega teǀamuga hoǃaǃe ǀuǃiǀekiǂa.",
+      "en": "The kings did not polish the priests' crown at night.",
       "gloss": [
-        "PL~king",
-        "PL~temple-ACC",
-        "holy",
-        "bless-PST-3PL"
-      ]
-    },
-    {
-      "lang": "Tunaka-tunaka tusa tamika-tamikaximi ki sipataba.",
-      "en": "The soldiers did not guard the navigator's temples.",
-      "gloss": [
-        "PL~soldier",
-        "navigator",
-        "PL~temple-POSS-ACC",
-        "NEG",
-        "guard-PST-3PL"
-      ]
-    },
-    {
-      "lang": "Tana-tana tusa-tusaxi tunakami ki mukataba.",
-      "en": "The kings' navigators did not bless the soldier.",
-      "gloss": [
-        "PL~king",
-        "PL~navigator-POSS",
-        "soldier-ACC",
-        "NEG",
-        "bless-PST-3PL"
+        "PL~king-DEF",
+        "PL~priest-DEF",
+        "crown-POSS-DEF",
+        "at.night",
+        "NEG-polish-PST-3PL"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Tusa-tusa tunaka tamikaximi ki mukataba.",
+      "prompt": "Kuǀeǂega ǃoǂahe-ǃoǂahemuga ǃaka-ǃaka hoǃaǃe nokuǂa.",
       "accepted": [
-        "the navigators did not bless the soldier's temple",
-        "the navigators did not bless a soldier's temple",
-        "navigators did not bless the soldier's temple",
-        "navigators did not bless a soldier's temple"
+        "the king's navigators carry shields at night",
+        "at night the king's navigators carry shields",
+        "the king's navigators are carrying shields at night",
+        "at night the king's navigators are carrying shields",
+        "the king's navigators will carry shields at night",
+        "at night the king's navigators will carry shields"
       ],
-      "explanation": "S O V order. tusa-tusa = PL~navigator; tunaka = soldier; tamika-xi-mi = temple-POSS-ACC; ki = NEG; muka-ta-ba = bless-PST-3PL."
+      "explanation": "S O V order. kuǀeǂe-ga = king-DEF; ǃoǂahe-ǃoǂahe-mu-ga = PL~navigator-POSS-DEF; ǃaka-ǃaka = PL~shield; hoǃaǃe = at.night; noku-ǂa = carry-3PL."
     }
   ],
   "toLang": [
     {
-      "prompt": "The king did not guard the navigators' temple.",
+      "prompt": "Kings carried the priests' crowns at night.",
       "accepted": [
-        "tana tusa-tusa tamikaximi ki sipata"
+        "kuǀeǂe-kuǀeǂe ǃate-ǃatega teǀa-teǀamuga hoǃaǃe nokukiǂa"
       ],
-      "explanation": "S O V order. tana = king; tusa-tusa = PL~navigator; tamika-xi-mi = temple-POSS-ACC; ki = NEG; sipa-ta = guard-PST."
+      "explanation": "S O V order. kuǀeǂe-kuǀeǂe = PL~king; ǃate-ǃate-ga = PL~priest-DEF; teǀa-teǀa-mu-ga = PL~crown-POSS-DEF; hoǃaǃe = at.night; noku-ki-ǂa = carry-PST-3PL."
     }
   ],
   "explain": {
     "words": [
       [
-        "tamika",
-        "temple"
+        "ǃate",
+        "priest"
       ],
       [
-        "tunaka",
-        "soldier"
-      ],
-      [
-        "tana",
+        "kuǀeǂe",
         "king"
       ],
       [
-        "tusa",
+        "ǃaka",
+        "shield"
+      ],
+      [
+        "ǃoǂahe",
         "navigator"
       ],
       [
-        "muka-",
-        "bless"
+        "teǀa",
+        "crown"
       ],
       [
-        "hati-",
-        "praise"
+        "ǃiǀe-",
+        "polish"
       ],
       [
-        "sipa-",
+        "tege-",
         "guard"
       ],
       [
-        "tiya",
-        "holy"
+        "noku-",
+        "carry"
       ],
       [
-        "bika",
-        "young"
+        "ǀiǃe-",
+        "kneel"
+      ],
+      [
+        "hoǃaǃe",
+        "at night"
       ]
     ],
     "grammar": [
@@ -161,57 +167,57 @@
       ],
       [
         "X-X",
-        "Plural: say the noun twice (tamika → tamika-tamika)."
+        "Plural: say the noun twice (ǃate → ǃate-ǃatega)."
       ],
       [
-        "-xi",
+        "-mu",
         "Marks the possessed noun (“the king's horse” = king horse-POSS). The possessor itself is bare."
       ],
       [
-        "-mi",
-        "Accusative: marks the object."
+        "-ga",
+        "Definite (“the”). A noun without it means “a” (or plain plural)."
       ],
       [
-        "-ta",
+        "-ki",
         "Past tense. Without it the verb is present or future."
       ],
       [
-        "-ba",
+        "-ǂa",
         "On the verb when the subject is plural."
       ],
       [
-        "ki",
-        "Negation: a separate word before the verb."
+        "ǀu-",
+        "Negation, on the verb."
       ],
       [
         "Suffix order",
-        "On nouns: stem-POSS-ACC."
-      ],
-      [
-        "Adjectives",
-        "Come after the noun. Noun endings go on the noun only; the adjective stays bare."
+        "On nouns: stem-POSS-DEF."
       ],
       [
         "Possessor",
         "Comes before the possessed noun."
+      ],
+      [
+        "Time and manner words",
+        "Go just before the verb."
       ]
     ],
-    "notes": "Checked against 1557 alternative analyses; the sentences rule out 1544, including: -ta appears when: past & plural subject."
+    "notes": "Checked against 1481 alternative analyses; the sentences rule out 1473, including: -mu appears when: possessed noun & negative."
   },
   "theme": "priests and soldiers guarding a temple",
   "shuffle": {
     "anchors": [
-      3
+      0
     ],
     "order": [
-      6,
-      7,
-      4,
-      3,
       0,
+      3,
       1,
+      6,
+      5,
+      7,
       2,
-      5
+      4
     ]
   }
 }

@@ -1,0 +1,155 @@
+{
+  "id": "mata",
+  "number": 1,
+  "date": "2026-11-23",
+  "difficulty": 4,
+  "language": {
+    "name": "Mata",
+    "real": false
+  },
+  "checks": 3,
+  "keys": [],
+  "hint": "Watch for “the” versus “a” in the English.",
+  "corpus": [
+    {
+      "lang": "Teltivise telelketime kuva.",
+      "en": "The dragons watch a cave.",
+      "gloss": [
+        "cave-ACC",
+        "dragon-PL-DEF",
+        "watch"
+      ]
+    },
+    {
+      "lang": "Teltivise telelketime kuvana.",
+      "en": "The dragons watched a cave.",
+      "gloss": [
+        "cave-ACC",
+        "dragon-PL-DEF",
+        "watch-PST"
+      ]
+    },
+    {
+      "lang": "Tamutusa telelketime kuva.",
+      "en": "The dragons watch miners.",
+      "gloss": [
+        "miner-PL-ACC",
+        "dragon-PL-DEF",
+        "watch"
+      ]
+    },
+    {
+      "lang": "Tamumasa matama la kuva.",
+      "en": "The knight does not watch the miner.",
+      "gloss": [
+        "miner-DEF-ACC",
+        "knight-DEF",
+        "NEG",
+        "watch"
+      ]
+    },
+    {
+      "lang": "Teltivitimese telelketi kuva.",
+      "en": "Dragons watch the caves.",
+      "gloss": [
+        "cave-PL-DEF-ACC",
+        "dragon-PL",
+        "watch"
+      ]
+    },
+    {
+      "lang": "Teltivitise telelketime la kuvana.",
+      "en": "The dragons did not watch caves.",
+      "gloss": [
+        "cave-PL-ACC",
+        "dragon-PL-DEF",
+        "NEG",
+        "watch-PST"
+      ]
+    },
+    {
+      "lang": "Tamutumasa matatuma la kuvana.",
+      "en": "The knights did not watch the miners.",
+      "gloss": [
+        "miner-PL-DEF-ACC",
+        "knight-PL-DEF",
+        "NEG",
+        "watch-PST"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Teltivise mata la kuvana.",
+      "accepted": [
+        "a knight did not watch a cave"
+      ],
+      "explanation": "O S V order. teltivi-se = cave-ACC; mata = knight; la = NEG; kuva-na = watch-PST."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "A dragon watches the miners.",
+      "accepted": [
+        "tamutumasa telelke kuva"
+      ],
+      "explanation": "O S V order. tamu-tu-ma-sa = miner-PL-DEF-ACC; telelke = dragon; kuva = watch."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "tamu",
+        "miner"
+      ],
+      [
+        "telelke",
+        "dragon"
+      ],
+      [
+        "teltivi",
+        "cave"
+      ],
+      [
+        "mata",
+        "knight"
+      ],
+      [
+        "kuva-",
+        "watch"
+      ]
+    ],
+    "grammar": [
+      [
+        "O S V",
+        "Word order: object, subject, verb. With one participant: subject, verb."
+      ],
+      [
+        "-tu / -ti",
+        "Plural."
+      ],
+      [
+        "-ma / -me",
+        "Definite (“the”). A noun without it means “a” (or plain plural)."
+      ],
+      [
+        "-sa / -se",
+        "Accusative: marks the object."
+      ],
+      [
+        "-na / -ne",
+        "Past tense. Without it the verb is present or future."
+      ],
+      [
+        "la",
+        "Negation: a separate word before the verb."
+      ],
+      [
+        "Suffix order",
+        "On nouns: stem-PL-DEF-ACC."
+      ]
+    ],
+    "notes": "Vowel harmony: a word's vowels are either all back (a, u) or all front (e, i), and suffix vowels follow the stem. Checked against 894 alternative analyses; the sentences rule out 877, including: la appears when: (negative or past)."
+  },
+  "theme": "knights and miners in a dragon's cave"
+}

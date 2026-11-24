@@ -4,159 +4,164 @@
   "date": "2026-12-06",
   "difficulty": 4,
   "language": {
-    "name": "Tumeke",
+    "name": "Yawe",
     "real": false
   },
   "checks": 3,
-  "keys": [
-    "ñ"
-  ],
+  "keys": [],
   "hint": "Watch for “the” versus “a” in the English.",
   "corpus": [
     {
-      "lang": "Gisipi-sipi ñupakunu kake.",
-      "en": "The shepherds snored at dawn.",
+      "lang": "Lehore heryoma.",
+      "en": "Giants stomp.",
       "gloss": [
-        "DEF-PL~shepherd",
-        "snore-PST-3PL",
-        "at.dawn"
+        "giant-PL",
+        "stomp-3PL"
       ]
     },
     {
-      "lang": "Gisipi-sipi lon ñupakunu.",
-      "en": "The shepherds did not snore.",
+      "lang": "Wenlire iryema rarweyalo.",
+      "en": "Hens guard a castle.",
       "gloss": [
-        "DEF-PL~shepherd",
-        "NEG",
-        "snore-PST-3PL"
+        "hen-PL",
+        "guard-3PL",
+        "castle-ACC"
       ]
     },
     {
-      "lang": "Gisipi kato lokeso kake.",
-      "en": "The shepherd wakes a sheepdog at dawn.",
+      "lang": "Lehore iryema rarweyalo.",
+      "en": "Giants guard a castle.",
       "gloss": [
-        "DEF-shepherd",
-        "wake",
-        "sheepdog-ACC",
-        "at.dawn"
+        "giant-PL",
+        "guard-3PL",
+        "castle-ACC"
       ]
     },
     {
-      "lang": "Giloke katoku gisipiso.",
-      "en": "The sheepdog woke the shepherd.",
+      "lang": "Leho unwami wenlirelo.",
+      "en": "A giant stole hens.",
       "gloss": [
-        "DEF-sheepdog",
-        "wake-PST",
-        "DEF-shepherd-ACC"
+        "giant",
+        "steal-PST",
+        "hen-PL-ACC"
       ]
     },
     {
-      "lang": "Gisipi lon sadi keko gidutiso.",
-      "en": "The shepherd does not steal the golden hen.",
+      "lang": "Wenli iryemira rarweyalo.",
+      "en": "A hen did not guard a castle.",
       "gloss": [
-        "DEF-shepherd",
-        "NEG",
-        "steal",
-        "golden",
-        "DEF-hen-ACC"
+        "hen",
+        "guard-PST-NEG",
+        "castle-ACC"
       ]
     },
     {
-      "lang": "Sipi-sipi lon katokunu keko lokeso.",
-      "en": "Shepherds did not wake a golden sheepdog.",
+      "lang": "Wenlire hayama lehorelo.",
+      "en": "Hens wake giants.",
       "gloss": [
-        "PL~shepherd",
-        "NEG",
-        "wake-PST-3PL",
-        "golden",
-        "sheepdog-ACC"
+        "hen-PL",
+        "wake-3PL",
+        "giant-PL-ACC"
       ]
     },
     {
-      "lang": "Tima sipi-sipi lon sadikunu gidutiso kake.",
-      "en": "Huge shepherds did not steal the hen at dawn.",
+      "lang": "Lehore iryemara wenlirelo.",
+      "en": "Giants do not guard hens.",
       "gloss": [
-        "huge",
-        "PL~shepherd",
-        "NEG",
-        "steal-PST-3PL",
-        "DEF-hen-ACC",
-        "at.dawn"
+        "giant-PL",
+        "guard-3PL-NEG",
+        "hen-PL-ACC"
       ]
     },
     {
-      "lang": "Keko giduti-duti lon katokunu gisipi-sipiso kake.",
-      "en": "The golden hens did not wake the shepherds at dawn.",
+      "lang": "Nowenlire hayamara leholo.",
+      "en": "The hens do not wake a giant.",
       "gloss": [
-        "golden",
-        "DEF-PL~hen",
-        "NEG",
-        "wake-PST-3PL",
-        "DEF-PL~shepherd-ACC",
-        "at.dawn"
+        "DEF-hen-PL",
+        "wake-3PL-NEG",
+        "giant-ACC"
+      ]
+    },
+    {
+      "lang": "Nowenlire larnere lenome hayamimara lehorelo.",
+      "en": "The golden hens did not wake giants quietly.",
+      "gloss": [
+        "DEF-hen-PL",
+        "golden-PL",
+        "quietly",
+        "wake-PST-3PL-NEG",
+        "giant-PL-ACC"
+      ]
+    },
+    {
+      "lang": "Nolehore lenome iryemimara nowenlirelo larnerelo.",
+      "en": "The giants did not guard the golden hens quietly.",
+      "gloss": [
+        "DEF-giant-PL",
+        "quietly",
+        "guard-PST-3PL-NEG",
+        "DEF-hen-PL-ACC",
+        "golden-PL-ACC"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Loke-loke katonu tima sipi-sipiso kake.",
+      "prompt": "Nolehore iryema wenlirelo larnerelo.",
       "accepted": [
-        "sheepdogs wake huge shepherds at dawn",
-        "at dawn sheepdogs wake huge shepherds",
-        "sheepdogs are waking huge shepherds at dawn",
-        "at dawn sheepdogs are waking huge shepherds",
-        "sheepdogs will wake huge shepherds at dawn",
-        "at dawn sheepdogs will wake huge shepherds"
+        "the giants guard golden hens",
+        "the giants are guarding golden hens",
+        "the giants will guard golden hens"
       ],
-      "explanation": "S V O order. loke-loke = PL~sheepdog; kato-nu = wake-3PL; tima = huge; sipi-sipi-so = PL~shepherd-ACC; kake = at.dawn."
+      "explanation": "S V O order. no-leho-re = DEF-giant-PL; irye-ma = guard-3PL; wenli-re-lo = hen-PL-ACC; larne-re-lo = golden-PL-ACC."
     }
   ],
   "toLang": [
     {
-      "prompt": "The hen does not wake a golden sheepdog.",
+      "prompt": "Golden hens did not guard a castle.",
       "accepted": [
-        "giduti lon kato keko lokeso"
+        "wenlire larnere iryemimara rarweyalo"
       ],
-      "explanation": "S V O order. gi-duti = DEF-hen; lon = NEG; kato = wake; keko = golden; loke-so = sheepdog-ACC."
+      "explanation": "S V O order. wenli-re = hen-PL; larne-re = golden-PL; irye-mi-ma-ra = guard-PST-3PL-NEG; rarweya-lo = castle-ACC."
     }
   ],
   "explain": {
     "words": [
       [
-        "sipi",
-        "shepherd"
+        "leho",
+        "giant"
       ],
       [
-        "duti",
+        "wenli",
         "hen"
       ],
       [
-        "loke",
-        "sheepdog"
+        "rarweya",
+        "castle"
       ],
       [
-        "kato-",
-        "wake"
+        "irye-",
+        "guard"
       ],
       [
-        "sadi-",
+        "unwa-",
         "steal"
       ],
       [
-        "ñupa-",
-        "snore"
+        "haya-",
+        "wake"
       ],
       [
-        "keko",
+        "heryo-",
+        "stomp"
+      ],
+      [
+        "larne",
         "golden"
       ],
       [
-        "tima",
-        "huge"
-      ],
-      [
-        "kake",
-        "at dawn"
+        "lenome",
+        "quietly"
       ]
     ],
     "grammar": [
@@ -165,54 +170,60 @@
         "Word order: subject, verb, object. With one participant: subject, verb."
       ],
       [
-        "X-X",
-        "Plural: say the noun twice (tasige → gitasige-tasige)."
+        "-re",
+        "Plural."
       ],
       [
-        "gi-",
+        "no-",
         "Definite (“the”). A noun without it means “a” (or plain plural)."
       ],
       [
-        "-so",
+        "-lo",
         "Accusative: marks the object."
       ],
       [
-        "-ku",
+        "-mi",
         "Past tense. Without it the verb is present or future."
       ],
       [
-        "-nu",
+        "-ma",
         "On the verb when the subject is plural."
       ],
       [
-        "lon",
-        "Negation: a separate word before the verb."
+        "-ra",
+        "Negation, on the verb."
+      ],
+      [
+        "Suffix order",
+        "On nouns: stem-PL-ACC."
       ],
       [
         "Adjectives",
-        "Come before the noun. Noun endings go on the noun only; the adjective stays bare."
+        "Come after the noun. The adjective copies the noun's plural and object endings."
       ],
       [
         "Time and manner words",
-        "Go at the end of the sentence."
+        "Go just before the verb."
       ]
     ],
-    "notes": "Checked against 1387 alternative analyses; the sentences rule out 1369, including: -ku appears when: (past or negative)."
+    "notes": "Checked against 1110 alternative analyses; the sentences rule out 1099, including: -re appears when: animate; -re appears when: (plural or past); -mi appears when: past & negative."
   },
   "theme": "giants above the clouds",
   "shuffle": {
     "anchors": [
-      2
+      5
     ],
     "order": [
-      7,
-      0,
       2,
-      1,
       3,
+      8,
+      0,
       6,
-      4,
-      5
+      5,
+      1,
+      9,
+      7,
+      4
     ]
   }
 }

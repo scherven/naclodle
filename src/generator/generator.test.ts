@@ -90,7 +90,7 @@ function ergativeGrammar(): Grammar {
     adjectives: null,
     possessorPosition: null,
     adverbPosition: null,
-    phonology: { consonants: ["t", "k", "m", "n", "s", "l"], vowels: ["a", "e", "i", "o", "u"], codas: [], codaProbability: 0, harmony: null },
+    phonology: { style: "plain", consonants: ["t", "k", "m", "n", "s", "l"], vowels: ["a", "e", "i", "o", "u"], codas: [], codaProbability: 0, harmony: null },
     lexicon: {
       nouns: [noun("woman", "selu", "p"), noun("dog", "napo", "b"), noun("hunter", "kirime", "p")],
       verbs: [verb("see", "lumi", true), verb("sleep", "nase", false)],

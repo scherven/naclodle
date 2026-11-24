@@ -34,7 +34,7 @@ import {
 } from "./grammar";
 import { englishSentence, type EnglishLexicon, type EnglishOptions } from "./english";
 import { relatedMeanings, type Meaning } from "./meaning";
-import { resolveHarmony } from "./phonology";
+import { resolveHarmony, VOWEL_LETTERS } from "./phonology";
 import { realise, sentenceText } from "./realise";
 
 export interface Competitor { family: string; description: string; grammar: Grammar }
@@ -176,7 +176,7 @@ export function singleEditCompetitors(grammar: Grammar): Competitor[] {
           candidate.morphemes[index].exponent = { kind: "consonantCopyPrefix", vowel };
         });
       for (const noun of grammar.lexicon.nouns) {
-        const fixed = /^[^aeiouäöü]*[aeiouäöü]/.exec(noun.form)?.[0] ?? "";
+        const fixed = new RegExp(`^[^${VOWEL_LETTERS}]*[${VOWEL_LETTERS}]`).exec(noun.form)?.[0] ?? "";
         add("reduplication", `plural is a fixed prefix ${fixed}-`, candidate => {
           candidate.morphemes[index].exponent = { kind: "prefix", form: fixed };
         });

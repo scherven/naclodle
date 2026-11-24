@@ -559,7 +559,9 @@ function startGame(puzzle: Puzzle) {
       byId("doneMessage").textContent = message ?? "";
       byId("doneMessage").hidden = message === null;
       byId("score").textContent = `${score(puzzle, state)} / ${maxScore(puzzle)}`;
-      byId("share").textContent = shareText(puzzle, state);
+      // the link opens this exact puzzle, so a friend who reads it tomorrow still gets the same one
+      const puzzleHash = /^#draft-/.test(location.hash) ? location.hash : "#" + puzzle.date;
+      byId("share").textContent = shareText(puzzle, state) + "\n" + location.origin + location.pathname + puzzleHash;
     }
   }
 

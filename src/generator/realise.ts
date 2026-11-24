@@ -3,7 +3,7 @@
 import { holds, type Grammar, type Morpheme, type Role, type WordContext } from "./grammar";
 import { isAnimate, isHuman } from "./lexicon";
 import type { Meaning, NounPhrase } from "./meaning";
-import { isFrontWord, resolveHarmony } from "./phonology";
+import { isFrontWord, resolveHarmony, VOWEL_LETTERS } from "./phonology";
 
 export interface AppliedMorpheme { morpheme: Morpheme; form: string }
 
@@ -36,7 +36,7 @@ function clauseContext(grammar: Grammar, meaning: Meaning): ClauseContext {
   };
 }
 
-const VOWEL = "aeiouäöü";
+const VOWEL = VOWEL_LETTERS;
 const firstConsonantVowel = (word: string) => new RegExp(`^[^${VOWEL}]*[${VOWEL}]`).exec(word)?.[0] ?? word.slice(0, 1);
 const firstConsonantVowelConsonant = (word: string) =>
   new RegExp(`^[^${VOWEL}]*[${VOWEL}][^${VOWEL}]?`).exec(word)?.[0] ?? word.slice(0, 1);

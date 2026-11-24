@@ -13,6 +13,10 @@
 import { Rng } from "./rng";
 import type { Headline, WordOrder } from "./grammar";
 import { THEMES } from "./themes";
+import { SOUND_STYLE_NAMES } from "./phonology";
+
+/** Share of days with a non-plain sound style. */
+const STYLE_CHANCE = 0.5;
 
 export interface DayPlan {
   date: string;
@@ -21,12 +25,14 @@ export interface DayPlan {
   wordOrder: WordOrder;
   /** Theme id; never the same as in the previous three days. */
   theme: string;
+  /** Sound style ("plain" or a SOUND_STYLES key); a non-plain style never repeats within six days. */
+  style: string;
   shuffle: boolean;
 }
 
 /** First planned date. The two puzzles before it were generated before the planner existed. */
 export const PLAN_EPOCH = "2026-12-01";
-const HISTORY_BEFORE_EPOCH: Pick<DayPlan, "headline" | "wordOrder" | "theme">[] = [
+const HISTORY_BEFORE_EPOCH: PlanHistory[] = [
   { headline: "definiteness", wordOrder: "OSV", theme: "captain-spirits" }, // 2026-11-29
   { headline: "harmony", wordOrder: "OSV", theme: "augur-envoy" }, // 2026-11-30
 ];
@@ -67,9 +73,13 @@ export interface PlanOverrides {
   shuffle?: boolean;
   /** Re-roll: a different seed gives a different headline, order and theme for the same date. */
   seed?: string;
+  /** Force a sound style ("plain" or a SOUND_STYLES key). */
+  style?: string;
 }
 
-function planOneDay(date: string, history: Pick<DayPlan, "headline" | "wordOrder" | "theme">[], overrides: PlanOverrides = {}): DayPlan {
+type PlanHistory = Pick<DayPlan, "headline" | "wordOrder" | "theme"> & { style?: string };
+
+function planOneDay(date: string, history: PlanHistory[], overrides: PlanOverrides = {}): DayPlan {
   const rng = new Rng(`naclodle-plan:${overrides.seed ?? date}`);
   const weekday = new Date(`${date}T00:00:00Z`).getUTCDay();
   const difficulty = overrides.difficulty ?? WEEKDAY_DIFFICULTY[weekday];
@@ -85,7 +95,12 @@ function planOneDay(date: string, history: Pick<DayPlan, "headline" | "wordOrder
   const wordOrder = rng.weighted(orderWeights.filter(([order]) => order !== repeatedOrder));
   const recentThemes = history.slice(-3).map(day => day.theme);
   const theme = rng.pick(THEMES.filter(candidate => !recentThemes.includes(candidate.id))).id;
-  return { date, difficulty, headline, wordOrder, theme, shuffle: overrides.shuffle ?? SHUFFLE_WEEKDAYS.has(weekday) };
+  // drawn last so adding styles didn't change any earlier day's headline, order or theme
+  const recentStyles = history.slice(-6).map(day => day.style);
+  const style = overrides.style ?? (rng.chance(STYLE_CHANCE)
+    ? rng.pick(SOUND_STYLE_NAMES.filter(name => !recentStyles.includes(name)))
+    : "plain");
+  return { date, difficulty, headline, wordOrder, theme, style, shuffle: overrides.shuffle ?? SHUFFLE_WEEKDAYS.has(weekday) };
 }
 
 const planCache = new Map<string, DayPlan>();
@@ -99,14 +114,15 @@ export function planForDate(date: string): DayPlan {
   for (let day = PLAN_EPOCH; day <= date; day = addDays(day, 1)) {
     plan = planCache.get(day) ?? planOneDay(day, history);
     planCache.set(day, plan);
-    history = [...history.slice(-2), plan];
+    history = [...history.slice(-5), plan];
   }
   return plan!;
 }
 
 /** The plan for a date with some choices overridden, keeping the variety rules against the days before it. */
 export function planWithOverrides(date: string, overrides: PlanOverrides): DayPlan {
-  if (overrides.difficulty === undefined && overrides.shuffle === undefined && overrides.seed === undefined) return planForDate(date);
-  const history = [3, 2, 1].map(daysBefore => planForDate(addDays(date, -daysBefore)));
+  if (overrides.difficulty === undefined && overrides.shuffle === undefined && overrides.seed === undefined && overrides.style === undefined)
+    return planForDate(date);
+  const history = [6, 5, 4, 3, 2, 1].map(daysBefore => planForDate(addDays(date, -daysBefore)));
   return planOneDay(date, history, overrides);
 }

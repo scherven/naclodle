@@ -113,7 +113,7 @@ export function sampleGrammar(rng: Rng, theme: Theme, plan: DayPlan): Grammar | 
   else if (chosen.has("case")) alignment = rng.chance(ERGATIVE_PROBABILITY[wordOrder]) ? "ergative" : "nominativeAccusative";
 
   const hasHarmony = chosen.has("harmony");
-  const phonology = samplePhonology(rng, hasHarmony);
+  const phonology = samplePhonology(rng, hasHarmony, plan.style);
   const affixes = affixFactory(rng, phonology);
   const suffixWeight = verbFinal(wordOrder) ? 5 : 3; // suffixing preference (WALS 26A), stronger when verb-final
   const affixExponent = (allowPrefix = true): Exponent =>

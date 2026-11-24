@@ -4,151 +4,218 @@
   "date": "2026-11-29",
   "difficulty": 4,
   "language": {
-    "name": "Mata",
+    "name": "Kulku",
     "real": false
   },
   "checks": 3,
   "keys": [],
-  "hint": "Watch for “the” versus “a” in the English.",
+  "hint": "Not every object gets the same ending. What do the marked ones have in common?",
   "corpus": [
     {
-      "lang": "Teltivise telelketime kuva.",
-      "en": "The spirits guard a stable.",
+      "lang": "Keme nato kita.",
+      "en": "The smith finds the grove.",
       "gloss": [
-        "stable-ACC",
-        "spirit-PL-DEF",
-        "guard"
+        "find",
+        "smith",
+        "grove"
       ]
     },
     {
-      "lang": "Teltivise telelketime kuvana.",
-      "en": "The spirits guarded a stable.",
+      "lang": "Rura tipu tekino.",
+      "en": "The owl pulls the axes.",
       "gloss": [
-        "stable-ACC",
-        "spirit-PL-DEF",
-        "guard-PST"
+        "pull",
+        "owl",
+        "axe-PL"
       ]
     },
     {
-      "lang": "Tamutusa telelketime kuva.",
-      "en": "The spirits guard sailors.",
+      "lang": "Rola nato tipuko.",
+      "en": "The smith chases the owl.",
       "gloss": [
-        "sailor-PL-ACC",
-        "spirit-PL-DEF",
-        "guard"
+        "chase",
+        "smith",
+        "owl-ACC"
       ]
     },
     {
-      "lang": "Tamumasa matama la kuva.",
-      "en": "The guardian does not guard the sailor.",
+      "lang": "Kemelu natono kita.",
+      "en": "The smiths find the grove.",
       "gloss": [
-        "sailor-DEF-ACC",
-        "guardian-DEF",
+        "find-3PL",
+        "smith-PL",
+        "grove"
+      ]
+    },
+    {
+      "lang": "Fi rola nato tipunoko kuti.",
+      "en": "The smith does not chase the owls quietly.",
+      "gloss": [
         "NEG",
-        "guard"
+        "chase",
+        "smith",
+        "owl-PL-ACC",
+        "quietly"
       ]
     },
     {
-      "lang": "Teltivitimese telelketi kuva.",
-      "en": "Spirits guard the stables.",
+      "lang": "Fi kemelu natono kitano tonti kuti.",
+      "en": "The smiths do not find the ancient groves quietly.",
       "gloss": [
-        "stable-PL-DEF-ACC",
-        "spirit-PL",
-        "guard"
-      ]
-    },
-    {
-      "lang": "Teltivitise telelketime la kuvana.",
-      "en": "The spirits did not guard stables.",
-      "gloss": [
-        "stable-PL-ACC",
-        "spirit-PL-DEF",
         "NEG",
-        "guard-PST"
+        "find-3PL",
+        "smith-PL",
+        "grove-PL",
+        "ancient",
+        "quietly"
       ]
     },
     {
-      "lang": "Tamutumasa matatuma la kuvana.",
-      "en": "The guardians did not guard the sailors.",
+      "lang": "Fi rolalu natono tipuko kuti.",
+      "en": "The smiths do not chase the owl quietly.",
       "gloss": [
-        "sailor-PL-DEF-ACC",
-        "guardian-PL-DEF",
         "NEG",
-        "guard-PST"
+        "chase-3PL",
+        "smith-PL",
+        "owl-ACC",
+        "quietly"
+      ]
+    },
+    {
+      "lang": "Fi rolalu tipuno tega natonoko kuti.",
+      "en": "The wild owls do not chase the smiths quietly.",
+      "gloss": [
+        "NEG",
+        "chase-3PL",
+        "owl-PL",
+        "wild",
+        "smith-PL-ACC",
+        "quietly"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Teltivise mata la kuvana.",
+      "prompt": "Rola tipu natonoko.",
       "accepted": [
-        "a guardian did not guard a stable"
+        "the owl chases the smiths",
+        "the owl chases smiths",
+        "the owl chased the smiths",
+        "the owl chased smiths",
+        "the owl is chasing the smiths",
+        "the owl is chasing smiths",
+        "an owl chases the smiths",
+        "an owl chases smiths",
+        "an owl chased the smiths",
+        "an owl chased smiths",
+        "an owl is chasing the smiths",
+        "an owl is chasing smiths"
       ],
-      "explanation": "O S V order. teltivi-se = stable-ACC; mata = guardian; la = NEG; kuva-na = guard-PST."
+      "explanation": "V S O order. rola = chase; tipu = owl; nato-no-ko = smith-PL-ACC."
     }
   ],
   "toLang": [
     {
-      "prompt": "A spirit guards the sailors.",
+      "prompt": "The owls find the groves quietly.",
       "accepted": [
-        "tamutumasa telelke kuva"
+        "kemelu tipuno kitano kuti"
       ],
-      "explanation": "O S V order. tamu-tu-ma-sa = sailor-PL-DEF-ACC; telelke = spirit; kuva = guard."
+      "explanation": "V S O order. keme-lu = find-3PL; tipu-no = owl-PL; kita-no = grove-PL; kuti = quietly. This object is not marked."
     }
   ],
   "explain": {
     "words": [
       [
-        "tamu",
-        "sailor"
+        "kita",
+        "grove"
       ],
       [
-        "telelke",
-        "spirit"
+        "tipu",
+        "owl"
       ],
       [
-        "teltivi",
-        "stable"
+        "nato",
+        "smith"
       ],
       [
-        "mata",
-        "guardian"
+        "teki",
+        "axe"
       ],
       [
-        "kuva-",
-        "guard"
+        "rola-",
+        "chase"
+      ],
+      [
+        "keme-",
+        "find"
+      ],
+      [
+        "rura-",
+        "pull"
+      ],
+      [
+        "tonti",
+        "ancient"
+      ],
+      [
+        "tega",
+        "wild"
+      ],
+      [
+        "kuti",
+        "quietly"
       ]
     ],
     "grammar": [
       [
-        "O S V",
-        "Word order: object, subject, verb. With one participant: subject, verb."
+        "V S O",
+        "Word order: verb, subject, object. With one participant: verb, subject."
       ],
       [
-        "-tu / -ti",
+        "-no",
         "Plural."
       ],
       [
-        "-ma / -me",
-        "Definite (“the”). A noun without it means “a” (or plain plural)."
+        "-ko",
+        "Marks the object, but only when it is alive (a person, animal or spirit). Other objects are bare."
       ],
       [
-        "-sa / -se",
-        "Accusative: marks the object."
+        "-lu",
+        "On the verb when the subject is plural."
       ],
       [
-        "-na / -ne",
-        "Past tense. Without it the verb is present or future."
-      ],
-      [
-        "la",
+        "fi",
         "Negation: a separate word before the verb."
       ],
       [
         "Suffix order",
-        "On nouns: stem-PL-DEF-ACC."
+        "On nouns: stem-PL-ACC."
+      ],
+      [
+        "Adjectives",
+        "Come after the noun. Noun endings go on the noun only; the adjective stays bare."
+      ],
+      [
+        "Time and manner words",
+        "Go at the end of the sentence."
       ]
     ],
-    "notes": "Vowel harmony: a word's vowels are either all back (a, u) or all front (e, i), and suffix vowels follow the stem. Checked against 894 alternative analyses; the sentences rule out 877, including: la appears when: (negative or past)."
+    "notes": "Checked against 607 alternative analyses; the sentences rule out 598, including: -lu appears when: plural subject & negative."
+  },
+  "theme": "a forbidden forest",
+  "shuffle": {
+    "anchors": [
+      2
+    ],
+    "order": [
+      1,
+      4,
+      2,
+      5,
+      6,
+      3,
+      7,
+      0
+    ]
   }
 }
