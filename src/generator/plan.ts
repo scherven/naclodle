@@ -61,10 +61,18 @@ export function addDays(date: string, offset: number): string {
   return day.toISOString().slice(0, 10);
 }
 
-function planOneDay(date: string, history: Pick<DayPlan, "headline" | "wordOrder" | "theme">[]): DayPlan {
-  const rng = new Rng(`naclodle-plan:${date}`);
+/** Ways to steer one day's plan away from the weekday defaults. */
+export interface PlanOverrides {
+  difficulty?: DayPlan["difficulty"];
+  shuffle?: boolean;
+  /** Re-roll: a different seed gives a different headline, order and theme for the same date. */
+  seed?: string;
+}
+
+function planOneDay(date: string, history: Pick<DayPlan, "headline" | "wordOrder" | "theme">[], overrides: PlanOverrides = {}): DayPlan {
+  const rng = new Rng(`naclodle-plan:${overrides.seed ?? date}`);
   const weekday = new Date(`${date}T00:00:00Z`).getUTCDay();
-  const difficulty = WEEKDAY_DIFFICULTY[weekday];
+  const difficulty = overrides.difficulty ?? WEEKDAY_DIFFICULTY[weekday];
   const recentHeadlines = history.slice(-2).map(day => day.headline);
   const headlineChoices = (Object.entries(HEADLINE_WEIGHTS) as [Headline, { minimum: number; weight: number }][])
     .filter(([headline, rule]) => rule.minimum <= difficulty && !recentHeadlines.includes(headline))
@@ -77,7 +85,7 @@ function planOneDay(date: string, history: Pick<DayPlan, "headline" | "wordOrder
   const wordOrder = rng.weighted(orderWeights.filter(([order]) => order !== repeatedOrder));
   const recentThemes = history.slice(-3).map(day => day.theme);
   const theme = rng.pick(THEMES.filter(candidate => !recentThemes.includes(candidate.id))).id;
-  return { date, difficulty, headline, wordOrder, theme, shuffle: SHUFFLE_WEEKDAYS.has(weekday) };
+  return { date, difficulty, headline, wordOrder, theme, shuffle: overrides.shuffle ?? SHUFFLE_WEEKDAYS.has(weekday) };
 }
 
 const planCache = new Map<string, DayPlan>();
@@ -94,4 +102,11 @@ export function planForDate(date: string): DayPlan {
     history = [...history.slice(-2), plan];
   }
   return plan!;
+}
+
+/** The plan for a date with some choices overridden, keeping the variety rules against the days before it. */
+export function planWithOverrides(date: string, overrides: PlanOverrides): DayPlan {
+  if (overrides.difficulty === undefined && overrides.shuffle === undefined && overrides.seed === undefined) return planForDate(date);
+  const history = [3, 2, 1].map(daysBefore => planForDate(addDays(date, -daysBefore)));
+  return planOneDay(date, history, overrides);
 }

@@ -1,0 +1,217 @@
+{
+  "id": "gen-2026-12-11",
+  "number": 19,
+  "date": "2026-12-11",
+  "difficulty": 4,
+  "language": {
+    "name": "Tanaka",
+    "real": false
+  },
+  "checks": 3,
+  "keys": [],
+  "hint": "In “the king's horse”, which of the two words carries the extra ending?",
+  "corpus": [
+    {
+      "lang": "Tusa tanami muka.",
+      "en": "The navigator blesses the king.",
+      "gloss": [
+        "navigator",
+        "king-ACC",
+        "bless"
+      ]
+    },
+    {
+      "lang": "Tunaka tamikami ki sipata.",
+      "en": "The soldier did not guard the temple.",
+      "gloss": [
+        "soldier",
+        "temple-ACC",
+        "NEG",
+        "guard-PST"
+      ]
+    },
+    {
+      "lang": "Tunaka tana-tanami bika ki hati.",
+      "en": "The soldier does not praise the young kings.",
+      "gloss": [
+        "soldier",
+        "PL~king-ACC",
+        "young",
+        "NEG",
+        "praise"
+      ]
+    },
+    {
+      "lang": "Tana-tana tusa-tusaxi tamikami sipaba.",
+      "en": "The kings' navigators guard the temple.",
+      "gloss": [
+        "PL~king",
+        "PL~navigator-POSS",
+        "temple-ACC",
+        "guard-3PL"
+      ]
+    },
+    {
+      "lang": "Tana-tana tunaka-tunaka tamikaximi sipaba.",
+      "en": "The kings guard the soldiers' temple.",
+      "gloss": [
+        "PL~king",
+        "PL~soldier",
+        "temple-POSS-ACC",
+        "guard-3PL"
+      ]
+    },
+    {
+      "lang": "Tana-tana tamika-tamikami tiya mukataba.",
+      "en": "The kings blessed the holy temples.",
+      "gloss": [
+        "PL~king",
+        "PL~temple-ACC",
+        "holy",
+        "bless-PST-3PL"
+      ]
+    },
+    {
+      "lang": "Tunaka-tunaka tusa tamika-tamikaximi ki sipataba.",
+      "en": "The soldiers did not guard the navigator's temples.",
+      "gloss": [
+        "PL~soldier",
+        "navigator",
+        "PL~temple-POSS-ACC",
+        "NEG",
+        "guard-PST-3PL"
+      ]
+    },
+    {
+      "lang": "Tana-tana tusa-tusaxi tunakami ki mukataba.",
+      "en": "The kings' navigators did not bless the soldier.",
+      "gloss": [
+        "PL~king",
+        "PL~navigator-POSS",
+        "soldier-ACC",
+        "NEG",
+        "bless-PST-3PL"
+      ]
+    }
+  ],
+  "toEnglish": [
+    {
+      "prompt": "Tusa-tusa tunaka tamikaximi ki mukataba.",
+      "accepted": [
+        "the navigators did not bless the soldier's temple",
+        "the navigators did not bless a soldier's temple",
+        "navigators did not bless the soldier's temple",
+        "navigators did not bless a soldier's temple"
+      ],
+      "explanation": "S O V order. tusa-tusa = PL~navigator; tunaka = soldier; tamika-xi-mi = temple-POSS-ACC; ki = NEG; muka-ta-ba = bless-PST-3PL."
+    }
+  ],
+  "toLang": [
+    {
+      "prompt": "The king did not guard the navigators' temple.",
+      "accepted": [
+        "tana tusa-tusa tamikaximi ki sipata"
+      ],
+      "explanation": "S O V order. tana = king; tusa-tusa = PL~navigator; tamika-xi-mi = temple-POSS-ACC; ki = NEG; sipa-ta = guard-PST."
+    }
+  ],
+  "explain": {
+    "words": [
+      [
+        "tamika",
+        "temple"
+      ],
+      [
+        "tunaka",
+        "soldier"
+      ],
+      [
+        "tana",
+        "king"
+      ],
+      [
+        "tusa",
+        "navigator"
+      ],
+      [
+        "muka-",
+        "bless"
+      ],
+      [
+        "hati-",
+        "praise"
+      ],
+      [
+        "sipa-",
+        "guard"
+      ],
+      [
+        "tiya",
+        "holy"
+      ],
+      [
+        "bika",
+        "young"
+      ]
+    ],
+    "grammar": [
+      [
+        "S O V",
+        "Word order: subject, object, verb. With one participant: subject, verb."
+      ],
+      [
+        "X-X",
+        "Plural: say the noun twice (tamika → tamika-tamika)."
+      ],
+      [
+        "-xi",
+        "Marks the possessed noun (“the king's horse” = king horse-POSS). The possessor itself is bare."
+      ],
+      [
+        "-mi",
+        "Accusative: marks the object."
+      ],
+      [
+        "-ta",
+        "Past tense. Without it the verb is present or future."
+      ],
+      [
+        "-ba",
+        "On the verb when the subject is plural."
+      ],
+      [
+        "ki",
+        "Negation: a separate word before the verb."
+      ],
+      [
+        "Suffix order",
+        "On nouns: stem-POSS-ACC."
+      ],
+      [
+        "Adjectives",
+        "Come after the noun. Noun endings go on the noun only; the adjective stays bare."
+      ],
+      [
+        "Possessor",
+        "Comes before the possessed noun."
+      ]
+    ],
+    "notes": "Checked against 1557 alternative analyses; the sentences rule out 1544, including: -ta appears when: past & plural subject."
+  },
+  "theme": "priests and soldiers guarding a temple",
+  "shuffle": {
+    "anchors": [
+      3
+    ],
+    "order": [
+      6,
+      7,
+      4,
+      3,
+      0,
+      1,
+      2,
+      5
+    ]
+  }
+}

@@ -31,16 +31,39 @@ npm run build      # static site in dist/
 | `src/main.ts`, `src/style.css` | The page. |
 | `src/copy.ts` | All interface copy; `null` means no copy in that spot. |
 | `src/generator/` | Artificial-language puzzle generator. |
-| `scripts/generate.ts` | CLI: `npm run generate -- --date 2026-11-24 --days 7 --schedule` |
+| `scripts/generate.ts` | Generator CLI (see below). |
+| `scripts/real-puzzle.ts`, `scripts/prompts/` | Has Claude Code write a real-language puzzle. |
 | `public/puzzles/` | Puzzle files plus `index.json`, the schedule. |
 
-## Adding a puzzle
+## Making puzzles
+
+Artificial languages (instant, free):
+
+```bash
+npm run generate -- next                    # the next 7 days after the last scheduled puzzle
+npm run generate -- next --days 14
+npm run generate -- date 2026-12-20         # a specific date (add --days N for a run)
+npm run generate -- draft --difficulty 5    # a one-off, not scheduled: play it at #draft-<seed>
+npm run generate -- list                    # what's scheduled, without spoilers
+```
+
+`--difficulty 1-5` overrides the weekday difficulty (Mon 1 … Sat 5, Sun 4), `--shuffle` / `--no-shuffle` overrides shuffled Saturdays, `--force` replaces existing puzzles. Runs are resumable and Ctrl-C finishes the current puzzle before stopping. Drafts live in `public/puzzles/drafts/` (gitignored).
+
+Real languages (uses your Claude account through Claude Code's headless mode; takes a few minutes):
+
+```bash
+npm run real -- Basque --difficulty 4 --theme "shepherds and witches in the Pyrenees"
+```
+
+Claude writes and checks the puzzle against dictionaries without showing you its contents; the script then validates it and schedules it on the day after the last scheduled puzzle (or `--date`). The instructions it follows are in `scripts/prompts/real-language-puzzle.md`.
+
+## Adding a puzzle by hand
 
 Write a JSON file matching `Puzzle` in `src/puzzle.ts` into `public/puzzles/`, add `{ "date", "file" }` to `public/puzzles/index.json`, and run `npm test`. The tests check every listed file is valid and that each accepted answer grades as correct.
 
 Shuffling is set per day in the schedule: add `"shuffle": true` to an entry. That puzzle file must carry a `shuffle` block (anchors and a starting order whose correct pairing is unique); files can carry one without being shuffled.
 
-The site shows the puzzle for today's date, or the latest one before it.
+The site shows the puzzle for today's date (the player's local date), or the latest one before it. Nothing needs redeploying day to day: deploy a batch of scheduled puzzles and each day picks itself.
 
 ## Deploying
 

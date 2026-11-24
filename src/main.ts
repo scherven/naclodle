@@ -20,15 +20,28 @@ function todayIso(): string {
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
 }
 
+async function fetchPuzzle(path: string): Promise<Puzzle> {
+  const response = await fetch(path);
+  if (!response.ok) throw new Error(`Couldn't load ${path}.`);
+  return response.json();
+}
+
 async function loadPuzzle(): Promise<Puzzle> {
+  // #draft-<seed>: a one-off made with `npm run generate -- draft` (local only, never scheduled)
+  const draft = location.hash.match(/^#(draft-[\w-]+)$/);
+  if (draft) return checked(await fetchPuzzle(`puzzles/drafts/${draft[1]}.json`));
   const index: PuzzleIndex = await (await fetch("puzzles/index.json")).json();
   const requestedDate = /^#\d{4}-\d{2}-\d{2}$/.test(location.hash) ? location.hash.slice(1) : todayIso();
   const byDate = index.puzzles.slice().sort((first, second) => first.date.localeCompare(second.date));
   // the puzzle for that date, or the latest one before it
   const entry = [...byDate].reverse().find(candidate => candidate.date <= requestedDate) ?? byDate[0];
   if (!entry) throw new Error("No puzzles scheduled.");
-  const puzzle: Puzzle = await (await fetch("puzzles/" + entry.file)).json();
+  const puzzle = await fetchPuzzle("puzzles/" + entry.file);
   if (!entry.shuffle) delete puzzle.shuffle; // shuffling is decided by the schedule, not the file
+  return checked(puzzle);
+}
+
+function checked(puzzle: Puzzle): Puzzle {
   const problems = validatePuzzle(puzzle);
   if (problems.length) throw new Error("Puzzle file is invalid: " + problems.join("; "));
   return puzzle;

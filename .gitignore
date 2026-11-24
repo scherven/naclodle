@@ -4,6 +4,7 @@ research/
 
 node_modules/
 dist/
+public/puzzles/drafts/
 coverage/
 .DS_Store
 *.log

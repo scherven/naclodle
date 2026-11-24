@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "generate": "tsx scripts/generate.ts"
+    "generate": "tsx scripts/generate.ts",
+    "real": "tsx scripts/real-puzzle.ts"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",

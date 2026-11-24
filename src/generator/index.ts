@@ -6,7 +6,7 @@ import { checkShufflePairing, checkSolvability, type CheckResult } from "./check
 import type { Grammar } from "./grammar";
 import { looksEnglish, makeLanguageName } from "./lexicon";
 import type { Meaning } from "./meaning";
-import { planForDate, type DayPlan } from "./plan";
+import { planForDate, planWithOverrides, type PlanOverrides, type DayPlan } from "./plan";
 import { realise } from "./realise";
 import { Rng } from "./rng";
 import { sampleGrammar } from "./sample";
@@ -69,11 +69,19 @@ function shuffledOrder(rng: Rng, rowCount: number, anchors: number[]): number[] 
   }
 }
 
-export function generatePuzzle(date: string, maxAttempts = 1500): { puzzle: Puzzle; report: GenerationReport } {
-  const theme = themeForDate(date);
-  const plan = planForDate(date);
+export interface GenerateOptions extends PlanOverrides { maxAttempts?: number }
+
+/**
+ * Build the puzzle for `date`. With no options this is the scheduled puzzle for that date (deterministic).
+ * `difficulty` / `shuffle` override the day plan; `seed` re-rolls everything for the same date.
+ */
+export function generatePuzzle(date: string, options: GenerateOptions = {}): { puzzle: Puzzle; report: GenerationReport } {
+  const { maxAttempts = 1500, ...overrides } = options;
+  const plan = planWithOverrides(date, overrides);
+  const theme = THEMES.find(candidate => candidate.id === plan.theme)!;
+  const seedKey = overrides.seed ?? date;
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    const rng = new Rng(`naclodle-v${GENERATOR_VERSION}:${date}:${attempt}`);
+    const rng = new Rng(`naclodle-v${GENERATOR_VERSION}:${seedKey}:${attempt}`);
     const grammar = sampleGrammar(rng, theme, plan);
     if (!grammar) continue;
     const english = englishLexiconOf(grammar);

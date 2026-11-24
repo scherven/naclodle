@@ -15,7 +15,8 @@
   --pen:#93abff; --mark:#5a4d12; --ok:#5fc98f; --near:#e0b44f; --bad:#ff8a7f; color-scheme:dark}
 
 *{box-sizing:border-box}
-body{background:var(--paper);color:var(--ink);font:15px/1.55 var(--f-ui);
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 var(--f-ui);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .sheet{max-width:680px;margin:0 auto;padding-block:40px 120px;display:flex;flex-direction:column;gap:36px}
 
