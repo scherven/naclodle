@@ -3,7 +3,7 @@
 import type { Rng } from "./rng";
 import { allowsAgent, allowsPatient, type Adverb, type Theme, type ThemeAdjective, type ThemeNoun, type ThemeVerb } from "./themes";
 import { ENGLISH_WORDS, REAL_NAMES } from "./blocklist";
-import { editDistance, makeStem, resolveHarmony, VOWEL_LETTERS, type Phonology } from "./phonology";
+import { distinctiveSegments, editDistance, makeStem, resolveHarmony, VOWEL_LETTERS, type Phonology } from "./phonology";
 
 export interface LexiconNoun extends ThemeNoun { form: string }
 export interface LexiconVerb extends ThemeVerb { form: string }
@@ -137,12 +137,17 @@ export function affixVariants(phonology: Phonology, affix: string): string[] {
   return [...new Set([resolveHarmony(phonology, affix, false), resolveHarmony(phonology, affix, true)])];
 }
 
-/** A language name in the language's own sound system. */
+/** A language name in the language's own sound system, showing off at least one of its distinctive sounds. */
 export function makeLanguageName(rng: Rng, phonology: Phonology): string {
-  for (let attempt = 0; attempt < 100; attempt++) {
+  const distinctive = distinctiveSegments(phonology);
+  let fallback: string | null = null;
+  for (let attempt = 0; attempt < 300; attempt++) {
     const name = makeStem(rng, phonology, rng.int(2, 3), phonology.harmony ? rng.chance(0.5) : null);
+    if (looksEnglish(name)) continue;
     // capitalise the first letter that has a capital (ʻ and ǃ don't)
-    if (!looksEnglish(name)) return name.replace(/\p{Ll}/u, letter => letter.toUpperCase());
+    const capitalised = name.replace(/\p{Ll}/u, letter => letter.toUpperCase());
+    if (!distinctive.length || distinctive.some(segment => name.includes(segment))) return capitalised;
+    fallback ??= capitalised;
   }
-  return "Tanu";
+  return fallback ?? "Tanu";
 }

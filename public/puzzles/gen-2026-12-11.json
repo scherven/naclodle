@@ -4,160 +4,177 @@
   "date": "2026-12-11",
   "difficulty": 4,
   "language": {
-    "name": "Kuǀone",
+    "name": "Ɬikʼuxa",
     "real": false
   },
   "checks": 3,
   "keys": [
-    "ǀ",
-    "ǂ",
-    "ǃ"
+    "ɬ",
+    "ʷ",
+    "ʼ"
   ],
   "hint": "In “the king's horse”, which of the two words carries the extra ending?",
   "corpus": [
     {
-      "lang": "Kuǀeǂega ǀiǃeki.",
-      "en": "The king knelt.",
+      "lang": "Ɬixʷakisu sakʼaxʷi ti.",
+      "en": "The soldier did not weep.",
       "gloss": [
-        "king-DEF",
-        "kneel-PST"
+        "DEF-soldier",
+        "weep-PST",
+        "NEG"
       ]
     },
     {
-      "lang": "Kuǀeǂe-kuǀeǂega ǃoǂahe-ǃoǂahemuga hoǃaǃe ǀiǃeǂa.",
-      "en": "The kings' navigators kneel at night.",
+      "lang": "Ɬixʷakisu qatuta kaxaxʷi.",
+      "en": "The soldier polished an altar.",
       "gloss": [
-        "PL~king-DEF",
-        "PL~navigator-POSS-DEF",
+        "DEF-soldier",
+        "altar",
+        "polish-PST"
+      ]
+    },
+    {
+      "lang": "Xʷakisusa qukaɬusa kaxakʼi ti.",
+      "en": "Soldiers do not polish shields.",
+      "gloss": [
+        "soldier-PL",
+        "shield-PL",
+        "polish-3PL",
+        "NEG"
+      ]
+    },
+    {
+      "lang": "Ɬiqiti ɬiqatutasa siqʼuta kaxaxʷi.",
+      "en": "The priest polished the altars again.",
+      "gloss": [
+        "DEF-priest",
+        "DEF-altar-PL",
+        "again",
+        "polish-PST"
+      ]
+    },
+    {
+      "lang": "Xʷakisusa qiti qaqʼuxʷikʼi ti.",
+      "en": "Soldiers did not praise a priest.",
+      "gloss": [
+        "soldier-PL",
+        "priest",
+        "praise-PST-3PL",
+        "NEG"
+      ]
+    },
+    {
+      "lang": "Ɬiqiti ɬixʷakisu ɬiqatutasaxi tuxʷaqu kaxa ti.",
+      "en": "The priest does not polish the soldier's altars at night.",
+      "gloss": [
+        "DEF-priest",
+        "DEF-soldier",
+        "DEF-altar-PL-POSS",
         "at.night",
-        "kneel-3PL"
+        "polish",
+        "NEG"
       ]
     },
     {
-      "lang": "Kuǀeǂe-kuǀeǂe ǃaka nokukiǂa.",
-      "en": "Kings carried a shield.",
+      "lang": "Ɬiqitisa ɬitatiqisa ɬixʷakisuxi xikʼaxʷikʼi.",
+      "en": "The priests blessed the kings' soldier.",
       "gloss": [
-        "PL~king",
-        "shield",
-        "carry-PST-3PL"
+        "DEF-priest-PL",
+        "DEF-king-PL",
+        "DEF-soldier-POSS",
+        "bless-PST-3PL"
       ]
     },
     {
-      "lang": "ǃoǂahe kuǀeǂe-kuǀeǂega tegeki.",
-      "en": "A navigator guarded the kings.",
+      "lang": "Ɬixʷakisusa ɬiqitisa ɬiqatutasaxi tuxʷaqu kaxaxʷikʼi ti.",
+      "en": "The soldiers did not polish the priests' altars at night.",
       "gloss": [
-        "navigator",
-        "PL~king-DEF",
-        "guard-PST"
-      ]
-    },
-    {
-      "lang": "ǃatega teǀa-teǀaga ǀunokuki.",
-      "en": "The priest did not carry the crowns.",
-      "gloss": [
-        "priest-DEF",
-        "PL~crown-DEF",
-        "NEG-carry-PST"
-      ]
-    },
-    {
-      "lang": "ǃoǂahe-ǃoǂahe kuǀeǂe-kuǀeǂega ǃakamuga hoǃaǃe ǀunokuǂa.",
-      "en": "Navigators do not carry the kings' shield at night.",
-      "gloss": [
-        "PL~navigator",
-        "PL~king-DEF",
-        "shield-POSS-DEF",
+        "DEF-soldier-PL",
+        "DEF-priest-PL",
+        "DEF-altar-PL-POSS",
         "at.night",
-        "NEG-carry-3PL"
+        "polish-PST-3PL",
+        "NEG"
       ]
     },
     {
-      "lang": "ǃate-ǃatega ǃoǂahega ǃaka-ǃakamuga hoǃaǃe ǀunokukiǂa.",
-      "en": "The priests did not carry the navigator's shields at night.",
+      "lang": "Ɬiqitisa ɬixʷakisusa ɬiqukaɬusaxi siqʼuta xikʼaxʷikʼi ti.",
+      "en": "The priests did not bless the soldiers' shields again.",
       "gloss": [
-        "PL~priest-DEF",
-        "navigator-DEF",
-        "PL~shield-POSS-DEF",
-        "at.night",
-        "NEG-carry-PST-3PL"
-      ]
-    },
-    {
-      "lang": "Kuǀeǂe-kuǀeǂega ǃate-ǃatega teǀamuga hoǃaǃe ǀuǃiǀekiǂa.",
-      "en": "The kings did not polish the priests' crown at night.",
-      "gloss": [
-        "PL~king-DEF",
-        "PL~priest-DEF",
-        "crown-POSS-DEF",
-        "at.night",
-        "NEG-polish-PST-3PL"
+        "DEF-priest-PL",
+        "DEF-soldier-PL",
+        "DEF-shield-PL-POSS",
+        "again",
+        "bless-PST-3PL",
+        "NEG"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Kuǀeǂega ǃoǂahe-ǃoǂahemuga ǃaka-ǃaka hoǃaǃe nokuǂa.",
+      "prompt": "Qitisa ɬixʷakisu ɬiqukaɬuxi siqʼuta kaxakʼi ti.",
       "accepted": [
-        "the king's navigators carry shields at night",
-        "at night the king's navigators carry shields",
-        "the king's navigators are carrying shields at night",
-        "at night the king's navigators are carrying shields",
-        "the king's navigators will carry shields at night",
-        "at night the king's navigators will carry shields"
+        "priests do not polish the soldier's shield again",
+        "priests are not polishing the soldier's shield again",
+        "priests will not polish the soldier's shield again"
       ],
-      "explanation": "S O V order. kuǀeǂe-ga = king-DEF; ǃoǂahe-ǃoǂahe-mu-ga = PL~navigator-POSS-DEF; ǃaka-ǃaka = PL~shield; hoǃaǃe = at.night; noku-ǂa = carry-3PL."
+      "explanation": "S O V order. qiti-sa = priest-PL; ɬi-xʷakisu = DEF-soldier; ɬi-qukaɬu-xi = DEF-shield-POSS; siqʼuta = again; kaxa-kʼi = polish-3PL; ti = NEG."
     }
   ],
   "toLang": [
     {
-      "prompt": "Kings carried the priests' crowns at night.",
+      "prompt": "The soldiers polish the priests' altar at night.",
       "accepted": [
-        "kuǀeǂe-kuǀeǂe ǃate-ǃatega teǀa-teǀamuga hoǃaǃe nokukiǂa"
+        "ɬixʷakisusa ɬiqitisa ɬiqatutaxi tuxʷaqu kaxakʼi"
       ],
-      "explanation": "S O V order. kuǀeǂe-kuǀeǂe = PL~king; ǃate-ǃate-ga = PL~priest-DEF; teǀa-teǀa-mu-ga = PL~crown-POSS-DEF; hoǃaǃe = at.night; noku-ki-ǂa = carry-PST-3PL."
+      "explanation": "S O V order. ɬi-xʷakisu-sa = DEF-soldier-PL; ɬi-qiti-sa = DEF-priest-PL; ɬi-qatuta-xi = DEF-altar-POSS; tuxʷaqu = at.night; kaxa-kʼi = polish-3PL."
     }
   ],
   "explain": {
     "words": [
       [
-        "ǃate",
-        "priest"
-      ],
-      [
-        "kuǀeǂe",
+        "tatiqi",
         "king"
       ],
       [
-        "ǃaka",
+        "xʷakisu",
+        "soldier"
+      ],
+      [
+        "qukaɬu",
         "shield"
       ],
       [
-        "ǃoǂahe",
-        "navigator"
+        "qatuta",
+        "altar"
       ],
       [
-        "teǀa",
-        "crown"
+        "qiti",
+        "priest"
       ],
       [
-        "ǃiǀe-",
+        "xikʼa-",
+        "bless"
+      ],
+      [
+        "kaxa-",
         "polish"
       ],
       [
-        "tege-",
-        "guard"
+        "qaqʼu-",
+        "praise"
       ],
       [
-        "noku-",
-        "carry"
+        "sakʼa-",
+        "weep"
       ],
       [
-        "ǀiǃe-",
-        "kneel"
-      ],
-      [
-        "hoǃaǃe",
+        "tuxʷaqu",
         "at night"
+      ],
+      [
+        "siqʼuta",
+        "again"
       ]
     ],
     "grammar": [
@@ -166,32 +183,32 @@
         "Word order: subject, object, verb. With one participant: subject, verb."
       ],
       [
-        "X-X",
-        "Plural: say the noun twice (ǃate → ǃate-ǃatega)."
+        "-sa",
+        "Plural."
       ],
       [
-        "-mu",
+        "-xi",
         "Marks the possessed noun (“the king's horse” = king horse-POSS). The possessor itself is bare."
       ],
       [
-        "-ga",
+        "ɬi-",
         "Definite (“the”). A noun without it means “a” (or plain plural)."
       ],
       [
-        "-ki",
+        "-xʷi",
         "Past tense. Without it the verb is present or future."
       ],
       [
-        "-ǂa",
+        "-kʼi",
         "On the verb when the subject is plural."
       ],
       [
-        "ǀu-",
-        "Negation, on the verb."
+        "ti",
+        "Negation: a separate word after the verb."
       ],
       [
         "Suffix order",
-        "On nouns: stem-POSS-DEF."
+        "On nouns: stem-PL-POSS."
       ],
       [
         "Possessor",
@@ -202,22 +219,23 @@
         "Go just before the verb."
       ]
     ],
-    "notes": "Checked against 1481 alternative analyses; the sentences rule out 1473, including: -mu appears when: possessed noun & negative."
+    "notes": "Checked against 1130 alternative analyses; the sentences rule out 1121, including: -sa appears when: (plural or possessed noun); -xʷi appears when: (past or plural subject)."
   },
   "theme": "priests and soldiers guarding a temple",
   "shuffle": {
     "anchors": [
-      0
+      7
     ],
     "order": [
-      0,
-      3,
-      1,
       6,
       5,
-      7,
+      0,
+      1,
+      8,
+      4,
       2,
-      4
+      7,
+      3
     ]
   }
 }

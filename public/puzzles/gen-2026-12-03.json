@@ -4,130 +4,118 @@
   "date": "2026-12-03",
   "difficulty": 3,
   "language": {
-    "name": "Ṇābhotho",
+    "name": "Elathe",
     "real": false
   },
   "checks": 3,
   "keys": [
-    "ū",
-    "ī",
-    "ṣ",
-    "ṭ",
-    "ṇ",
-    "ā"
+    "ï",
+    "ë"
   ],
   "hint": "Watch for “the” versus “a” in the English.",
   "corpus": [
     {
-      "lang": "Thikota dhūtīṣe.",
-      "en": "Princes run.",
+      "lang": "Thathserofï thesena.",
+      "en": "The hunters hide.",
       "gloss": [
-        "PL-prince",
-        "run-3PL"
+        "hunter-PL-DEF",
+        "hide-3PL"
       ]
     },
     {
-      "lang": "Kotakha kathiṭo dha ṭaṇi.",
-      "en": "The prince does not shoot a stag.",
+      "lang": "Thathsefï thomë mithsa.",
+      "en": "The hunter chases a boar.",
       "gloss": [
-        "prince-DEF",
-        "stag",
-        "NEG",
-        "shoot"
+        "hunter-DEF",
+        "boar",
+        "chase"
       ]
     },
     {
-      "lang": "Kathiṭokha thubhakhatā thiṣudhaṇa dhīdha.",
-      "en": "The hunter's stag tracks boars.",
+      "lang": "Rasero thomëro fïninatho.",
+      "en": "Stags do not track boars.",
       "gloss": [
-        "stag-DEF",
+        "stag-PL",
+        "boar-PL",
+        "track-3PL-NEG"
+      ]
+    },
+    {
+      "lang": "Rasero thathsefïla thomëfï mithsanatho.",
+      "en": "Stags do not chase the hunter's boar.",
+      "gloss": [
+        "stag-PL",
         "hunter-DEF-GEN",
-        "PL-boar",
-        "track"
+        "boar-DEF",
+        "chase-3PL-NEG"
       ]
     },
     {
-      "lang": "Thikota thikathiṭo dha dhīdhaṣe.",
-      "en": "Princes do not track stags.",
+      "lang": "Thomëro thathsefïla raserofï fïninatho.",
+      "en": "Boars do not track the hunter's stags.",
       "gloss": [
-        "PL-prince",
-        "PL-stag",
-        "NEG",
-        "track-3PL"
+        "boar-PL",
+        "hunter-DEF-GEN",
+        "stag-PL-DEF",
+        "track-3PL-NEG"
       ]
     },
     {
-      "lang": "Thithubhakha kathiṭokha kotakhatā dha ṭaṇiṣe.",
-      "en": "The hunters do not shoot the prince's stag.",
+      "lang": "Raserofï thathserofïla thomërofï fïnina.",
+      "en": "The stags track the hunters' boars.",
       "gloss": [
-        "PL-hunter-DEF",
-        "stag-DEF",
-        "prince-DEF-GEN",
-        "NEG",
-        "shoot-3PL"
-      ]
-    },
-    {
-      "lang": "Thikota kathiṭokha thithubhakhatā dha dhīdhaṣe.",
-      "en": "Princes do not track the hunters' stag.",
-      "gloss": [
-        "PL-prince",
-        "stag-DEF",
-        "PL-hunter-DEF-GEN",
-        "NEG",
+        "stag-PL-DEF",
+        "hunter-PL-DEF-GEN",
+        "boar-PL-DEF",
         "track-3PL"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Thikota kathiṭo dha ṭaṇiṣe.",
+      "prompt": "Thathse thomëfï fïnitho.",
       "accepted": [
-        "princes do not shoot a stag",
-        "princes did not shoot a stag",
-        "princes are not shooting a stag"
+        "a hunter does not track the boar",
+        "a hunter did not track the boar",
+        "a hunter is not tracking the boar"
       ],
-      "explanation": "S O V order. thi-kota = PL-prince; kathiṭo = stag; dha = NEG; ṭaṇi-ṣe = shoot-3PL."
+      "explanation": "S O V order. thathse = hunter; thomë-fï = boar-DEF; fïni-tho = track-NEG."
     }
   ],
   "toLang": [
     {
-      "prompt": "A hunter tracks the prince's stag.",
+      "prompt": "The hunters' boars do not chase stags.",
       "accepted": [
-        "thubha kathiṭokha kotakhatā dhīdha"
+        "thathserofïla thomërofï rasero mithsanatho"
       ],
-      "explanation": "S O V order. thubha = hunter; kathiṭo-kha = stag-DEF; kota-kha-tā = prince-DEF-GEN; dhīdha = track."
+      "explanation": "S O V order. thathse-ro-fï-la = hunter-PL-DEF-GEN; thomë-ro-fï = boar-PL-DEF; rase-ro = stag-PL; mithsa-na-tho = chase-3PL-NEG."
     }
   ],
   "explain": {
     "words": [
       [
-        "kota",
-        "prince"
-      ],
-      [
-        "thubha",
+        "thathse",
         "hunter"
       ],
       [
-        "ṣudhaṇa",
+        "thomë",
         "boar"
       ],
       [
-        "kathiṭo",
+        "rase",
         "stag"
       ],
       [
-        "ṭaṇi-",
-        "shoot"
+        "mithsa-",
+        "chase"
       ],
       [
-        "dhīdha-",
+        "fïni-",
         "track"
       ],
       [
-        "dhūtī-",
-        "run"
+        "these-",
+        "hide"
       ]
     ],
     "grammar": [
@@ -136,48 +124,48 @@
         "Word order: subject, object, verb. With one participant: subject, verb."
       ],
       [
-        "thi-",
+        "-ro",
         "Plural."
       ],
       [
-        "-kha",
+        "-fï",
         "Definite (“the”). A noun without it means “a” (or plain plural)."
       ],
       [
-        "-tā",
+        "-la",
         "Marks the possessor (“the king's”)."
       ],
       [
-        "-ṣe",
+        "-na",
         "On the verb when the subject is plural."
       ],
       [
-        "dha",
-        "Negation: a separate word before the verb."
+        "-tho",
+        "Negation, on the verb."
       ],
       [
         "Suffix order",
-        "On nouns: stem-DEF-GEN."
+        "On nouns: stem-PL-DEF-GEN."
       ],
       [
         "Possessor",
-        "Comes after the possessed noun."
+        "Comes before the possessed noun."
       ]
     ],
-    "notes": "Checked against 704 alternative analyses; the sentences rule out 690, including: thi- appears when: definite; thi- appears when: plural & definite."
+    "notes": "Checked against 848 alternative analyses; the sentences rule out 828, including: -ro appears when: definite; -ro appears when: plural & definite."
   },
   "theme": "a royal hunt",
   "shuffle": {
     "anchors": [
-      1
+      5
     ],
     "order": [
-      2,
-      1,
-      5,
       4,
+      2,
       3,
-      0
+      1,
+      0,
+      5
     ]
   }
 }

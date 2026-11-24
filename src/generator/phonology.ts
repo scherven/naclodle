@@ -40,7 +40,7 @@ const HARMONY_SYSTEMS: [string[], string[]][] = [
 ];
 
 /** Every vowel letter any style uses. Used wherever code needs to tell vowels from consonants. */
-export const VOWEL_LETTERS = "aeiouäöüæøåáàéèíìóòúùāēīōūãẽõũëï";
+export const VOWEL_LETTERS = "aeiouäöüæøåáàéèíìóòúùāēīōūãẽõũëïıăâơưôêạảốőű";
 
 /**
  * Optional sound styles, for fun: some days the language sounds alien. Consonant lists are ordered
@@ -72,6 +72,22 @@ export const SOUND_STYLES: Record<string, SoundStyle> = {
   highland: { consonants: ["tl", "t", "tz", "x", "k", "ch", "m", "n", "w", "y", "l", "p", "s"], vowels: ["a", "e", "i", "o"], codas: ["n", "l", "x"], codaProbability: 0.2 },
   // airy and elvish: soft consonants, vowels with diaereses
   airy: { consonants: ["l", "th", "s", "n", "r", "v", "f", "m", "d", "w"], vowels: ["a", "e", "i", "ë", "ï", "o"], codas: ["l", "n", "r", "th"], codaProbability: 0.3 },
+  // Slavic-like: háčeks everywhere
+  carved: { consonants: ["č", "ž", "k", "š", "dž", "v", "r", "t", "z", "l", "n", "m", "s", "p"], vowels: ["a", "e", "i", "o", "u"], codas: ["r", "v", "š", "n"], codaProbability: 0.3 },
+  // Old English/Icelandic-like breathed sonorants: hl, hr, hn, hw
+  breath: { consonants: ["hl", "r", "hr", "w", "hn", "l", "hw", "n", "f", "m", "g", "d"], vowels: ["a", "e", "i", "o", "u", "ā", "ē"], codas: ["l", "r", "n", "f"], codaProbability: 0.25 },
+  // something from the stars: z, x, q and breaks (ʼ) between vowels
+  void: { consonants: ["z", "x", "v", "q", "k", "r", "th", "n", "s"], vowels: ["a", "o", "u", "ʼa", "ʼo", "e"], codas: ["x", "z", "r"], codaProbability: 0.25 },
+  // Turkic steppe: dotless ı, ğ, ş, ç
+  steppe: { consonants: ["ğ", "k", "q", "ş", "t", "ç", "n", "m", "r", "l", "y", "b", "s"], vowels: ["a", "ı", "o", "u", "e", "ö", "ü"], codas: ["r", "n", "l", "ş"], codaProbability: 0.3 },
+  // Vietnamese-like: stacked diacritics, ng/nh/tr/đ
+  delta: { consonants: ["ng", "nh", "t", "th", "đ", "tr", "kh", "m", "n", "l", "b", "ph"], vowels: ["a", "ă", "â", "ơ", "ư", "ô", "ê", "ạ", "ả", "ố", "i", "o"], codas: ["n", "m"], codaProbability: 0.2 },
+  // Irish-like lenited consonants: bh, mh, dh, gh, ch, accented vowels
+  mists: { consonants: ["bh", "t", "mh", "c", "dh", "l", "gh", "r", "ch", "s", "n", "f"], vowels: ["a", "á", "e", "é", "i", "í", "o", "ó", "u", "ú"], codas: ["n", "r", "l"], codaProbability: 0.25 },
+  // Hungarian-like: sz, zs, gy, ny, cs, double-acute vowels
+  puszta: { consonants: ["sz", "k", "gy", "t", "zs", "ny", "cs", "m", "l", "r", "v", "b", "h"], vowels: ["a", "á", "e", "é", "i", "o", "ö", "ő", "u", "ü", "ű"], codas: ["r", "l", "n"], codaProbability: 0.3 },
+  // Inuit-like: q, ng, rl, three vowels long and short
+  ice: { consonants: ["q", "k", "t", "ng", "rl", "s", "v", "j", "m", "n", "p", "l"], vowels: ["a", "aa", "i", "ii", "u", "uu"], codas: ["q", "k", "t"], codaProbability: 0.2 },
 };
 export const SOUND_STYLE_NAMES = Object.keys(SOUND_STYLES);
 
@@ -179,4 +195,10 @@ export function editDistance(first: string, second: string): number {
         table[row][column - 1] + 1,
         table[row - 1][column - 1] + (first[row - 1] === second[column - 1] ? 0 : 1));
   return table[first.length][second.length];
+}
+
+/** Segments that make a style recognisable: anything non-ASCII or written with more than one letter. */
+export function distinctiveSegments(phonology: Phonology): string[] {
+  if (phonology.style === "plain") return [];
+  return [...phonology.consonants, ...phonology.vowels].filter(segment => segment.length > 1 || /[^a-z]/.test(segment));
 }

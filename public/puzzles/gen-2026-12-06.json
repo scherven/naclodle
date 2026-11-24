@@ -4,7 +4,7 @@
   "date": "2026-12-06",
   "difficulty": 4,
   "language": {
-    "name": "Yawe",
+    "name": "Taaja",
     "real": false
   },
   "checks": 3,
@@ -12,156 +12,132 @@
   "hint": "Watch for “the” versus “a” in the English.",
   "corpus": [
     {
-      "lang": "Lehore heryoma.",
-      "en": "Giants stomp.",
+      "lang": "Quuqanga viitapuu.",
+      "en": "Giants snore.",
       "gloss": [
         "giant-PL",
-        "stomp-3PL"
+        "snore-3PL"
       ]
     },
     {
-      "lang": "Wenlire iryema rarweyalo.",
-      "en": "Hens guard a castle.",
+      "lang": "Vanaaqnaa tiiq qiiqa.",
+      "en": "The hen does not cackle.",
       "gloss": [
-        "hen-PL",
-        "guard-3PL",
-        "castle-ACC"
+        "DEF-hen",
+        "NEG",
+        "cackle"
       ]
     },
     {
-      "lang": "Lehore iryema rarweyalo.",
-      "en": "Giants guard a castle.",
+      "lang": "Rlaavuu qapaanaanga lipapuu quuqanganuu kijaqaa.",
+      "en": "Sleepy sheepdogs wake giants again.",
       "gloss": [
-        "giant-PL",
-        "guard-3PL",
-        "castle-ACC"
-      ]
-    },
-    {
-      "lang": "Leho unwami wenlirelo.",
-      "en": "A giant stole hens.",
-      "gloss": [
-        "giant",
-        "steal-PST",
-        "hen-PL-ACC"
-      ]
-    },
-    {
-      "lang": "Wenli iryemira rarweyalo.",
-      "en": "A hen did not guard a castle.",
-      "gloss": [
-        "hen",
-        "guard-PST-NEG",
-        "castle-ACC"
-      ]
-    },
-    {
-      "lang": "Wenlire hayama lehorelo.",
-      "en": "Hens wake giants.",
-      "gloss": [
-        "hen-PL",
+        "sleepy",
+        "sheepdog-PL",
         "wake-3PL",
-        "giant-PL-ACC"
+        "giant-PL-ACC",
+        "again"
       ]
     },
     {
-      "lang": "Lehore iryemara wenlirelo.",
-      "en": "Giants do not guard hens.",
+      "lang": "Naaqnaanga kiilipapuu vaquuqanuu kijaqaa.",
+      "en": "Hens woke the giant again.",
       "gloss": [
+        "hen-PL",
+        "PST-wake-3PL",
+        "DEF-giant-ACC",
+        "again"
+      ]
+    },
+    {
+      "lang": "Naaqnaanga kiilipapuu vaqapaanaanganuu.",
+      "en": "Hens woke the sheepdogs.",
+      "gloss": [
+        "hen-PL",
+        "PST-wake-3PL",
+        "DEF-sheepdog-PL-ACC"
+      ]
+    },
+    {
+      "lang": "Rlaavuu quuqanga tiiq kiiqitkaapuu vanaaqnaanganuu kijaqaa.",
+      "en": "Sleepy giants did not steal the hens again.",
+      "gloss": [
+        "sleepy",
         "giant-PL",
-        "guard-3PL-NEG",
-        "hen-PL-ACC"
-      ]
-    },
-    {
-      "lang": "Nowenlire hayamara leholo.",
-      "en": "The hens do not wake a giant.",
-      "gloss": [
-        "DEF-hen-PL",
-        "wake-3PL-NEG",
-        "giant-ACC"
-      ]
-    },
-    {
-      "lang": "Nowenlire larnere lenome hayamimara lehorelo.",
-      "en": "The golden hens did not wake giants quietly.",
-      "gloss": [
-        "DEF-hen-PL",
-        "golden-PL",
-        "quietly",
-        "wake-PST-3PL-NEG",
-        "giant-PL-ACC"
-      ]
-    },
-    {
-      "lang": "Nolehore lenome iryemimara nowenlirelo larnerelo.",
-      "en": "The giants did not guard the golden hens quietly.",
-      "gloss": [
-        "DEF-giant-PL",
-        "quietly",
-        "guard-PST-3PL-NEG",
+        "NEG",
+        "PST-steal-3PL",
         "DEF-hen-PL-ACC",
-        "golden-PL-ACC"
+        "again"
+      ]
+    },
+    {
+      "lang": "Rlaavuu vaqapaanaanga tiiq kiilipapuu vaquuqanganuu kijaqaa.",
+      "en": "The sleepy sheepdogs did not wake the giants again.",
+      "gloss": [
+        "sleepy",
+        "DEF-sheepdog-PL",
+        "NEG",
+        "PST-wake-3PL",
+        "DEF-giant-PL-ACC",
+        "again"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Nolehore iryema wenlirelo larnerelo.",
+      "prompt": "Naaqnaa tiiq kiilipa rlaavuu vaqapaanaanganuu.",
       "accepted": [
-        "the giants guard golden hens",
-        "the giants are guarding golden hens",
-        "the giants will guard golden hens"
+        "a hen did not wake the sleepy sheepdogs"
       ],
-      "explanation": "S V O order. no-leho-re = DEF-giant-PL; irye-ma = guard-3PL; wenli-re-lo = hen-PL-ACC; larne-re-lo = golden-PL-ACC."
+      "explanation": "S V O order. naaqnaa = hen; tiiq = NEG; kii-lipa = PST-wake; rlaavuu = sleepy; va-qapaanaa-nga-nuu = DEF-sheepdog-PL-ACC."
     }
   ],
   "toLang": [
     {
-      "prompt": "Golden hens did not guard a castle.",
+      "prompt": "Sleepy hens do not wake a giant again.",
       "accepted": [
-        "wenlire larnere iryemimara rarweyalo"
+        "rlaavuu naaqnaanga tiiq lipapuu quuqanuu kijaqaa"
       ],
-      "explanation": "S V O order. wenli-re = hen-PL; larne-re = golden-PL; irye-mi-ma-ra = guard-PST-3PL-NEG; rarweya-lo = castle-ACC."
+      "explanation": "S V O order. rlaavuu = sleepy; naaqnaa-nga = hen-PL; tiiq = NEG; lipa-puu = wake-3PL; quuqa-nuu = giant-ACC; kijaqaa = again."
     }
   ],
   "explain": {
     "words": [
       [
-        "leho",
-        "giant"
+        "qapaanaa",
+        "sheepdog"
       ],
       [
-        "wenli",
+        "naaqnaa",
         "hen"
       ],
       [
-        "rarweya",
-        "castle"
+        "quuqa",
+        "giant"
       ],
       [
-        "irye-",
-        "guard"
-      ],
-      [
-        "unwa-",
-        "steal"
-      ],
-      [
-        "haya-",
+        "lipa-",
         "wake"
       ],
       [
-        "heryo-",
-        "stomp"
+        "qitkaa-",
+        "steal"
       ],
       [
-        "larne",
-        "golden"
+        "qiiqa-",
+        "cackle"
       ],
       [
-        "lenome",
-        "quietly"
+        "viita-",
+        "snore"
+      ],
+      [
+        "rlaavuu",
+        "sleepy"
+      ],
+      [
+        "kijaqaa",
+        "again"
       ]
     ],
     "grammar": [
@@ -170,28 +146,28 @@
         "Word order: subject, verb, object. With one participant: subject, verb."
       ],
       [
-        "-re",
+        "-nga",
         "Plural."
       ],
       [
-        "no-",
+        "va-",
         "Definite (“the”). A noun without it means “a” (or plain plural)."
       ],
       [
-        "-lo",
+        "-nuu",
         "Accusative: marks the object."
       ],
       [
-        "-mi",
+        "kii-",
         "Past tense. Without it the verb is present or future."
       ],
       [
-        "-ma",
+        "-puu",
         "On the verb when the subject is plural."
       ],
       [
-        "-ra",
-        "Negation, on the verb."
+        "tiiq",
+        "Negation: a separate word before the verb."
       ],
       [
         "Suffix order",
@@ -199,31 +175,28 @@
       ],
       [
         "Adjectives",
-        "Come after the noun. The adjective copies the noun's plural and object endings."
+        "Come before the noun. Noun endings go on the noun only; the adjective stays bare."
       ],
       [
         "Time and manner words",
-        "Go just before the verb."
+        "Go at the end of the sentence."
       ]
     ],
-    "notes": "Checked against 1110 alternative analyses; the sentences rule out 1099, including: -re appears when: animate; -re appears when: (plural or past); -mi appears when: past & negative."
+    "notes": "Checked against 2348 alternative analyses; the sentences rule out 2333, including: -nga appears when: definite; -nga appears when: plural & definite."
   },
   "theme": "giants above the clouds",
   "shuffle": {
     "anchors": [
-      5
+      3
     ],
     "order": [
-      2,
-      3,
-      8,
-      0,
-      6,
-      5,
       1,
-      9,
-      7,
-      4
+      5,
+      4,
+      3,
+      6,
+      2,
+      0
     ]
   }
 }

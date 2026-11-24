@@ -438,7 +438,6 @@ function startGame(puzzle: Puzzle) {
   /* ---------- test items ---------- */
 
   const itemHtml = (item: TestItem) => `<div class="item" id="item-${item.id}">
-      <span class="n">${item.id}</span>
       <div class="prompt${item.isEnglish ? " lang" : ""}" data-side="${item.isEnglish ? "lang" : "en"}" data-item="${item.id}" data-text="${escapeHtml(item.prompt)}"></div>
       <div class="field"><div class="ov" id="overlay-${item.id}" aria-hidden="true"></div><input id="answer-${item.id}" data-item="${item.id}"
         autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Answer ${item.id}"></div>
@@ -447,11 +446,7 @@ function startGame(puzzle: Puzzle) {
   const toEnglishItems = items.filter(item => item.isEnglish), toLanguageItems = items.filter(item => !item.isEnglish);
   if (toEnglishItems.length) byId("itemsToEnglish").innerHTML = toEnglishItems.map(itemHtml).join("");
   if (toLanguageItems.length) byId("itemsToLanguage").innerHTML = toLanguageItems.map(itemHtml).join("");
-  // with no to-English section, the to-language section is "A"
-  if (!toEnglishItems.length) for (const item of toLanguageItems) {
-    const label = document.querySelector(`#item-${item.id} .n`);
-    if (label) label.textContent = item.id.replace("B", "A");
-  }
+
 
   const answerSide = (itemId: string): Side => (items.find(item => item.id === itemId)!.isEnglish ? "en" : "lang");
   // colours show through typed answers: a text-transparent copy of the answer sits under the input

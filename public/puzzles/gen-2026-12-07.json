@@ -4,25 +4,15 @@
   "date": "2026-12-07",
   "difficulty": 1,
   "language": {
-    "name": "Jalka",
+    "name": "Laweya",
     "real": false
   },
   "checks": 3,
-  "keys": [
-    "ä"
-  ],
+  "keys": [],
   "hint": "How does a noun change when there is more than one? Look at the start of the word.",
   "corpus": [
     {
-      "lang": "Luluutä lahaa.",
-      "en": "The judges weep.",
-      "gloss": [
-        "PL~judge",
-        "weep"
-      ]
-    },
-    {
-      "lang": "Kätiha kistii luutä.",
+      "lang": "Lamemo lona malu.",
       "en": "The hound guards the judge.",
       "gloss": [
         "hound",
@@ -31,103 +21,112 @@
       ]
     },
     {
-      "lang": "Luutä toosti taal titiiki.",
-      "en": "The judge does not carry the coin.",
+      "lang": "Malu leyo mu wirme.",
+      "en": "The judge does not carry the ghost.",
       "gloss": [
         "judge",
         "carry",
         "NEG",
-        "coin"
+        "ghost"
       ]
     },
     {
-      "lang": "Luluutä toosti titiiki.",
-      "en": "The judges carry the coin.",
-      "gloss": [
-        "PL~judge",
-        "carry",
-        "coin"
-      ]
-    },
-    {
-      "lang": "Kätiha kistii taal luluutä.",
-      "en": "The hound does not guard the judges.",
-      "gloss": [
-        "hound",
-        "guard",
-        "NEG",
-        "PL~judge"
-      ]
-    },
-    {
-      "lang": "Käkätiha kistii taal tutuko.",
-      "en": "The hounds do not guard the rivers.",
+      "lang": "Lalamemo lona malu.",
+      "en": "The hounds guard the judge.",
       "gloss": [
         "PL~hound",
         "guard",
+        "judge"
+      ]
+    },
+    {
+      "lang": "Rele leyo wiwirme.",
+      "en": "The ferryman carries the ghosts.",
+      "gloss": [
+        "ferryman",
+        "carry",
+        "PL~ghost"
+      ]
+    },
+    {
+      "lang": "Wiwirme lami mu rerele.",
+      "en": "The ghosts do not pay the ferrymen.",
+      "gloss": [
+        "PL~ghost",
+        "pay",
         "NEG",
-        "PL~river"
+        "PL~ferryman"
+      ]
+    },
+    {
+      "lang": "Rerele lona mu mamalu.",
+      "en": "The ferrymen do not guard the judges.",
+      "gloss": [
+        "PL~ferryman",
+        "guard",
+        "NEG",
+        "PL~judge"
       ]
     }
   ],
   "toEnglish": [
     {
-      "prompt": "Käkätiha kistii luluutä.",
+      "prompt": "Lamemo lona mu mamalu.",
       "accepted": [
-        "the hounds guard the judges",
-        "the hounds guard judges",
-        "the hounds guarded the judges",
-        "the hounds guarded judges",
-        "the hounds are guarding the judges",
-        "the hounds are guarding judges",
-        "hounds guard the judges",
-        "hounds guard judges",
-        "hounds guarded the judges",
-        "hounds guarded judges",
-        "hounds are guarding the judges",
-        "hounds are guarding judges"
+        "the hound does not guard the judges",
+        "the hound does not guard judges",
+        "the hound did not guard the judges",
+        "the hound did not guard judges",
+        "the hound is not guarding the judges",
+        "the hound is not guarding judges",
+        "a hound does not guard the judges",
+        "a hound does not guard judges",
+        "a hound did not guard the judges",
+        "a hound did not guard judges",
+        "a hound is not guarding the judges",
+        "a hound is not guarding judges"
       ],
-      "explanation": "S V O order. kä~kätiha = PL~hound; kistii = guard; lu~luutä = PL~judge."
+      "explanation": "S V O order. lamemo = hound; lona = guard; mu = NEG; ma~malu = PL~judge."
     }
   ],
   "toLang": [
     {
-      "prompt": "The judges do not carry the coins.",
+      "prompt": "The ferrymen do not carry the ghost.",
       "accepted": [
-        "luluutä toosti taal tititiiki"
+        "rerele leyo mu wirme"
       ],
-      "explanation": "S V O order. lu~luutä = PL~judge; toosti = carry; taal = NEG; ti~titiiki = PL~coin."
+      "explanation": "S V O order. re~rele = PL~ferryman; leyo = carry; mu = NEG; wirme = ghost."
     }
   ],
   "explain": {
     "words": [
       [
-        "titiiki",
-        "coin"
+        "rele",
+        "ferryman"
       ],
       [
-        "kätiha",
+        "lamemo",
         "hound"
       ],
       [
-        "luutä",
+        "malu",
         "judge"
       ],
       [
-        "tuko",
-        "river"
+        "wirme",
+        "ghost"
       ],
       [
-        "toosti",
-        "carry"
+        "lami",
+        "pay"
       ],
       [
-        "kistii",
+        "lona",
         "guard"
       ],
       [
-        "lahaa",
-        "weep"
+        "leyo",
+        "carry"
       ]
     ],
     "grammar": [
@@ -137,27 +136,27 @@
       ],
       [
         "CV~",
-        "Plural: copy the noun's first consonant and vowel in front (seesha → seseesha)."
+        "Plural: copy the noun's first consonant and vowel in front (rele → rerele)."
       ],
       [
-        "taal",
+        "mu",
         "Negation: a separate word after the verb."
       ]
     ],
-    "notes": "Checked against 259 alternative analyses; the sentences rule out 257, including: CV reduplication appears when: animate; CV reduplication appears when: plural & animate."
+    "notes": "Checked against 122 alternative analyses; the sentences rule out 118, including: CV reduplication appears when: animate; CV reduplication appears when: plural & not animate."
   },
   "theme": "the ferry of the underworld",
   "shuffle": {
     "anchors": [
-      5
+      2
     ],
     "order": [
-      3,
-      2,
-      0,
       4,
+      0,
+      2,
+      5,
       1,
-      5
+      3
     ]
   }
 }

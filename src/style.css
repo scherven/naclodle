@@ -98,11 +98,10 @@ section{display:flex;flex-direction:column;gap:14px}
 .task-h{display:flex;gap:12px;align-items:baseline}
 .task-h .letter{font:500 14px var(--f-mono)}
 .items{display:flex;flex-direction:column;gap:18px}
-.item{display:grid;grid-template-columns:2.2em minmax(0,1fr) 1.4em;column-gap:20px;align-items:end}
-.item .n{font:13px/1 var(--f-mono);color:var(--muted);align-self:start;padding-top:5px;background:none;border:0;text-align:left}
-.prompt{font:17px/1.4 var(--f-data);grid-column:2;margin-bottom:4px}
+.item{display:grid;grid-template-columns:minmax(0,1fr) 1.4em;column-gap:20px;align-items:end}
+.prompt{font:17px/1.4 var(--f-data);grid-column:1;margin-bottom:4px}
 .prompt.lang{font-weight:600}
-.field{grid-column:2;position:relative;min-width:0}
+.field{grid-column:1;position:relative;min-width:0}
 .ov{position:absolute;inset:0;font:17px/1.6 var(--f-data);padding:2px 0;white-space:pre;overflow:hidden;color:transparent;pointer-events:none}
 .ov mark{color:transparent}
 .item input{position:relative;width:100%;border:0;border-bottom:1px solid var(--rule);background:transparent;
@@ -110,9 +109,9 @@ section{display:flex;flex-direction:column;gap:14px}
 .item input:focus{outline:none;border-bottom-color:var(--pen)}
 .item input:disabled{border-bottom-color:transparent;color:var(--pen);-webkit-text-fill-color:var(--pen);opacity:1}
 .item.revealed input:disabled{color:var(--muted);-webkit-text-fill-color:var(--muted)}
-.verdict{grid-column:3;font:14px var(--f-mono);padding-bottom:6px}
+.verdict{grid-column:2;font:14px var(--f-mono);padding-bottom:6px}
 .verdict.ok{color:var(--ok)} .verdict.near{color:var(--near)} .verdict.bad{color:var(--bad)} .verdict.rev{color:var(--muted)}
-.key{grid-column:2;display:flex;flex-direction:column;gap:2px;margin-top:6px}
+.key{grid-column:1;display:flex;flex-direction:column;gap:2px;margin-top:6px}
 .key .yours{font:17px/1.5 var(--f-data);color:var(--pen)}
 .key .yours s{color:var(--bad);text-decoration-thickness:1.5px}
 .key .right{font:17px/1.5 var(--f-data);color:var(--ok)}

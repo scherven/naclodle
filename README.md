@@ -47,7 +47,7 @@ npm run generate -- draft --difficulty 5    # a one-off, not scheduled: play it 
 npm run generate -- list                    # what's scheduled, without spoilers
 ```
 
-`--difficulty 1-5` overrides the weekday difficulty (Mon 1 … Sat 5, Sun 4), `--shuffle` / `--no-shuffle` overrides shuffled Saturdays, `--style clicks` (or tones, island, clusters, glides, northern, nasal, dotted, lakes, desert, highland, airy, plain) picks the sound style, `--force` replaces existing puzzles. Runs are resumable and Ctrl-C finishes the current puzzle before stopping. Drafts live in `public/puzzles/drafts/` (gitignored).
+`--difficulty 1-5` overrides the weekday difficulty (Mon 1 … Sat 5, Sun 4), `--shuffle` / `--no-shuffle` overrides shuffled Saturdays, `--style clicks` (or any style in `SOUND_STYLES` in `src/generator/phonology.ts`, or plain) picks the sound style, `--force` replaces existing puzzles. Runs are resumable and Ctrl-C finishes the current puzzle before stopping. Drafts live in `public/puzzles/drafts/` (gitignored).
 
 Real languages (uses your Claude account through Claude Code's headless mode; takes a few minutes):
 
