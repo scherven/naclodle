@@ -104,7 +104,7 @@ export function generatePuzzle(date: string, options: GenerateOptions = {}): { p
 
     const languageName = makeLanguageName(rng, grammar.phonology);
     const puzzle = buildPuzzle({
-      date, languageName, grammar, corpus, tests: selection.tests, check, blocked: selection.blocked, themeTitle: theme.title, shuffle,
+      date, languageName, grammar, corpus, tests: selection.tests, themeTitle: theme.title, shuffle,
     });
     const report: GenerationReport = {
       date, attempts: attempt + 1, theme: theme.id, plan,

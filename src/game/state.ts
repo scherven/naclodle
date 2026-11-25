@@ -43,6 +43,8 @@ export interface GameState {
   /** Rows placed automatically at the end of the game. */
   revealedRows: number[];
   orderAtLastPairCheck: string | null;
+  /** Time spent with the puzzle on screen before the game ended. 0 for games finished before this was tracked. */
+  activeMs: number;
 }
 
 export interface TestItem extends Item { id: string; isEnglish: boolean }
@@ -64,7 +66,7 @@ export function freshState(puzzle: Puzzle): GameState {
     paints: [], splits: [], colours: DEFAULT_COLOURS.map(colour => ({ ...colour })), matchAll: true,
     translationOrder: puzzle.shuffle ? puzzle.shuffle.order.slice() : identity,
     lockedRows: puzzle.shuffle ? puzzle.shuffle.anchors.slice() : identity,
-    pairCheckHistory: [], revealedRows: [], orderAtLastPairCheck: null,
+    pairCheckHistory: [], revealedRows: [], orderAtLastPairCheck: null, activeMs: 0,
   };
 }
 
@@ -152,10 +154,20 @@ export const maxScore = (puzzle: Puzzle) => testItems(puzzle).length * POINTS.ok
 export const hintsUsed = (state: GameState) => (state.hintUsed ? 1 : 0) + state.pairCheckHistory.length;
 
 const SQUARES: Record<Verdict, string> = { ok: "🟩", near: "🟨", bad: "⬜" };
+/** 75000 → "1:15", 3725000 → "1:02:05". */
+export function formatDuration(milliseconds: number): string {
+  const totalSeconds = Math.round(milliseconds / 1000);
+  const hours = Math.floor(totalSeconds / 3600), minutes = Math.floor(totalSeconds / 60) % 60, seconds = totalSeconds % 60;
+  const twoDigits = (value: number) => String(value).padStart(2, "0");
+  return hours ? `${hours}:${twoDigits(minutes)}:${twoDigits(seconds)}` : `${minutes}:${twoDigits(seconds)}`;
+}
+
 export function shareText(puzzle: Puzzle, state: GameState): string {
   const hints = hintsUsed(state);
   const perfect = allSolved(puzzle, state) && hints === 0 && !state.revealedRows.length;
-  const header = `naclodle ${puzzle.number}${puzzle.shuffle ? " ⇅" : ""}  ${score(puzzle, state)}/${maxScore(puzzle)}` +
+  const difficulty = "●".repeat(puzzle.difficulty) + "○".repeat(5 - puzzle.difficulty);
+  const header = `naclodle ${puzzle.number}${puzzle.shuffle ? " ⇅" : ""}  ${difficulty}  ${score(puzzle, state)}/${maxScore(puzzle)}` +
+    (state.activeMs ? `  ⏱ ${formatDuration(state.activeMs)}` : "") +
     (hints ? "  " + "💡".repeat(hints) : "") + (perfect ? "  ★" : "");
   const grid = (rows: Verdict[][]) => rows.map(row => row.map(verdict => SQUARES[verdict]).join("")).join("\n");
   const pairGrid = puzzle.shuffle && state.pairCheckHistory.length ? grid(state.pairCheckHistory) + "\n\n" : "";

@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { validatePuzzle, type Puzzle, type PuzzleIndex } from "../puzzle";
 import { DEFAULT_COLOURS, newColour } from "./colours";
-import { canCheck, checkAnswers, checkPairs, freshState, isOver, placeRemainingPairs, score, shareText, swapTranslations, testItems } from "./state";
+import { canCheck, checkAnswers, checkPairs, formatDuration, freshState, isOver, placeRemainingPairs, score, shareText, swapTranslations, testItems } from "./state";
 import { closestAccepted, grade, normalise } from "./text";
 
 const DIR = join(__dirname, "../../public/puzzles");
@@ -47,6 +47,13 @@ describe("game rules", () => {
     expect(isOver(turkish, state)).toBe(true);
     expect(score(turkish, state)).toBe(6);
     expect(shareText(turkish, state)).toContain("★");
+  });
+  it("shares difficulty, and time once it was tracked", () => {
+    const state = checkAnswers(turkish, answerEverything());
+    expect(shareText(turkish, state)).toContain("●".repeat(turkish.difficulty) + "○".repeat(5 - turkish.difficulty));
+    expect(shareText(turkish, state)).not.toContain("⏱");
+    expect(shareText(turkish, { ...state, activeMs: 272_400 })).toContain("⏱ 4:32");
+    expect(formatDuration(3_725_000)).toBe("1:02:05");
   });
   it("only allows a check when an answer changed", () => {
     let state = freshState(turkish);

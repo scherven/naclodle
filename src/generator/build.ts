@@ -1,7 +1,7 @@
 /** Turns a grammar + selected data into the Puzzle JSON: glosses, answers, explanations, hint, keys. */
 
 import type { CorpusLine, Item, Puzzle } from "../puzzle";
-import type { CheckResult, TestItem } from "./checker";
+import type { TestItem } from "./checker";
 import { englishAnswers, englishSentence, type EnglishLexicon, type EnglishOptions } from "./english";
 import type { Grammar, Headline, Morpheme } from "./grammar";
 import { difficultyScore } from "./sample";
@@ -154,13 +154,11 @@ export interface BuildInput {
   grammar: Grammar;
   corpus: Meaning[];
   tests: TestItem[];
-  check: CheckResult;
-  blocked: string[];
   themeTitle: string;
   shuffle?: { anchors: number[]; order: number[] };
 }
 
-export function buildPuzzle({ date, languageName, grammar, corpus, tests, check, blocked, themeTitle, shuffle }: BuildInput): Puzzle {
+export function buildPuzzle({ date, languageName, grammar, corpus, tests, themeTitle, shuffle }: BuildInput): Puzzle {
   const english = englishLexiconOf(grammar);
   const englishOptions = englishOptionsOf(grammar);
 
@@ -203,9 +201,6 @@ export function buildPuzzle({ date, languageName, grammar, corpus, tests, check,
     const fronts = grammar.phonology.harmony.pairs.map(pair => pair[1]).join(", ");
     notes.push(`Vowel harmony: a word's vowels are either all back (${backs}) or all front (${fronts}), and suffix vowels follow the stem.`);
   }
-  const killed = check.verdicts.filter(verdict => verdict.killedBy >= 0).length;
-  const ruledOut = blocked.length ? blocked : check.verdicts.filter(verdict => verdict.killedBy >= 0 && verdict.competitor.family === "condition").slice(0, 2).map(verdict => verdict.competitor.description);
-  notes.push(`Checked against ${check.verdicts.length} alternative analyses; the sentences rule out ${killed}, including: ${ruledOut.slice(0, 3).join("; ")}.`);
 
   return {
     id: `gen-${date}`,

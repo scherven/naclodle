@@ -614,6 +614,7 @@ function startGame(puzzle: Puzzle) {
     }
   }
   function finishGame(justFinished: boolean) {
+    stopClock();
     update(placeRemainingPairs(puzzle, state));
     recordStats();
     renderExplanation(); renderAllText(); renderGameState();
@@ -655,6 +656,16 @@ function startGame(puzzle: Puzzle) {
       });
   });
 
+  /* Time counts only while the page is visible and the game is on, so leaving a tab open overnight doesn't. */
+  let visibleSince: number | null = null;
+  const stopClock = () => {
+    if (visibleSince === null) return;
+    state.activeMs += Date.now() - visibleSince; visibleSince = null; save();
+  };
+  const startClock = () => { if (visibleSince === null && !isOver(puzzle, state) && !document.hidden) visibleSince = Date.now(); };
+  document.addEventListener("visibilitychange", () => (document.hidden ? stopClock() : startClock()));
+  addEventListener("pagehide", stopClock);
+
   const notes = byId<HTMLTextAreaElement>("notes");
   notes.value = state.notes || "";
   notes.addEventListener("input", () => { state.notes = notes.value; save(); });
@@ -663,5 +674,6 @@ function startGame(puzzle: Puzzle) {
   items.forEach(item => showVerdict(item.id));
   renderSwatches(); renderAllText(); renderGameState();
   if (isOver(puzzle, state)) finishGame(false);
+  else startClock();
   addEventListener("hashchange", () => location.reload());
 }
